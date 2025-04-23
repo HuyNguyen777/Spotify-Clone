@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-song-card',
-  imports: [],
+  standalone: false,
   templateUrl: './song-card.component.html',
   styleUrl: './song-card.component.css'
 })

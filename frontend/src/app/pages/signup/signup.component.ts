@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-signup',
-  imports: [],
+  standalone: false,
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })

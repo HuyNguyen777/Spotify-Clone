@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-playlist',
-  imports: [],
+  standalone: false,
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.css'
 })

@@ -28,7 +28,11 @@ import { SongComponent } from './pages/song/song.component';
     BrowseCardComponent,
     SongComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule, 
+    AppRoutingModule, 
+    ReactiveFormsModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
