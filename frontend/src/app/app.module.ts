@@ -26,7 +26,7 @@ import { SongComponent } from './pages/song/song.component';
     TopNavComponent,
     ButtonComponent,
     BrowseCardComponent,
-    SongComponent,
+    SongComponent
   ],
   imports: [
     BrowserModule, 
