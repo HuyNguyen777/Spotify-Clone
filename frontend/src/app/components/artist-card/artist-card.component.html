@@ -1,0 +1,10 @@
+<div class="spotify__artist-card" (click)="onNavigateToArtist()">
+    <div class="spotify_artist-card__thumbnail">
+      <img [src]="artistImage" width="80" alt="artist-thumbnail" />
+    </div>
+    <div class="spotify_artist-card__name text-left">
+      {{ artistName }}
+    </div>
+    <div class="spotify_artist-card__description">{{ artistDescription }}</div>
+  </div>
+  

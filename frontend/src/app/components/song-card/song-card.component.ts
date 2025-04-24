@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SongDataService } from '../../services/song-data.service';
-
+import { Track, TrackService } from '../../services/tracks.service';
 @Component({
   selector: 'app-song-card',
   standalone: false,
@@ -10,6 +10,10 @@ import { SongDataService } from '../../services/song-data.service';
 })
 export class SongCardComponent implements OnInit {
   @Input() public playlistThumbnail!: string;
+  @Input() public title!: string;
+  @Input() public description!: string;
+
+  /*@Input() public playlistThumbnail!: string;
   @Input() public title!: string;
   @Input() public description!: string;
   @Input() public link!: string;
@@ -29,6 +33,16 @@ export class SongCardComponent implements OnInit {
         id: this.song_id,
       },
     });
-  }
+  }*/
+    tracks: Track[] = [];
+
+    constructor(private trackService: TrackService) {}
+  
+    ngOnInit(): void {
+      this.trackService.getTracks().subscribe(data => {
+        this.tracks = data;
+        
+      });
+    }
 }
 
