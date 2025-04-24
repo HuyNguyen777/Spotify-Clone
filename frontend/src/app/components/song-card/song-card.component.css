@@ -1,6 +1,6 @@
 .spotify__song-card {
     min-height: 250px;
-    min-width: 180px;
+    width: 180px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -18,12 +18,14 @@
     word-spacing: 0.4px;
     color: white;
     margin-top: 18px;
+    padding-left: 20px;
+    padding-right: 20px;
     text-transform: capitalize;
   }
   
   .spotify_song-card__tumbnail {
     background-color: rgba(0, 0, 0, 0.24);
-    padding: 20px;
+    
     border-radius: 12px;
     margin-top: 15px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
