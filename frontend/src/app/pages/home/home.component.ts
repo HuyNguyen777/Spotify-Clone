@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { TrackService, Track } from '../../services/tracks.service';  // Import đúng Track và TrackService
 import { SearchBarService } from '../../services/searchbar.service';
 
 @Component({
   selector: 'app-home',
-  standalone: false,
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css'],
+  standalone:false,
 })
 export class HomeComponent implements OnInit {
   public browserAll = [
-    {
-      bgColor: 'red',
-      color: 'white',
-      title: 'Podcasts',
-    },
+    { bgColor: 'red', color: 'white', title: 'Podcasts' },
     { bgColor: 'green', color: 'white', title: 'Made for you' },
     { bgColor: 'purple', color: 'white', title: 'Charts' },
     { bgColor: 'blue', color: 'white', title: 'Live streams' },
@@ -24,86 +21,23 @@ export class HomeComponent implements OnInit {
     { bgColor: 'black', color: 'white', title: 'Marathi' },
     { bgColor: 'orangered', color: 'white', title: 'Hip-Hop' },
     { bgColor: 'darkgray', color: 'white', title: 'Workout' },
-    { bgColor: 'smokewhite', color: 'white', title: 'R&B' },
+    { bgColor: 'smokewhite', color: 'white', title: 'R&B' }
   ];
-  public songCards = [
-    {
-      song_id: 1,
-      thumbnail:
-        'https://en.wikialpha.org/mediawiki/images/archive/5/50/20220720185634%21Ponishare-verified.png',
-      title: 'Romantic Songs',
-      description: 'Relax and indulge with beautiful piano pieces',
-      song_link: 'assets/dangerous.mp3',
-    },
-    {
-      song_id: 2,
-      thumbnail:
-        'https://en.wikialpha.org/mediawiki/images/archive/5/50/20220720185634%21Ponishare-verified.png',
-      title: 'Peaceful Songs',
-      description: 'Relax and indulge with beautiful piano pieces',
-      song_link: '',
-    },
-    {
-      song_id: 3,
-      thumbnail:
-        'https://en.wikialpha.org/mediawiki/images/archive/5/50/20220720185634%21Ponishare-verified.png',
-      title: 'DJ Songs',
-      description: 'Relax and indulge with beautiful piano pieces',
-      song_link: '',
-    },
-    {
-      song_id: 4,
-      thumbnail:
-        'https://en.wikialpha.org/mediawiki/images/archive/5/50/20220720185634%21Ponishare-verified.png',
-      title: 'Party Mashup Songs',
-      description: 'Relax and indulge with beautiful piano pieces',
-      song_link: '',
-    },
-    {
-      song_id: 5,
-      thumbnail:
-        'https://en.wikialpha.org/mediawiki/images/archive/5/50/20220720185634%21Ponishare-verified.png',
-      title: 'HeartBreak Songs',
-      description: 'Relax and indulge with beautiful piano pieces',
-      song_link: 'assets/Bezubaan.mp3',
-    },
-    {
-      song_id: 6,
-      thumbnail:
-        'https://en.wikialpha.org/mediawiki/images/archive/5/50/20220720185634%21Ponishare-verified.png',
-      title: 'Spiritual Songs',
-      description: 'Relax and indulge with beautiful piano pieces',
-      song_link: '',
-    },
-    {
-      song_id: 7,
-      thumbnail:
-        'https://en.wikialpha.org/mediawiki/images/archive/5/50/20220720185634%21Ponishare-verified.png',
-      title: 'Religional Songs',
-      description: 'Relax and indulge with beautiful piano pieces',
-      song_link: '',
-    },
-    {
-      song_id: 8,
-      thumbnail:
-        'https://en.wikialpha.org/mediawiki/images/archive/5/50/20220720185634%21Ponishare-verified.png',
-      title: 'English Mashups',
-      description: 'Relax and indulge with beautiful piano pieces',
-      song_link: '',
-    },
-    {
-      song_id: 9,
-      thumbnail:
-        'https://en.wikialpha.org/mediawiki/images/archive/5/50/20220720185634%21Ponishare-verified.png',
-      title: 'Motivational Songs',
-      description: 'Relax and indulge with beautiful piano pieces',
-      song_link: '',
-    },
-  ];
-  constructor(public sb: SearchBarService) {}
 
-  ngOnInit(): void {}
+  public songCards: Track[] = [];  // Định nghĩa songCards là Track[]
 
+  constructor(private trackService: TrackService,public sb: SearchBarService) {}
+
+  ngOnInit(): void {
+    this.trackService.getTracks().subscribe({
+      next: (data: Track[]) => {  // Dữ liệu trả về từ API là Track[]
+        this.songCards = data;
+      },
+      error: (err: any) => {
+        console.error('Error fetching tracks:', err);
+      }
+    });
+  }
   onInputFilterRes($event: string) {
     const res = this.browserAll.filter(
       (element) => element.title.toLowerCase() === $event.toLowerCase().trim()
@@ -118,4 +52,5 @@ export class HomeComponent implements OnInit {
       this.sb.isSearchVisible.next(false);
     }
   }
+  
 }

@@ -14,6 +14,9 @@ import { ButtonComponent } from './components/button/button.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowseCardComponent } from './components/browse-card/browse-card.component';
 import { SongComponent } from './pages/song/song.component';
+import { ArtistCardComponent } from "./components/artist-card/artist-card.component";
+import { HttpClientModule } from '@angular/common/http'; 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,13 +29,16 @@ import { SongComponent } from './pages/song/song.component';
     TopNavComponent,
     ButtonComponent,
     BrowseCardComponent,
-    SongComponent
+    SongComponent,
+    ArtistCardComponent,
   ],
   imports: [
-    BrowserModule, 
-    AppRoutingModule, 
-    ReactiveFormsModule
-  ],
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    
+],
   providers: [],
   bootstrap: [AppComponent],
 })

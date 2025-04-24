@@ -44,11 +44,9 @@
         <div class="playlist_card_collections">
           <div id="song_card_item" *ngFor="let sc of songCards">
             <app-song-card
-              [playlistThumbnail]="sc.thumbnail"
-              [title]="sc.title"
-              [description]="sc.description"
-              [song_id]="sc.song_id"
-              [link]="sc.song_link"
+            [playlistThumbnail]="sc.image_url"  
+            [title]="sc.title"
+            [description]="sc.namemp3"  
             ></app-song-card>
           </div>
         </div>
@@ -64,13 +62,12 @@
         <div class="playlist_card_collections">
           <div id="song_card_item" *ngFor="let sc of songCards">
             <app-song-card
-              [playlistThumbnail]="sc.thumbnail"
-              [title]="sc.title"
-              [description]="sc.description"
-              [song_id]="sc.song_id"
+              
+              
             ></app-song-card>
           </div>
         </div>
+        
       </div>
       <div
         [style.paddingTop]="'48px'"
