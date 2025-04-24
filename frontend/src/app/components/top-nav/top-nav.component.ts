@@ -23,6 +23,10 @@ export class TopNavComponent implements OnInit {
     this.router.navigate(['/', 'login']);
   }
 
+  OnNavigateToSignUp(){
+    this.router.navigate(['/', 'signup']);
+  }
+
   filterBrowsingList(inputElement: HTMLInputElement) {
     // console.log(inputElement);
     this.inputFilterRes.emit(inputElement.value);
