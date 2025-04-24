@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TrackService, Track } from '../../services/tracks.service';  // Import đúng Track và TrackService
 import { SearchBarService } from '../../services/searchbar.service';
+import { Artist, ArtistService } from '../../services/artists.service';
 
 @Component({
   selector: 'app-home',
@@ -25,17 +26,22 @@ export class HomeComponent implements OnInit {
   ];
 
   public songCards: Track[] = [];  // Định nghĩa songCards là Track[]
+  artistNames: { [key: number]: string } = {};
 
-  constructor(private trackService: TrackService,public sb: SearchBarService) {}
+
+  constructor(private trackService: TrackService,public sb: SearchBarService,private artistService: ArtistService) {}
 
   ngOnInit(): void {
-    this.trackService.getTracks().subscribe({
-      next: (data: Track[]) => {  // Dữ liệu trả về từ API là Track[]
-        this.songCards = data;
-      },
-      error: (err: any) => {
-        console.error('Error fetching tracks:', err);
-      }
+    this.trackService.getTracks().subscribe((tracks) => {
+      this.songCards = tracks;
+      // Lấy tên nghệ sĩ tương ứng
+      tracks.forEach((track) => {
+        if (track.artist_id && !this.artistNames[track.artist_id]) {
+          this.artistService.getArtistName(track.artist_id).subscribe((res) => {
+            this.artistNames[track.artist_id] = res.name;
+          });
+        }
+      });
     });
   }
   onInputFilterRes($event: string) {
@@ -51,6 +57,9 @@ export class HomeComponent implements OnInit {
     } else {
       this.sb.isSearchVisible.next(false);
     }
+  }
+  getArtistName(artistId: number): string {
+    return this.artistNames[artistId] || 'Unknown';
   }
   
 }

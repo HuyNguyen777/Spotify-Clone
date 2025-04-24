@@ -12,6 +12,8 @@ export class SongCardComponent implements OnInit {
   @Input() public playlistThumbnail!: string;
   @Input() public title!: string;
   @Input() public description!: string;
+  @Input() public song_id!: string | number;
+  @Input() public link!: string;
 
   /*@Input() public playlistThumbnail!: string;
   @Input() public title!: string;
@@ -21,22 +23,23 @@ export class SongCardComponent implements OnInit {
   constructor(private router: Router, private sd: SongDataService) {}
 
   ngOnInit(): void {}
+*/
+onNavigateToSong() {
+  // Điều hướng tới trang chi tiết bài hát và truyền state
+  this.router.navigateByUrl(`/song/${this.song_id}`, {
+    state: {
+      thumbnail: this.playlistThumbnail,
+      title: this.title,
+      description: this.description,
+      link: this.link, // Đảm bảo link là đường dẫn chính xác đến file mp3
+      id: this.song_id,
+    },
+  });
+}
 
-  onNavigateToSong() {
-    // this.sd.songData.next();
-    this.router.navigateByUrl(`/song/${this.song_id}`, {
-      state: {
-        thumbnail: this.playlistThumbnail,
-        title: this.title,
-        description: this.description,
-        link: this.link,
-        id: this.song_id,
-      },
-    });
-  }*/
     tracks: Track[] = [];
 
-    constructor(private trackService: TrackService) {}
+    constructor(private trackService: TrackService,private router:Router) {}
   
     ngOnInit(): void {
       this.trackService.getTracks().subscribe(data => {

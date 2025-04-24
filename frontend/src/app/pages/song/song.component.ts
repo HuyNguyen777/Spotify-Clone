@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { SongDataService } from '../../services/song-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
+import { SongDataService } from '../../services/song-data.service';
 
 @Component({
   selector: 'app-song',
-  standalone: false,
   templateUrl: './song.component.html',
-  styleUrl: './song.component.css'
+  styleUrls: ['./song.component.css'],
+  standalone:false,
 })
 export class SongComponent implements OnInit {
   public songData!: any;

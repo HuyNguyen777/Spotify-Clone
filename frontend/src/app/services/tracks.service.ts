@@ -2,6 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Artist } from './artists.service';
 
 export interface Track {
   track_id: number;
@@ -13,6 +14,7 @@ export interface Track {
   image_url: string;
   release_date: string;
   namemp3: string;
+  artist: Artist;
 }
 
 @Injectable({
@@ -28,5 +30,8 @@ export class TrackService {
 
   getTracks(): Observable<Track[]> {
     return this.http.get<Track[]>(this.apiUrl);
+  }
+  getArtistName(track: Track): string {
+    return track.artist ? track.artist.name : 'Unknown Artist';  // Trả về tên nghệ sĩ hoặc 'Unknown Artist'
   }
 }

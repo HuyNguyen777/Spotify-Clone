@@ -46,7 +46,9 @@
             <app-song-card
             [playlistThumbnail]="sc.image_url"  
             [title]="sc.title"
-            [description]="sc.namemp3"  
+            [description]="getArtistName(sc.artist_id)"
+            [song_id]="sc.track_id"
+            [link]="sc.namemp3"
             ></app-song-card>
           </div>
         </div>
