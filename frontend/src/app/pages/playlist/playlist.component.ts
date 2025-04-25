@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-playlist',
-  standalone: false,
   templateUrl: './playlist.component.html',
-  styleUrl: './playlist.component.css'
+  styleUrls: ['./playlist.component.css'],
+  standalone: false,
 })
 export class PlaylistComponent {
-
+  playlistName = 'My Playlist #3';
+  playlistId = 'user';
 }

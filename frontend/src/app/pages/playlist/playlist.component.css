@@ -1,0 +1,84 @@
+.playlist-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    background: #121212;
+    color: white;
+    padding: 2rem;
+  }
+  
+  .playlist-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .playlist-icon {
+    width: 120px;
+    height: 120px;
+    background: #2a2a2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    border-radius: 4px;
+  }
+  
+  .playlist-info .playlist-type {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: gray;
+  }
+  
+  .playlist-info .playlist-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+  }
+  
+  .playlist-info .playlist-id {
+    font-size: 0.9rem;
+    color: #999;
+  }
+  
+  .playlist-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .playlist-search {
+    margin-top: 2rem;
+    background-color: #1e1e1e;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  .playlist-search input {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border: none;
+    background: #333;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  .player-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1a1a1a;
+    padding: 0.8rem 1rem;
+    margin-top: auto;
+    border-top: 1px solid #333;
+  }
+  
+  .player-controls button {
+    margin: 0 0.5rem;
+    font-size: 1.2rem;
+    background: none;
+    border: none;
+    color: white;
+  }
+  

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TrackService, Track } from '../../services/tracks.service';  // Import đúng Track và TrackService
 import { SearchBarService } from '../../services/searchbar.service';
 import { Artist, ArtistService } from '../../services/artists.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
   artistNames: { [key: number]: string } = {};
 
 
-  constructor(private trackService: TrackService,public sb: SearchBarService,private artistService: ArtistService) {}
+  constructor(private trackService: TrackService,public sb: SearchBarService,private artistService: ArtistService,private router:Router) {}
 
   ngOnInit(): void {
     this.trackService.getTracks().subscribe((tracks) => {
@@ -52,12 +53,15 @@ export class HomeComponent implements OnInit {
   }
 
   onNavigation(pageName: string) {
-    if (pageName === 'search') {
+    if (pageName == 'search') {
       this.sb.isSearchVisible.next(true);
     } else {
       this.sb.isSearchVisible.next(false);
     }
+    
   }
+    
+    
   getArtistName(artistId: number): string {
     return this.artistNames[artistId] || 'Unknown';
   }
