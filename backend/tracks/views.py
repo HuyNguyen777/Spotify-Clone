@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 
 # tracks/views.py
@@ -5,6 +6,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import Track
 from .serializers import TrackSerializer
+from artists.models import Artist  # Import mô hình Artist
 
 class TrackViewSet(viewsets.ModelViewSet):
     queryset = Track.objects.all()
@@ -43,3 +45,9 @@ class TrackViewSet(viewsets.ModelViewSet):
         track = self.get_object()
         track.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    def get_artist_name(request, artist_id):
+        try:
+            artist = Artist.objects.get(pk=artist_id)
+            return JsonResponse({'artist_id': artist_id, 'name': artist.name})
+        except Artist.DoesNotExist:
+            return JsonResponse({'error': 'Artist not found'}, status=404)

@@ -1,13 +1,12 @@
 # tracks/urls.py
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import TrackViewSet
+from .views import PlayListDetailViewSet
 
 router = DefaultRouter()
-router.register(r'tracks', TrackViewSet)
+router.register(r'playlistdetail', PlayListDetailViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('artist-name/<int:artist_id>/', TrackViewSet.get_artist_name, name='get-artist-name'),
 
 ]
