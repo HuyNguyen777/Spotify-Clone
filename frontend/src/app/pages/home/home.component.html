@@ -87,6 +87,17 @@
             [title]="sc.title"
           ></app-browse-card>
         </div>
+
+       <!--playlistplaylist-->
+       <div
+       [style.paddingTop]="'48px'"
+       class="mt-5 container-fluid"
+       *ngIf="(sb.isSearchVisible | async)">
+       <div class="play-list-container">
+         <app-playlist> </app-playlist>
+       </div>
+     </div>
+
       </div>
     </div>
   </div>
