@@ -1,32 +1,22 @@
 <div class="music-player">
+    <!-- Controls: shuffle, previous, play, next, repeat -->
     <div class="controls">
-      <button class="control-btn">
-        <i class="fa-solid fa-shuffle"></i>
-      </button>
-      <button class="control-btn">
-        <i class="fa-solid fa-backward-step"></i>
-      </button>
-  
-      <button class="play-btn" (click)="togglePlay()">
-        <i class="fa-solid" [ngClass]="isPlaying ? 'fa-pause' : 'fa-play'"></i>
-      </button>
-  
-      <button class="control-btn">
-        <i class="fa-solid fa-forward-step"></i>
-      </button>
-      <button class="control-btn">
-        <i class="fa-solid fa-tv"></i>
-      </button>
+      <i class="fas fa-random control-icon"></i>
+      <i class="fas fa-step-backward control-icon"></i>
+      <i class="fas fa-play-circle play-icon"></i>
+      <i class="fas fa-step-forward control-icon"></i>
+      <i class="fas fa-redo control-icon"></i>
     </div>
   
-    <div class="progress">
-      <span class="time">{{ (currentTime/60) | number:'1.0-0' }}:{{ (currentTime%60) | number:'2.0' }}</span>
-      <input type="range"
-        min="0"
-        [max]="duration"
-        [(ngModel)]="currentTime"
-        class="progress-bar" />
-      <span class="time">{{ (duration/60) | number:'1.0-0' }}:{{ (duration%60) | number:'2.0' }}</span>
+    <!-- Progress bar -->
+    <div class="progress-container">
+      <span class="current-time">0:02</span>
+  
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+  
+      <span class="total-time">4:20</span>
     </div>
   </div>
   
