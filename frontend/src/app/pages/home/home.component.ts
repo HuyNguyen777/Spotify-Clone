@@ -37,9 +37,9 @@ export class HomeComponent implements OnInit {
       this.songCards = tracks;
       // Lấy tên nghệ sĩ tương ứng
       tracks.forEach((track) => {
-        if (track.artist_id && !this.artistNames[track.artist_id]) {
-          this.artistService.getArtistName(track.artist_id).subscribe((res) => {
-            this.artistNames[track.artist_id] = res.name;
+        if (track.artist && !this.artistNames[track.artist]) {
+          this.artistService.getArtistName(track.artist).subscribe((res) => {
+            this.artistNames[track.artist] = res.name;
           });
         }
       });
