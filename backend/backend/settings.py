@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_authtoken',
     
     # Các app của bạn
     'tracks',       
@@ -47,7 +48,7 @@ INSTALLED_APPS = [
     'playlistdetail',
     'playlist_oder',
     'role',
-            
+
     
     'corsheaders',  # Nếu bạn đang sử dụng CORS
 ]

@@ -8,5 +8,7 @@ class PlaylistOrder(models.Model):
     datte_oder = models.DateField(null=True, blank=True)
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    class Meta:
+        db_table = 'playlist_order' 
     def __str__(self):
         return self.name if self.name else f"Order {self.playlist_oder_id}"
