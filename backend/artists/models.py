@@ -5,7 +5,7 @@ class Artist(models.Model):
     popularity_score = models.IntegerField(default=0)
     name = models.CharField(max_length=255)
     gener = models.CharField(max_length=255, null=True, blank=True)
-    follower = models.IntegerField(default=0)
+    artist_img = models.CharField(max_length=255)
     class Meta:
         db_table = 'artists' 
     def __str__(self):

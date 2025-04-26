@@ -46,13 +46,14 @@
             <app-song-card
             [playlistThumbnail]="sc.image_url"  
             [title]="sc.title"
-            [description]="getArtistName(sc.artist_id)"
+            [description]="getArtistName(sc.artist)"
             [song_id]="sc.track_id"
             [link]="sc.namemp3"
             ></app-song-card>
           </div>
         </div>
       </div>
+      
       <div
         [style.paddingTop]="'250px'"
         class="mt-5 container-fluid"
@@ -71,6 +72,7 @@
         </div>
         
       </div>
+
       <div
         [style.paddingTop]="'48px'"
         class="mt-5 container-fluid"
@@ -86,6 +88,13 @@
           ></app-browse-card>
         </div>
       </div>
+      
+    </div>
+    <div>
+      <app-music-player></app-music-player>
+  
     </div>
   </div>
+ 
+
   

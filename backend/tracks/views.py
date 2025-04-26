@@ -45,6 +45,7 @@ class TrackViewSet(viewsets.ModelViewSet):
         track = self.get_object()
         track.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
     def get_artist_name(request, artist_id):
         try:
             artist = Artist.objects.get(pk=artist_id)

@@ -11,11 +11,12 @@ import { LoginComponent } from './pages/login/login.component';
 import { SongCardComponent } from './components/song-card/song-card.component';
 import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { ButtonComponent } from './components/button/button.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowseCardComponent } from './components/browse-card/browse-card.component';
 import { SongComponent } from './pages/song/song.component';
 import { ArtistCardComponent } from "./components/artist-card/artist-card.component";
 import { HttpClientModule } from '@angular/common/http'; 
+import { MusicPlayerComponent } from './components/music-player/music-player.component';
 
 @NgModule({
   declarations: [
@@ -31,12 +32,15 @@ import { HttpClientModule } from '@angular/common/http';
     BrowseCardComponent,
     SongComponent,
     ArtistCardComponent,
+    MusicPlayerComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    
     
 ],
   providers: [],

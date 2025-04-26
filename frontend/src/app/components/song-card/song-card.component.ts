@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SongDataService } from '../../services/song-data.service';
 import { Track, TrackService } from '../../services/tracks.service';
+import { Artist } from '../../services/artists.service';
 @Component({
   selector: 'app-song-card',
   standalone: false,
@@ -14,6 +14,7 @@ export class SongCardComponent implements OnInit {
   @Input() public description!: string;
   @Input() public song_id!: string | number;
   @Input() public link!: string;
+  @Input() public artist!: Artist;
 
   /*@Input() public playlistThumbnail!: string;
   @Input() public title!: string;

@@ -1,0 +1,32 @@
+<div class="music-player">
+    <div class="controls">
+      <button class="control-btn">
+        <i class="fa-solid fa-shuffle"></i>
+      </button>
+      <button class="control-btn">
+        <i class="fa-solid fa-backward-step"></i>
+      </button>
+  
+      <button class="play-btn" (click)="togglePlay()">
+        <i class="fa-solid" [ngClass]="isPlaying ? 'fa-pause' : 'fa-play'"></i>
+      </button>
+  
+      <button class="control-btn">
+        <i class="fa-solid fa-forward-step"></i>
+      </button>
+      <button class="control-btn">
+        <i class="fa-solid fa-tv"></i>
+      </button>
+    </div>
+  
+    <div class="progress">
+      <span class="time">{{ (currentTime/60) | number:'1.0-0' }}:{{ (currentTime%60) | number:'2.0' }}</span>
+      <input type="range"
+        min="0"
+        [max]="duration"
+        [(ngModel)]="currentTime"
+        class="progress-bar" />
+      <span class="time">{{ (duration/60) | number:'1.0-0' }}:{{ (duration%60) | number:'2.0' }}</span>
+    </div>
+  </div>
+  
