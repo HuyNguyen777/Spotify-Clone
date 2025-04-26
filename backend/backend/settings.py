@@ -37,11 +37,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tracks',
-    'artists',
-    'corsheaders',  
     
+    # Các app của bạn
+    'tracks',       
+    'albums',      
+    'artists',      
+    'users',
+    'playlists',
+    'playlistdetail',
+    'playlist_oder',
+    'role',
+            
+    
+    'corsheaders',  # Nếu bạn đang sử dụng CORS
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

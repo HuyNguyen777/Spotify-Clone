@@ -1,19 +1,13 @@
 from django.db import models
 
 class Artist(models.Model):
-    artist_id = models.IntegerField(primary_key=True)
-    popularity_score = models.IntegerField()
-    name = models.CharField(max_length=200)
-    artist_img = models.CharField(max_length=200)
-    gener = models.CharField(max_length=200)
-
+    artist_id = models.AutoField(primary_key=True)
+    popularity_score = models.IntegerField(default=0)
+    name = models.CharField(max_length=255)
+    gener = models.CharField(max_length=255, null=True, blank=True)
+    follower = models.IntegerField(default=0)
     class Meta:
-        db_table = 'artists'
-
-
+        db_table = 'artists' 
     def __str__(self):
         return self.name
 
-
-
-# Create your models here.
