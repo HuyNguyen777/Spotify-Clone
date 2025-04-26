@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
   public songCards: Track[] = [];  // Định nghĩa songCards là Track[]
   artistNames: { [key: number]: string } = {};
-
+  currentPage: string = 'home';
 
   constructor(private trackService: TrackService,public sb: SearchBarService,private artistService: ArtistService,private router:Router) {}
 
@@ -53,12 +53,14 @@ export class HomeComponent implements OnInit {
   }
 
   onNavigation(pageName: string) {
+    this.currentPage = pageName;
     if (pageName == 'search') {
       this.sb.isSearchVisible.next(true);
-    } else {
+    } else if(pageName == 'playlist'){
+      this.sb.isSearchVisible.next(true);
+    }else{
       this.sb.isSearchVisible.next(false);
     }
-    
   }
     
     

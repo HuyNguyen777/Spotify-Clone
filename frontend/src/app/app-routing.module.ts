@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'song/:song_id', component: SongComponent },
   { path: 'signup', component: SignupComponent},
+  { path: 'playlist', component: PlaylistComponent}
 
 ];
 

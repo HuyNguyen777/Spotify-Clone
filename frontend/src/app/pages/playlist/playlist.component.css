@@ -3,15 +3,22 @@
     flex-direction: column;
     justify-content: space-between;
     min-height: 100vh;
-    background: #121212;
+    background: #000000;
     color: white;
-    padding: 2rem;
+    /*padding: 2rem;*/
+    border-radius: 10px;
   }
-  
+  .playlist-container-playlist-header{
+    display: flex;
+    flex-direction: column;
+    background: #000000;
+    color: white;
+  }
   .playlist-header {
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    padding: 2rem;
   }
   
   .playlist-icon {
@@ -28,7 +35,7 @@
   .playlist-info .playlist-type {
     text-transform: uppercase;
     font-size: 0.8rem;
-    color: gray;
+    color: rgb(255, 255, 255);
   }
   
   .playlist-info .playlist-title {
@@ -45,13 +52,19 @@
     margin-top: 1rem;
     display: flex;
     gap: 1rem;
+    margin: 2rem;
   }
-  
+  .bar{
+    border-bottom: 1px solid;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
   .playlist-search {
     margin-top: 2rem;
     background-color: #1e1e1e;
     padding: 1rem;
     border-radius: 8px;
+    margin: 2rem
   }
   
   .playlist-search input {
@@ -64,21 +77,146 @@
     border-radius: 4px;
   }
   
+
+  .scrollbar-playlist {
+    max-height: 500px;
+    overflow-y: auto;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  /* Header */
+  .playlist-header-row {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #555;
+    font-weight: bold;
+    color: #aaa;
+  }
+  
+  /* Each song row */
+  .playlist-song-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+    transition: background 0.2s;
+  }
+  
+  .playlist-song-row:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Column styles */
+  .col-number, .col-title, .col-album, .col-date, .col-duration {
+    flex: 1;
+    padding: 0 10px;
+  }
+  
+  .col-number {
+    flex: 0.2;
+  }
+  
+  .col-title {
+    flex: 3;
+    display: flex;
+    align-items: center;
+  }
+  
+  .title-info {
+    margin-left: 10px;
+  }
+  
+  .song-title {
+    font-weight: bold;
+  }
+  
+  .song-artist {
+    font-size: 12px;
+    color: #bbb;
+  }
+  
+  .col-album {
+    flex: 2;
+  }
+  
+  .col-date {
+    flex: 1.5;
+  }
+  
+  .col-duration {
+    flex: 0.5;
+    text-align: right;
+  }
+  
+  /*
   .player-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: #1a1a1a;
-    padding: 0.8rem 1rem;
-    margin-top: auto;
-    border-top: 1px solid #333;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 0;
+    background-color: #000;  màu nền đen 
+    margin-bottom: 5px;
   }
   
-  .player-controls button {
-    margin: 0 0.5rem;
-    font-size: 1.2rem;
-    background: none;
-    border: none;
+  .time-start, .time-end {
     color: white;
+    font-size: 12px;
+    width: 40px;
+    text-align: center;
   }
+  
+  .player-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .control-button img {
+    cursor: pointer;
+    filter: brightness(0) invert(1); biến icon thành màu trắng 
+  }
+  
+  .play-button img {
+    /*background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+  }
+  
+  .progress-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: -10px;
+  }
+  
+  .progress-bar {
+    width: 80%;
+    appearance: none;
+    height: 4px;
+    background: #cccccc;
+    outline: none;
+    border-radius: 5px;
+  }
+  
+  /* Tùy chỉnh nút kéo 
+  .progress-bar::-webkit-slider-thumb {
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .playlist-bottom{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+  }
+*/
   

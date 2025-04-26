@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-playlist',
@@ -6,7 +6,72 @@ import { Component } from '@angular/core';
   styleUrls: ['./playlist.component.css'],
   standalone: false,
 })
-export class PlaylistComponent {
+export class PlaylistComponent implements OnInit{
   playlistName = 'My Playlist #3';
   playlistId = 'user';
+
+  constructor(){}
+  songsInPlaylist = [
+    {
+      thumbnail: 'waybackhome.jpg',
+      title: 'Way Back Home',
+      artist: 'SHAUN',
+      album: 'Take',
+      dateAdded: 'Mar 27, 2021',
+      duration: '3:34'
+    },
+    {
+      thumbnail: 'muonroi.jpg',
+      title: 'Muộn Rồi Mà Sao Còn',
+      artist: 'Sơn Tùng M-TP',
+      album: 'Muộn Rồi Mà Sao Còn',
+      dateAdded: 'May 28, 2021',
+      duration: '4:35'
+    },
+    // tiếp tục các bài khác...
+    {
+      thumbnail: 'waybackhome.jpg',
+      title: 'Way Back Home',
+      artist: 'SHAUN',
+      album: 'Take',
+      dateAdded: 'Mar 27, 2021',
+      duration: '3:34'
+    },
+    {
+      thumbnail: 'waybackhome.jpg',
+      title: 'Way Back Home',
+      artist: 'SHAUN',
+      album: 'Take',
+      dateAdded: 'Mar 27, 2021',
+      duration: '3:34'
+    },
+    {
+      thumbnail: 'waybackhome.jpg',
+      title: 'Way Back Home',
+      artist: 'SHAUN',
+      album: 'Take',
+      dateAdded: 'Mar 27, 2021',
+      duration: '3:34'
+    },
+    {
+      thumbnail: 'waybackhome.jpg',
+      title: 'Way Back Home',
+      artist: 'SHAUN',
+      album: 'Take',
+      dateAdded: 'Mar 27, 2021',
+      duration: '3:34'
+    },
+    {
+      thumbnail: 'waybackhome.jpg',
+      title: 'Way Back Home',
+      artist: 'SHAUN',
+      album: 'Take',
+      dateAdded: 'Mar 27, 2021',
+      duration: '3:34'
+    },
+  ];
+
+  ngOnInit(): void {
+      
+  }
 }
