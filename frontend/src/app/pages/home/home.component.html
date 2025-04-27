@@ -1,96 +1,103 @@
-<div class="spotify__home-container row">
-    <div class="spotify__home-container_side-bar col-2">
-      <div class="spotify__home-container_side-bar-item">
-        <img
-          width="150"
-          class="m-3 text-left"
-          src="/spotify_light.png"
-          alt="spotify light logo"
-        />
-      </div>
-      <div
-        class="spotify__home-container_side-bar-item"
-        (click)="onNavigation('home')"
-      >
-        <a>Home</a>
-      </div>
-      <div
-        class="spotify__home-container_side-bar-item"
-        (click)="onNavigation('search')"
-      >
-        <a>Search</a>
-      </div>
-      <div
-        class="spotify__home-container_side-bar-item"
-        (click)="onNavigation('library')"
-      >
-        <a>Your Library</a>
-      </div>
-      <div
-        class="spotify__home-container_side-bar-item"
-        (click)="onNavigation('playlist')"
-      >
-        <a>Create Playlist</a>
-      </div>
-    </div>
-    <div class="spotify__home-container_playlist-container col-10">
-      <app-top-nav (inputFilterRes)="onInputFilterRes($event)"></app-top-nav>
-      <div [style.paddingTop]="'48px'" class="mt-5 container-fluid" *ngIf="!(sb.isSearchVisible)">
-        <h4 [style.color]="'white'" [style.padding]="'10px'">Focus</h4>
-        <div class="playlist_card_collections">
-          <div id="song_card_item" *ngFor="let sc of songCards">
-            <app-song-card
-            [playlistThumbnail]="sc.image_url"  
-            [title]="sc.title"
-            [description]="getArtistName(sc.artist)"
-            [song_id]="sc.track_id"
-            [link]="sc.namemp3"
-            ></app-song-card>
-          </div>
+<div class="home-container">
+  <div class="hearder-top-nav">
+    <app-top-nav (inputFilterRes)="onInputFilterRes($event)"></app-top-nav>
+  </div>
+  <!--Container-->
+  <div class="spotify__home-container row">
+      <!--Container left-->
+      <div class="spotify__home-container_side-bar col-2">
+        <div class="spotify__home-container_side-bar-item">
+          <img
+            width="150"
+            class="m-3 text-left"
+            src="/spotify_light.png"
+            alt="spotify light logo"
+          />
+        </div>
+        <div
+          class="spotify__home-container_side-bar-item"
+          (click)="onNavigation('home')"
+        >
+          <a>Home</a>
+        </div>
+        <div
+          class="spotify__home-container_side-bar-item"
+          (click)="onNavigation('search')"
+        >
+          <a>Search</a>
+        </div>
+        <div
+          class="spotify__home-container_side-bar-item"
+          (click)="onNavigation('library')"
+        >
+          <a>Your Library</a>
+        </div>
+        <div
+          class="spotify__home-container_side-bar-item"
+          (click)="onNavigation('playlist')"
+        >
+          <a>Create Playlist</a>
         </div>
       </div>
-      
-      <div [style.paddingTop]="'250px'" class="mt-5 container-fluid" *ngIf="!(sb.isSearchVisible)">
-        <h4 [style.color]="'white'" [style.padding]="'10px'">
-          Spotify Playlists
-        </h4>
-        <div class="playlist_card_collections">
-          <div id="song_card_item" *ngFor="let sc of songCards">
-            <app-song-card
-              
-              
-            ></app-song-card>
+      <!--Container right-->
+      <div class="spotify__home-container_playlist-container col-10">
+        
+        <div [style.paddingTop]="'48px'" class="mt-5 container-fluid" *ngIf="!(sb.isSearchVisible)">
+          <h4 [style.color]="'white'" [style.padding]="'10px'">Focus</h4>
+          <div class="playlist_card_collections">
+            <div id="song_card_item" *ngFor="let sc of songCards">
+              <app-song-card
+              [playlistThumbnail]="sc.image_url"  
+              [title]="sc.title"
+              [description]="getArtistName(sc.artist)"
+              [song_id]="sc.track_id"
+              [link]="sc.namemp3"
+              ></app-song-card>
+            </div>
           </div>
         </div>
         
-      </div>
-
-      <div [style.paddingTop]="'48px'" class="mt-5 container-fluid" *ngIf="(sb.isSearchVisible | async) && currentPage === 'search'" >
-        <h4 [style.color]="'white'" [style.padding]="'10px'">Browse All</h4>
-        <div class="browse_card_collections">
-          <app-browse-card
-            *ngFor="let sc of browserAll"
-            [bgColor]="sc.bgColor"
-            [textColor]="sc.color"
-            [title]="sc.title"
-          ></app-browse-card>
+        <div [style.paddingTop]="'250px'" class="mt-5 container-fluid" *ngIf="!(sb.isSearchVisible)">
+          <h4 [style.color]="'white'" [style.padding]="'10px'">
+            Spotify Playlists
+          </h4>
+          <div class="playlist_card_collections">
+            <div id="song_card_item" *ngFor="let sc of songCards">
+              <app-song-card
+                
+                
+              ></app-song-card>
+            </div>
+          </div>
+          
         </div>
-      </div>
 
-       <!--playlistplaylist-->
-      <div [style.padding]="'10px'" class="mt-5 container-fluid" *ngIf="(sb.isPlayListVisible | async) && currentPage === 'playlist'">
-        <div class="play-list-container">
-          <app-playlist> 
-
-          </app-playlist>
+        <div [style.paddingTop]="'48px'" class="mt-5 container-fluid" *ngIf="(sb.isSearchVisible | async) && currentPage === 'search'" >
+          <h4 [style.color]="'white'" [style.padding]="'10px'">Browse All</h4>
+          <div class="browse_card_collections">
+            <app-browse-card
+              *ngFor="let sc of browserAll"
+              [bgColor]="sc.bgColor"
+              [textColor]="sc.color"
+              [title]="sc.title"
+            ></app-browse-card>
+          </div>
         </div>
-      </div> 
 
-    
-      
-    </div>
-  <app-music-player></app-music-player>
+        <!--playlistplaylist-->
+        <div [style.padding]="'10px'" class="mt-5 container-fluid" *ngIf="(sb.isPlayListVisible | async) && currentPage === 'playlist'">
+          <div class="play-list-container">
+            <app-playlist> 
+
+            </app-playlist>
+          </div>
+        </div> 
+      </div>
   </div>
- 
+  <!---->
+  <div class="play-contaier-bottom">
+    <app-music-player></app-music-player>
+  </div>
+</div>
 
   

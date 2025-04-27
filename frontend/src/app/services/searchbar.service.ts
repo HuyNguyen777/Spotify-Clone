@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SearchBarService {
   public isSearchVisible: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
+    new BehaviorSubject<boolean>(true);
 
   public isPlayListVisible: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);

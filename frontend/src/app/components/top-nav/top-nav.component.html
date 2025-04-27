@@ -1,10 +1,9 @@
 <header>
     <nav class="spotify__top-nav">
+      <div class="logospotify"><img src="spotify.png" alt="" width="30px" height="30px"></div>
       <div class="spotify__top-nav_focus_title">
-        <ul class="spotify__top-nav_auth">
-          <li><button class="forward_btn"><</button></li>
-          <li><button class="backward_btn">></button></li>
-          <li *ngIf="isSearchFieldVisible">
+        <div class="spotify__top-nav_auth" *ngIf="isSearchFieldVisible">
+         
             <input
               class="search_playlist"
               type="search"
@@ -12,15 +11,12 @@
               #inputSearchRef
               (keyup)="filterBrowsingList(inputSearchRef)"
             />
-          </li>
-        </ul>
+        </div>
       </div>
-      <ul class="spotify__top-nav_auth">
-        <li class="spotify__top-nav_auth_login" (click)="OnNavigateToSignUp()">Sign up</li>
-        <li class="spotify__top-nav_auth_login" (click)="onNavigateToLogin()">
-          Log in
-        </li>
-      </ul>
+      <div class="spotify__top-nav_auth">
+        <div class="spotify__top-nav_auth_login" (click)="OnNavigateToSignUp()">Sign up</div>
+        <div class="spotify__top-nav_auth_login" (click)="onNavigateToLogin()">Log in</div>
+      </div>
     </nav>
   </header>
   
