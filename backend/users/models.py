@@ -7,7 +7,6 @@ class User(models.Model):
     passwordhash = models.CharField(max_length=255)
     fullname = models.CharField(max_length=255, null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
-   # role_id = models.ForeignKey('Role', on_delete=models.SET_NULL, null=True, blank=True)
     accesstoken = models.TextField(null=True, blank=True)
     refreshtoken = models.TextField(null=True, blank=True)
     email = models.EmailField(unique=True, null=True, blank=True)
