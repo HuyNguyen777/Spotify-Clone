@@ -76,7 +76,7 @@
       <div
         [style.paddingTop]="'48px'"
         class="mt-5 container-fluid"
-        *ngIf="(sb.isSearchVisible | async ) && currentPage === 'search'"
+        *ngIf="sb.isSearchVisible | async"
       >
         <h4 [style.color]="'white'" [style.padding]="'10px'">Browse All</h4>
         <div class="browse_card_collections">
@@ -88,7 +88,9 @@
           ></app-browse-card>
         </div>
       </div>
+      
     </div>
+  <app-music-player></app-music-player>
   </div>
  
 
