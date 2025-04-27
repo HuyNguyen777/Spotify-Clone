@@ -4,6 +4,8 @@ import { SearchBarService } from '../../services/searchbar.service';
 import { Artist, ArtistService } from '../../services/artists.service';
 import { Router } from '@angular/router';
 
+type PageType = 'home' | 'search' | 'playlist' | 'library';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -28,7 +30,8 @@ export class HomeComponent implements OnInit {
 
   public songCards: Track[] = [];  // Định nghĩa songCards là Track[]
   artistNames: { [key: number]: string } = {};
-  currentPage: string = 'home';
+
+  currentPage: PageType = 'home'; // Gán type chuẩn
 
   constructor(private trackService: TrackService,public sb: SearchBarService,private artistService: ArtistService,private router:Router) {}
 
@@ -52,21 +55,31 @@ export class HomeComponent implements OnInit {
     console.log(res);
   }
 
-  
-    
-  onNavigation(pageName: string) {
+  onNavigation(pageName: PageType) {
     this.currentPage = pageName;
-      if (pageName == 'search') {
-        this.sb.isSearchVisible.next(true);
-      } else {
-      if(pageName == 'playlist'){
-        this.sb.isSearchVisible.next(true);
-      }else{
-        this.sb.isSearchVisible.next(false);
-      }
+    if (pageName == 'search') {
+      this.sb.isSearchVisible.next(true);
+    } else {
+      this.sb.isSearchVisible.next(false);
     }
   }
+  
+  get isHomePage() {
+    return this.currentPage === 'home';
+  }
 
+  get isSearchPage() {
+    return this.currentPage === 'search';
+  }
+
+  get isPlaylistPage() {
+    return this.currentPage === 'playlist';
+  }
+
+  get isLibraryPage() {
+    return this.currentPage === 'library';
+  }
+    
   getArtistName(artistId: number): string {
     return this.artistNames[artistId] || 'Unknown';
   }

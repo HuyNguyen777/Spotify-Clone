@@ -35,6 +35,7 @@ import { MusicPlayerComponent } from './components/music-player/music-player.com
     MusicPlayerComponent,
   ],
   imports: [
+    
     BrowserModule,
     FormsModule,
     AppRoutingModule,

@@ -38,7 +38,7 @@
       <div
         [style.paddingTop]="'48px'"
         class="mt-5 container-fluid"
-        *ngIf="!(sb.isSearchVisible | async)"
+        *ngIf="isHomePage"
       >
         <h4 [style.color]="'white'" [style.padding]="'10px'">Focus</h4>
         <div class="playlist_card_collections">
@@ -76,7 +76,7 @@
       <div
         [style.paddingTop]="'48px'"
         class="mt-5 container-fluid"
-        *ngIf="sb.isSearchVisible | async"
+        *ngIf="isSearchPage"
       >
         <h4 [style.color]="'white'" [style.padding]="'10px'">Browse All</h4>
         <div class="browse_card_collections">
@@ -92,9 +92,9 @@
        <div
        [style.paddingTop]="'48px'"
        class="mt-5 container-fluid"
-       *ngIf="(sb.isSearchVisible | async)">
+       *ngIf="isPlaylistPage">
        <div class="play-list-container">
-         <app-playlist> </app-playlist>
+        <app-playlist> </app-playlist>
        </div>
      </div>
 
