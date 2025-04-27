@@ -35,7 +35,7 @@
     </div>
     <div class="spotify__home-container_playlist-container col-10">
       <app-top-nav (inputFilterRes)="onInputFilterRes($event)"></app-top-nav>
-      <div [style.paddingTop]="'48px'" class="mt-5 container-fluid" *ngIf="!(sb.isSearchVisible)">
+      <div [style.paddingTop]="'48px'" class="mt-5 container-fluid" *ngIf="(sb.isSearchVisible)">
         <h4 [style.color]="'white'" [style.padding]="'10px'">Focus</h4>
         <div class="playlist_card_collections">
           <div id="song_card_item" *ngFor="let sc of songCards">
@@ -50,7 +50,7 @@
         </div>
       </div>
       
-      <div [style.paddingTop]="'250px'" class="mt-5 container-fluid" *ngIf="!(sb.isSearchVisible)">
+      <div [style.paddingTop]="'250px'" class="mt-5 container-fluid" *ngIf="(sb.isSearchVisible)">
         <h4 [style.color]="'white'" [style.padding]="'10px'">
           Spotify Playlists
         </h4>
