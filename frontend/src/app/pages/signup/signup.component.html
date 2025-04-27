@@ -1,143 +1,146 @@
-<div class="signup__container">
-  <img src="/spotify_green.png" width="300" alt="Spotify Logo">
-  <h2>Sign Up for Spotify</h2>
-  <hr class="separator" />
-
-  <form (ngSubmit)="register()" #signupForm="ngForm">
-    <!-- Full Name Field -->
-    <div class="signup__form-group">
-      <label for="fullname">Full Name</label>
-      <input 
-        type="text" 
-        id="fullname" 
-        [(ngModel)]="fullname" 
-        name="fullname" 
-        placeholder="Full name" 
-        required 
-        #fullnameModel="ngModel">
-      <div *ngIf="fullnameModel.invalid && fullnameModel.touched" style="color: red;">
-        Full Name is required.
+<div class="container">
+  <div class="signup__container">
+    <img src="/spotify_green.png" width="300" alt="Spotify Logo">
+    <h2>Sign Up for Spotify</h2>
+    <hr class="separator" />
+  
+    <form (ngSubmit)="register()" #signupForm="ngForm">
+      <!-- Full Name Field -->
+      <div class="signup__form-group">
+        <label for="fullname">Full Name</label>
+        <input 
+          type="text" 
+          id="fullname" 
+          [(ngModel)]="fullname" 
+          name="fullname" 
+          placeholder="Full name" 
+          required 
+          #fullnameModel="ngModel">
+        <div *ngIf="fullnameModel.invalid && fullnameModel.touched" style="color: red;">
+          Full Name is required.
+        </div>
       </div>
-    </div>
-
-    <!-- Username Field -->
-    <div class="signup__form-group">
-      <label for="username">Username</label>
-      <input 
-        type="text" 
-        id="username" 
-        [(ngModel)]="user_name" 
-        name="user_name" 
-        placeholder="Username" 
-        required 
-        minlength="5" 
-        pattern="^[a-zA-Z0-9_]+$" 
-        #usernameModel="ngModel">
-      <div *ngIf="usernameModel.invalid && usernameModel.touched" style="color: red;">
-        Username is required and must be at least 5 characters long and only contain letters, numbers, and underscores.
+  
+      <!-- Username Field -->
+      <div class="signup__form-group">
+        <label for="username">Username</label>
+        <input 
+          type="text" 
+          id="username" 
+          [(ngModel)]="user_name" 
+          name="user_name" 
+          placeholder="Username" 
+          required 
+          minlength="5" 
+          pattern="^[a-zA-Z0-9_]+$" 
+          #usernameModel="ngModel">
+        <div *ngIf="usernameModel.invalid && usernameModel.touched" style="color: red;">
+          Username is required and must be at least 5 characters long and only contain letters, numbers, and underscores.
+        </div>
       </div>
-    </div>
-
-    <!-- Password Field -->
-    <div class="signup__form-group">
-      <label for="password">Password</label>
-      <input 
-        type="password" 
-        id="password" 
-        [(ngModel)]="password" 
-        name="password" 
-        placeholder="Password" 
-        required 
-        minlength="6" 
-        #passwordModel="ngModel">
-      <div *ngIf="passwordModel.invalid && passwordModel.touched" style="color: red;">
-        Password is required and must be at least 6 characters long.
+  
+      <!-- Password Field -->
+      <div class="signup__form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          [(ngModel)]="password" 
+          name="password" 
+          placeholder="Password" 
+          required 
+          minlength="6" 
+          #passwordModel="ngModel">
+        <div *ngIf="passwordModel.invalid && passwordModel.touched" style="color: red;">
+          Password is required and must be at least 6 characters long.
+        </div>
       </div>
-    </div>
-
-    <!-- Confirm Password Field -->
-    <div class="signup__form-group">
-      <label for="confirm-password">Confirm Password</label>
-      <input 
-        type="password" 
-        id="confirm-password" 
-        [(ngModel)]="confirmPassword" 
-        name="confirm-password" 
-        placeholder="Confirm Password" 
-        required 
-        minlength="6" 
-        #confirmPasswordModel="ngModel">
-      <div *ngIf="confirmPasswordModel.invalid && confirmPasswordModel.touched" style="color: red;">
-        Confirm Password is required and must match the password.
+  
+      <!-- Confirm Password Field -->
+      <div class="signup__form-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input 
+          type="password" 
+          id="confirm-password" 
+          [(ngModel)]="confirmPassword" 
+          name="confirm-password" 
+          placeholder="Confirm Password" 
+          required 
+          minlength="6" 
+          #confirmPasswordModel="ngModel">
+        <div *ngIf="confirmPasswordModel.invalid && confirmPasswordModel.touched" style="color: red;">
+          Confirm Password is required and must match the password.
+        </div>
       </div>
-    </div>
-
-    <!-- Birthday Field -->
-    <div class="signup__form-group">
-      <label for="birthday">Birthday</label>
-      <input 
-        type="date" 
-        id="birthday" 
-        [(ngModel)]="birthday" 
-        name="birthday" 
-        required 
-        #birthdayModel="ngModel">
-      <div *ngIf="birthdayModel.invalid && birthdayModel.touched" style="color: red;">
-        Birthday is required.
+  
+      <!-- Birthday Field -->
+      <div class="signup__form-group">
+        <label for="birthday">Birthday</label>
+        <input 
+          type="date" 
+          id="birthday" 
+          [(ngModel)]="birthday" 
+          name="birthday" 
+          required 
+          #birthdayModel="ngModel">
+        <div *ngIf="birthdayModel.invalid && birthdayModel.touched" style="color: red;">
+          Birthday is required.
+        </div>
       </div>
-    </div>
-
-    <!-- Email Field -->
-    <div class="signup__form-group">
-      <label for="email">Email</label>
-      <input 
-        type="email" 
-        id="email" 
-        [(ngModel)]="email" 
-        name="email" 
-        placeholder="Email" 
-        required 
-        #emailModel="ngModel">
-      <div *ngIf="emailModel.invalid && emailModel.touched" style="color: red;">
-        Please enter a valid email.
+  
+      <!-- Email Field -->
+      <div class="signup__form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          [(ngModel)]="email" 
+          name="email" 
+          placeholder="Email" 
+          required 
+          #emailModel="ngModel">
+        <div *ngIf="emailModel.invalid && emailModel.touched" style="color: red;">
+          Please enter a valid email.
+        </div>
       </div>
-    </div>
-
-    <!-- Phone Field -->
-    <div class="signup__form-group">
-      <label for="phone">Phone</label>
-      <input 
-        type="text" 
-        id="phone" 
-        [(ngModel)]="phone" 
-        name="phone" 
-        placeholder="Phone" 
-        required 
-        pattern="^[0-9]{10}$" 
-        #phoneModel="ngModel">
-      <div *ngIf="phoneModel.invalid && phoneModel.touched" style="color: red;">
-        Phone number is required and must be 10 digits.
+  
+      <!-- Phone Field -->
+      <div class="signup__form-group">
+        <label for="phone">Phone</label>
+        <input 
+          type="text" 
+          id="phone" 
+          [(ngModel)]="phone" 
+          name="phone" 
+          placeholder="Phone" 
+          required 
+          pattern="^[0-9]{10}$" 
+          #phoneModel="ngModel">
+        <div *ngIf="phoneModel.invalid && phoneModel.touched" style="color: red;">
+          Phone number is required and must be 10 digits.
+        </div>
       </div>
-    </div>
-
-    <!-- Error Message -->
-    <div *ngIf="errorMessage" style="color: red;">
-      {{ errorMessage }}
-    </div>
-
-    <!-- Submit Button -->
-    <div style="display: flex; justify-content: center; width: 100%; padding-top: 15px;">
-      <button 
-        class="signup__btn" 
-        type="submit" 
-        [disabled]="signupForm.invalid">
-        SIGN UP
-      </button>
-    </div>
-
-    <!-- Link to Login Page -->
-    <p class="login_link">
-      Already have an account? <a href="/login">Log in</a>
-    </p>
-  </form>
+  
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" style="color: red;">
+        {{ errorMessage }}
+      </div>
+  
+      <!-- Submit Button -->
+      <div style="display: flex; justify-content: center; width: 100%; padding-top: 15px;">
+        <button 
+          class="signup__btn" 
+          type="submit" 
+          [disabled]="signupForm.invalid">
+          SIGN UP
+        </button>
+      </div>
+  
+      <!-- Link to Login Page -->
+      <p class="login_link">
+        Already have an account? <a href="/login">Log in</a>
+      </p>
+    </form>
+  </div>
 </div>
+

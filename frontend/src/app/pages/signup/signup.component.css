@@ -1,10 +1,16 @@
+.container {
+  max-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto; /* Scroll chỉ ở .signup__container */
+  max-width: 100%;
+}
+
 .signup__container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Chiều cao tối thiểu bằng 100% màn hình */
-  overflow-y: auto; /* Cho phép cuộn theo chiều dọc khi nội dung vượt quá chiều cao */
   padding-bottom: 50px; /* Thêm khoảng trống dưới cùng để tránh bị footer che */
 
 }
@@ -71,8 +77,6 @@ input::placeholder {
   font-weight: bold;
   cursor: pointer;
 }
-
-
 
 .login_link {
   margin-top: 10px;
