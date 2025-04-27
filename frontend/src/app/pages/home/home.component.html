@@ -31,7 +31,7 @@
       
       <div class="spotify__home-container_playlist-container col-10">
         
-        <div class="mt-5 container-fluid" *ngIf="(sb.isHomeVisible ) && (sb.isSearchVisible) && currentPage === 'home'">
+        <div class="mt-5 container-fluid" *ngIf="(sb.isHomeVisible ) && currentPage === 'home'">
           <h4 [style.color]="'white'">Focus</h4>
           <div class="playlist_card_collections">
             <div id="song_card_item" *ngFor="let sc of songCards">
@@ -47,7 +47,7 @@
           </div>
         </div>
         
-        <div [style.paddingTop]="'250px'" class="mt-5 container-fluid" *ngIf="(sb.isHomeVisible ) && (sb.isSearchVisible) && currentPage === 'home'">
+        <div [style.paddingTop]="'250px'" class="mt-5 container-fluid" *ngIf="(sb.isHomeVisible ) && currentPage === 'home'">
           <h4 [style.color]="'white'" [style.padding]="'10px'">
             Spotify Playlists
           </h4>
