@@ -59,28 +59,17 @@ export class HomeComponent implements OnInit {
 
   onNavigation(pageName: PageType) {
     this.currentPage = pageName;
-    if (pageName == 'search') {
+    if (pageName ==='search') {
       this.sb.isSearchVisible.next(true);
-    } else {
+      this.sb.isPlayListVisible.next(false);
+    } else if(pageName === 'playlist') {
+      this.sb.isSearchVisible.next(false);
+      this.sb.isPlayListVisible.next(true);
+    }else{
       this.sb.isSearchVisible.next(false);
     }
-  }
-  
-  get isHomePage() {
-    return this.currentPage === 'home';
-  }
-
-  get isSearchPage() {
-    return this.currentPage === 'search';
-  }
-
-  get isPlaylistPage() {
-    return this.currentPage === 'playlist';
-  }
-
-  get isLibraryPage() {
-    return this.currentPage === 'library';
-  }
+    console.log('Navigate to:', pageName);
+  } 
     
   getArtistName(artistId: number): string {
     return this.artistNames[artistId] || 'Unknown';
