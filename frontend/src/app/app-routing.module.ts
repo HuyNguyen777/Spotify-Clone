@@ -10,7 +10,7 @@ import { PlaylistComponent } from './pages/playlist/playlist.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'song/:song_id', component: SongComponent },
+  //{ path: 'song/:song_id', component: SongComponent },
   { path: 'signup', component: SignupComponent},
   { path: 'playlist', component: PlaylistComponent}
 
