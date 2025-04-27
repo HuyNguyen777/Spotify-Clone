@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TrackService, Track } from '../../services/tracks.service';  // Import đúng Track và TrackService
 import { SearchBarService } from '../../services/searchbar.service';
 import { Artist, ArtistService } from '../../services/artists.service';
 import { Router } from '@angular/router';
+import { MusicPlayerComponent } from '../../components/music-player/music-player.component';
+
 
 type PageType = 'home' | 'search' | 'playlist' | 'library';
 
@@ -83,5 +85,10 @@ export class HomeComponent implements OnInit {
   getArtistName(artistId: number): string {
     return this.artistNames[artistId] || 'Unknown';
   }
-  
+  @ViewChild(MusicPlayerComponent) musicPlayer!: MusicPlayerComponent;
+
+  onClickSong(clickedSong: Track, allSongs: Track[]) {
+    this.musicPlayer.setQueueAndPlay(allSongs, clickedSong);
+  }
+
 }
