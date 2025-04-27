@@ -52,18 +52,21 @@ export class HomeComponent implements OnInit {
     console.log(res);
   }
 
+  
+    
   onNavigation(pageName: string) {
     this.currentPage = pageName;
-    if (pageName == 'search') {
-      this.sb.isSearchVisible.next(true);
-    } else if(pageName == 'playlist'){
-      this.sb.isSearchVisible.next(true);
-    }else{
-      this.sb.isSearchVisible.next(false);
+      if (pageName == 'search') {
+        this.sb.isSearchVisible.next(true);
+      } else {
+      if(pageName == 'playlist'){
+        this.sb.isSearchVisible.next(true);
+      }else{
+        this.sb.isSearchVisible.next(false);
+      }
     }
   }
-    
-    
+
   getArtistName(artistId: number): string {
     return this.artistNames[artistId] || 'Unknown';
   }
