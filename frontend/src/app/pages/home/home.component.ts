@@ -35,6 +35,12 @@ export class HomeComponent implements OnInit {
 
   currentPage: PageType = 'home'; // Gán type chuẩn
 
+  isCollapsed = false;
+
+  toggleNavbar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
+
   constructor(private trackService: TrackService,public sb: SearchBarService,private artistService: ArtistService,private router:Router) {}
 
   ngOnInit(): void {
