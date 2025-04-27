@@ -3,19 +3,19 @@
   <audio #audioPlayer (timeupdate)="onTimeUpdate()" (ended)="nextSong()"></audio>
 
   <!-- Controls: shuffle, previous, play/pause, next, repeat -->
-  <!-- Controls: shuffle, previous, play/pause, next, repeat -->
-<div class="controls">
-  <i class="fas fa-random control-icon" (click)="shuffle()"></i>
-  <i class="fas fa-step-backward control-icon" (click)="prevSong()"></i>
-  <i 
-    class="fas" 
-    [ngClass]="isPlaying ? 'fa-pause' : 'fa-play'" 
-    class="play-icon" 
-    (click)="togglePlay()"
-  ></i>
-  <i class="fas fa-step-forward control-icon" (click)="nextSong()"></i>
-  <i class="fas fa-redo control-icon" (click)="repeat()"></i>
-</div>
+  <div class="controls">
+    <i class="fas fa-random control-icon" (click)="shuffle()"></i>
+    <i class="fas fa-step-backward control-icon" (click)="prevSong()"></i>
+    <i 
+      class="fas" 
+      [ngClass]="isPlaying ? 'fa-pause-circle' : 'fa-play-circle'" 
+      class="play-icon" 
+      (click)="togglePlay()"
+      
+    ></i>
+    <i class="fas fa-step-forward control-icon" (click)="nextSong()"></i>
+    <i class="fas fa-redo control-icon" (click)="repeat()"></i>
+  </div>
 
   <!-- Progress bar -->
   <div class="progress-container">

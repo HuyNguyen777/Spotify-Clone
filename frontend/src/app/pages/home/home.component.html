@@ -45,6 +45,7 @@
             [description]="getArtistName(sc.artist)"
             [song_id]="sc.track_id"
             [link]="sc.namemp3"
+            (click)="onClickSong(sc, songCards)"
             ></app-song-card>
           </div>
         </div>
