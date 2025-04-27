@@ -62,6 +62,7 @@ export class HomeComponent implements OnInit {
     if (pageName ==='search') {
       this.sb.isSearchVisible.next(true);
       this.sb.isPlayListVisible.next(false);
+      this.sb.isHomeVisible.next(false);
     } else if(pageName === 'playlist') {
       this.sb.isSearchVisible.next(false);
       this.sb.isPlayListVisible.next(true);
