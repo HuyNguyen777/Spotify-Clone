@@ -35,11 +35,7 @@
     </div>
     <div class="spotify__home-container_playlist-container col-10">
       <app-top-nav (inputFilterRes)="onInputFilterRes($event)"></app-top-nav>
-      <div
-        [style.paddingTop]="'48px'"
-        class="mt-5 container-fluid"
-        *ngIf="isHomePage"
-      >
+      <div [style.paddingTop]="'48px'" class="mt-5 container-fluid" *ngIf="!(sb.isSearchVisible)">
         <h4 [style.color]="'white'" [style.padding]="'10px'">Focus</h4>
         <div class="playlist_card_collections">
           <div id="song_card_item" *ngFor="let sc of songCards">
@@ -54,11 +50,7 @@
         </div>
       </div>
       
-      <div
-        [style.paddingTop]="'250px'"
-        class="mt-5 container-fluid"
-        *ngIf="!(sb.isSearchVisible | async)"
-      >
+      <div [style.paddingTop]="'250px'" class="mt-5 container-fluid" *ngIf="!(sb.isSearchVisible)">
         <h4 [style.color]="'white'" [style.padding]="'10px'">
           Spotify Playlists
         </h4>
@@ -73,11 +65,7 @@
         
       </div>
 
-      <div
-        [style.paddingTop]="'48px'"
-        class="mt-5 container-fluid"
-        *ngIf="isSearchPage"
-      >
+      <div [style.paddingTop]="'48px'" class="mt-5 container-fluid" *ngIf="(sb.isSearchVisible | async) && currentPage === 'search'" >
         <h4 [style.color]="'white'" [style.padding]="'10px'">Browse All</h4>
         <div class="browse_card_collections">
           <app-browse-card
@@ -87,18 +75,18 @@
             [title]="sc.title"
           ></app-browse-card>
         </div>
+      </div>
 
        <!--playlistplaylist-->
-       <div
-       [style.paddingTop]="'48px'"
-       class="mt-5 container-fluid"
-       *ngIf="isPlaylistPage">
-       <div class="play-list-container">
-        <app-playlist> </app-playlist>
-       </div>
-     </div>
+      <div [style.padding]="'10px'" class="mt-5 container-fluid" *ngIf="(sb.isPlayListVisible | async) && currentPage === 'playlist'">
+        <div class="play-list-container">
+          <app-playlist> 
 
-      </div>
+          </app-playlist>
+        </div>
+      </div> 
+
+    
       
     </div>
   <app-music-player></app-music-player>
