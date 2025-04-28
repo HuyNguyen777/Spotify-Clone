@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_authtoken',
-    
+    'rest_framework',
+    'rest_framework_simplejwt',
     # Các app của bạn
     'tracks',       
     'albums',      
@@ -103,6 +103,7 @@ DATABASES = {
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
 }
 
@@ -125,6 +126,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'user_id',  # Chỉ định trường 'user_id' là khóa chính thay cho 'id'
+}
 
 
 # Internationalization

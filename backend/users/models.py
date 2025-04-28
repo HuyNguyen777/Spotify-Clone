@@ -16,5 +16,6 @@ class User(models.Model):
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
     class Meta:
         db_table = 'users' 
+        
     def __str__(self):
         return self.user_name

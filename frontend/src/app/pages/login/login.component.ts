@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,14 +10,12 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
-  public usernameFormControl = new FormControl(null, [
-    Validators.required,
-    Validators.email,
-  ]);
-  public passwordFormControl = new FormControl(null, [Validators.minLength(4)]);
+  public usernameFormControl = new FormControl('', [Validators.required]);
+  public passwordFormControl = new FormControl('', [Validators.minLength(4)]);
 
   public userForm!: FormGroup;
-  constructor() {}
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.userForm = new FormGroup({
@@ -25,7 +24,25 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  submit() {
-    console.log(this.userForm.value);
+  onLogin() {
+    if (this.userForm.valid) {
+      const username = this.userForm.value.username;
+      const password = this.userForm.value.password;
+  
+      this.authService.login(username, password).subscribe({
+        next: (data) => {
+          this.authService.saveToken(data.access); // Lưu token vào localStorage hoặc state
+          alert('Login Successful');
+          this.router.navigate(['/home']); // Chuyển hướng người dùng sau khi đăng nhập thành công
+        },
+        error: (err) => {
+          console.error('Login failed:', err); // In lỗi ra console để dễ dàng gỡ lỗi
+          alert('Login Failed');
+        }
+      });
+    } else {
+      alert('Please fill in all fields correctly!');
+    }
   }
+  
 }
