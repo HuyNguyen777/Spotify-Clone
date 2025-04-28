@@ -13,6 +13,8 @@ export class MusicPlayerComponent {
   currentTime = 0;
   totalTime = 0;
   progress = 0;
+  volume: number = 1;
+  isMuted: boolean = false;
 
   currentQueue: Track[] = [];
   currentQueueIndex = 0;
@@ -102,5 +104,31 @@ export class MusicPlayerComponent {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs < 10 ? '0' + secs : secs}`;
+  }
+
+  changeVolume(event: Event) {
+    const audio = this.audioPlayer.nativeElement;
+    const input = event.target as HTMLInputElement;
+    this.volume = parseFloat(input.value);
+    audio.volume = this.volume;
+    this.isMuted = this.volume === 0;
+  }
+
+  toggleVolume(){
+    const audio = this.audioPlayer.nativeElement;
+    this.isMuted = !this.isMuted;
+    audio.muted = this.isMuted;
+  
+    if (this.isMuted) {
+      this.volume = 0;
+    } else {
+      this.volume = 1;
+    }
+    audio.volume = this.volume;
+  }
+
+  getVolumeBackground(): string {
+    const percentage = this.volume * 100;
+    return `linear-gradient(to right, white ${percentage}%, #555 ${percentage}%)`;
   }
 }

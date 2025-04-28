@@ -2,23 +2,58 @@
   <!-- Audio Element -->
   <audio #audioPlayer (timeupdate)="onTimeUpdate()" (ended)="nextSong()"></audio>
 
-  <!-- Controls: shuffle, previous, play/pause, next, repeat -->
-  <div class="controls">
-    <i class="fas fa-random control-icon" (click)="shuffle()"></i>
-    <i class="fas fa-step-backward control-icon" (click)="prevSong()"></i>
-    <img [src]="isPlaying ? 'play-button.png' : 'pause.png'" alt="" width="25px" height="25px" (click)="togglePlay()">
-    <i class="fas fa-step-forward control-icon" (click)="nextSong()"></i>
-    <i class="fas fa-redo control-icon" (click)="repeat()"></i>
+  <!--Name music-->
+  <div class="name-muic-player">
+    <div class="image-player">
+      <img src="spotify.png" alt="" width="50px" height="50px" border-radius="5px">
+    </div>
+    <div class="profile-play">
+      <div class="name-music">
+        Chung ta khong thuoc ve nhau
+      </div>
+      <div class="artist">
+        <span class="artist-name">Son Tung</span> 
+      </div>
+    </div>
   </div>
 
-  <!-- Progress bar -->
-  <div class="progress-container">
-    <span class="current-time">{{ formatTime(currentTime) }}</span>
-
-    <div class="progress-bar" (click)="seek($event)">
-      <div class="progress" [style.width.%]="progress"></div>
+  <!-- Controls: shuffle, previous, play/pause, next, repeat -->
+  <div class="playing-music">
+    <div class="controls">
+      <div class="fas fa-random control-icon" (click)="shuffle()"></div>
+      <div class="fas fa-step-backward control-icon" (click)="prevSong()"></div>
+      <img [src]="isPlaying ? 'play-button.png' : 'pause.png'" alt="" width="25px" height="25px" (click)="togglePlay()">
+      <div class="fas fa-step-forward control-icon" (click)="nextSong()"></div>
+      <div class="fas fa-redo control-icon" (click)="repeat()"></div>
     </div>
 
-    <span class="total-time">{{ formatTime(totalTime) }}</span>
+    <!-- Progress bar -->
+    <div class="progress-container">
+      <span class="current-time">{{ formatTime(currentTime) }}</span>
+      <div class="progress-bar" (click)="seek($event)">
+        <div class="progress" [style.width.%]="progress"></div>
+      </div>
+      <span class="total-time">{{ formatTime(totalTime) }}</span>
+    </div>
   </div>
+  
+  <div class="volume-control">
+    <div class="volume-icon" (click)="toggleVolume()">
+      <img [src]="isMuted ? 'volume.png' : 'volume-up.png'" alt="" width="25px" height="25px" >
+    </div>
+      <div class="volume-bar">
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          [(ngModel)]="volume"
+          (input)="changeVolume($event)"
+          class="volume-slider"
+          [style.background]="getVolumeBackground()"
+        />
+      </div>
+    
+  </div>
+
 </div>

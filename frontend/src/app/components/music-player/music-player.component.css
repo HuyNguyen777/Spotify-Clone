@@ -3,7 +3,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 120px;
+    height: 80px;
     background-color: #000;
     z-index: 9999;
     display: flex;
@@ -11,15 +11,47 @@
     justify-content: center;
     align-items: center;
   }
+
+  .playing-music{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 700px;
+  }
   
   .music-player {
     width: 100%;
-    max-width: 700px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .name-muic-player{
+    display: flex;
+    flex-direction: row;
+    color: white;
+    justify-content: center;
     align-items: center;
   }
   
+  .profile-play{
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 700px;
+  }
+
+  .name-music{
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .artist-name{
+    font-size: small;
+  }
+
   .controls {
     display: flex;
     justify-content: center;
@@ -70,5 +102,44 @@
     width: 10%;
     background-color: #1db954;
     border-radius: 2px;
+  }
+  .volume-control {
+    display: flex;
+    align-items: center;
+    background-color: black;
+    flex-direction: row;
+  }
+  
+  .volume-icon img {
+    cursor: pointer;
+    
+  }
+  
+  .volume-slider {
+    -webkit-appearance: none;
+    width: 100px;
+    height: 4px;
+    background: #555; /* default - sẽ bị override bởi binding style */
+    outline: none;
+    border-radius: 2px;
+    margin-left: 10px;
+  }
+  
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
   }
   
