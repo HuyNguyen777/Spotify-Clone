@@ -6,13 +6,7 @@
   <div class="controls">
     <i class="fas fa-random control-icon" (click)="shuffle()"></i>
     <i class="fas fa-step-backward control-icon" (click)="prevSong()"></i>
-    <i 
-      class="fas" 
-      [ngClass]="isPlaying ? 'fa-pause-circle' : 'fa-play-circle'" 
-      class="play-icon" 
-      (click)="togglePlay()"
-      
-    ></i>
+    <img [src]="isPlaying ? 'play-button.png' : 'pause.png'" alt="" width="25px" height="25px" (click)="togglePlay()">
     <i class="fas fa-step-forward control-icon" (click)="nextSong()"></i>
     <i class="fas fa-redo control-icon" (click)="repeat()"></i>
   </div>

@@ -9,6 +9,7 @@ import { Track } from '../../services/tracks.service';
 })
 export class MusicPlayerComponent {
   isPlaying = false;
+  isImage?: string;
   currentTime = 0;
   totalTime = 0;
   progress = 0;
@@ -22,8 +23,10 @@ export class MusicPlayerComponent {
     const audio = this.audioPlayer.nativeElement;
     if (this.isPlaying) {
       audio.pause();
+      this.isImage ="pause.png";
     } else {
       audio.play();
+      this.isImage = "play.png";
     }
     this.isPlaying = !this.isPlaying;
   }

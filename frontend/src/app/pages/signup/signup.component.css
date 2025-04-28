@@ -31,7 +31,7 @@
 }
 
 .signup__container::-webkit-scrollbar-thumb:hover {
-  background: #1db954; /* Màu khi hover vào thanh cuộn */
+  background: #00ff59; /* Màu khi hover vào thanh cuộn */
 }
 
 .separator {
