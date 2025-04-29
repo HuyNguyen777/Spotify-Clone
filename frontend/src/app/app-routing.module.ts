@@ -6,9 +6,13 @@ import { LoginComponent } from './pages/login/login.component';
 import { SongComponent } from './pages/song/song.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { PlaylistComponent } from './pages/playlist/playlist.component';
+import { AdminComponent } from './pagesadmin/admin/admin/admin.component';
+import { adminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [adminGuard]},
   { path: 'login', component: LoginComponent },
   //{ path: 'song/:song_id', component: SongComponent },
   { path: 'signup', component: SignupComponent},
