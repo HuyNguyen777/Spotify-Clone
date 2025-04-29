@@ -22,7 +22,7 @@
     <div class="controls">
       <div class="fas fa-random control-icon" (click)="shuffle()"></div>
       <div class="fas fa-step-backward control-icon" (click)="prevSong()"></div>
-      <img [src]="isPlaying ? 'play-button.png' : 'pause.png'" alt="" width="25px" height="25px" (click)="togglePlay()">
+      <img [src]="isPlaying ? 'pause.png' : 'play-button.png'" alt="" width="25px" height="25px" (click)="togglePlay()">
       <div class="fas fa-step-forward control-icon" (click)="nextSong()"></div>
       <div class="fas fa-redo control-icon" (click)="repeat()"></div>
     </div>
