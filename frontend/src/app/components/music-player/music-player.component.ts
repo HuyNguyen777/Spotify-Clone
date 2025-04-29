@@ -1,5 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Track } from '../../services/tracks.service';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Track, TrackService } from '../../services/tracks.service';
+import { Artist, ArtistService } from '../../services/artists.service';
 
 @Component({
   selector: 'app-music-player',
@@ -7,7 +8,12 @@ import { Track } from '../../services/tracks.service';
   styleUrls: ['./music-player.component.css'],
   standalone:false,
 })
-export class MusicPlayerComponent {
+export class MusicPlayerComponent implements OnInit {
+  // Thêm thuộc tính currentSong để lưu thông tin bài hát hiện tại
+  currentSong: { title: string, imgUrl: string, artistartistName: string } | null = null;
+  tracks: Track[] =[];
+  currentArt: Artist[] =[];
+
   isPlaying = false;
   isImage?: string;
   currentTime = 0;
@@ -25,10 +31,10 @@ export class MusicPlayerComponent {
     const audio = this.audioPlayer.nativeElement;
     if (this.isPlaying) {
       audio.pause();
-      this.isImage ="pause.png";
+      this.isImage ="play.png";
     } else {
       audio.play();
-      this.isImage = "play.png";
+      this.isImage = "pause.png";
     }
     this.isPlaying = !this.isPlaying;
   }
@@ -88,6 +94,12 @@ export class MusicPlayerComponent {
       audio.load();
       audio.play();
       this.isPlaying = true;
+      // Tìm tên nghệ sĩ từ danh sách artists
+      const artistObj = this.currentArt.find(artist => artist.artist_id === song.artist);
+      const artistName = artistObj ? artistObj.name : 'Unknown Artist';
+      // Cập nhật thông tin bài hát hiện tại 
+      this.currentSong = { title: song.title, imgUrl: song.image_url, artistartistName: artistName }; // Cập nhật tên bài hát và nghệ sĩ
+      
     }
   }
 
@@ -130,5 +142,17 @@ export class MusicPlayerComponent {
   getVolumeBackground(): string {
     const percentage = this.volume * 100;
     return `linear-gradient(to right, white ${percentage}%, #555 ${percentage}%)`;
+  }
+
+  constructor(private tracksService: TrackService, private artistService: ArtistService){}
+
+  ngOnInit(): void {
+      this.tracksService.getTracks().subscribe( data => {
+        this.tracks = data;
+      })
+
+      this.artistService.getArtists().subscribe( data => {
+        this.currentArt = data;
+      })
   }
 }

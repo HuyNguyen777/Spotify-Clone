@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-playlist',
@@ -7,8 +7,9 @@ import { Component, OnInit } from '@angular/core';
   standalone: false,
 })
 export class PlaylistComponent implements OnInit{
-  playlistName = 'My Playlist #3';
-  playlistId = 'user';
+  @Input() playlistName: string = 'My Playlist';
+  @Input() playlistId: string = '';
+  @Input() songInPlayList: any[] = [];
 
   constructor(){}
   songsInPlaylist = [

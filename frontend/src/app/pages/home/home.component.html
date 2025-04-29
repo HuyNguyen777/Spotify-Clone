@@ -1,7 +1,7 @@
 <div class="home-container">
   <!--Header-->
   <div class="header">
-    <app-top-nav (inputFilterRes)="onInputFilterRes($event)"></app-top-nav>
+    <app-top-nav></app-top-nav>
   </div>
 
   <div class="body">
@@ -13,20 +13,16 @@
           <span *ngIf="!isCollapsed">Home</span>
         </div>
       
-        <div class="spotify__home-container_side-bar-item" (click)="onNavigation('search')">
-          <i class="fas fa-search"></i>
-          <span *ngIf="!isCollapsed">Search</span>
-        </div>
-      
-        <div class="spotify__home-container_side-bar-item" (click)="onNavigation('library')">
-          <i class="fas fa-book"></i>
-          <span *ngIf="!isCollapsed">Your Library</span>
-        </div>
-      
-        <div class="spotify__home-container_side-bar-item" (click)="onNavigation('playlist')">
+        <div class="spotify__home-container_side-bar-item" (click)="createAndSelectNewPlaylist()">
           <i class="fas fa-plus-square"></i>
           <span *ngIf="!isCollapsed">Create Playlist</span>
         </div>
+
+        <div *ngFor="let playlist of playlists" class="spotify__home-container_side-bar-item" (click)="selectPlaylist(playlist.id)">
+          <i class="fas fa-music"></i>
+          <span *ngIf="!isCollapsed">{{ playlist.name }}</span>
+        </div>
+
       </div>
       
       <div class="spotify__home-container_playlist-container col-10">
@@ -61,7 +57,7 @@
           </div>
           
         </div>
-
+          <!--
           <div class="mt-5 container-fluid" *ngIf="(sb.isSearchVisible | async) && currentPage === 'search'" >
             <h4 [style.color]="'white'" [style.padding]="'10px'">Browse All</h4>
             <div class="browse_card_collections">
@@ -73,13 +69,16 @@
               ></app-browse-card>
             </div>
           </div>
-
+          -->
           <!--playlistplaylist-->
-          <div class="mt-5 container-fluid" *ngIf="(sb.isPlayListVisible | async) && currentPage === 'playlist'">
+          <div class="mt-5 container-fluid" *ngIf="(sb.isPlayListVisible | async) && currentPage === 'playlist' && selectedPlaylist" >
             <div class="play-list-container">
-              <app-playlist> 
-
-              </app-playlist>
+                <app-playlist 
+                    *ngIf="selectedPlaylist"
+                    [playlistName]="selectedPlaylist.name"
+                    [playlistId]="selectedPlaylist.id"
+                    [songInPlayList]="selectedPlaylist.songs"
+                ></app-playlist>
             </div>
           </div> 
         </div>

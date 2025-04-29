@@ -13,4 +13,7 @@ export class SearchBarService {
 
   public isHomeVisible: BehaviorSubject<boolean> = 
     new BehaviorSubject<boolean>(false);
+
+  public setPlayListVisible: BehaviorSubject<boolean> = 
+    new BehaviorSubject<boolean>(false);
 }

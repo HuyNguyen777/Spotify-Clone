@@ -24,7 +24,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    padding: 10px;
   }
 
   .name-muic-player{
@@ -121,6 +122,7 @@
     height: 4px;
     background: #555; /* default - sẽ bị override bởi binding style */
     outline: none;
+    display: flex;
     border-radius: 2px;
     margin-left: 10px;
   }

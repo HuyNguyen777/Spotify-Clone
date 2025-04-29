@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { MusicPlayerComponent } from '../../components/music-player/music-player.component';
 
 
-type PageType = 'home' | 'search' | 'playlist' | 'library';
+type PageType = 'home' | 'playlist' | 'library';
 
 @Component({
   selector: 'app-home',
@@ -15,22 +15,31 @@ type PageType = 'home' | 'search' | 'playlist' | 'library';
   standalone:false,
 })
 export class HomeComponent implements OnInit {
-  public browserAll = [
-    { bgColor: 'red', color: 'white', title: 'Podcasts' },
-    { bgColor: 'green', color: 'white', title: 'Made for you' },
-    { bgColor: 'purple', color: 'white', title: 'Charts' },
-    { bgColor: 'blue', color: 'white', title: 'Live streams' },
-    { bgColor: 'pink', color: 'white', title: 'Bollywood' },
-    { bgColor: 'lightblue', color: 'white', title: 'Punjabi' },
-    { bgColor: 'orange', color: 'white', title: 'Tamil' },
-    { bgColor: 'yellow', color: 'white', title: 'Telugu' },
-    { bgColor: 'black', color: 'white', title: 'Marathi' },
-    { bgColor: 'orangered', color: 'white', title: 'Hip-Hop' },
-    { bgColor: 'darkgray', color: 'white', title: 'Workout' },
-    { bgColor: 'smokewhite', color: 'white', title: 'R&B' }
-  ];
+
+  playlists: {
+    name: string;
+    id: string;
+    songs: any[]
+  }[] = [];
+
+  selectedPlaylistId: string | null = null;
+
+  createAndSelectNewPlaylist() {
+    const newPlaylist = {
+      id: Date.now().toString(), // tạo ID ngẫu nhiên đơn giản
+      name: `Playlist ${this.playlists.length + 1}`,
+      songs: []
+    };
+    
+    this.playlists.push(newPlaylist);           // Thêm vào danh sách sidebar
+    this.selectedPlaylistId = newPlaylist.id;        // Chọn playlist vừa tạo
+    this.currentPage = 'playlist';   
+    this.sb.isHomeVisible.next(false);           // Đổi trang hiển thị
+    this.sb.setPlayListVisible.next(true);           // Hiển thị vùng playlist nếu bạn dùng service
+  }
 
   public songCards: Track[] = [];  // Định nghĩa songCards là Track[]
+
   artistNames: { [key: number]: string } = {};
 
   currentPage: PageType = 'home'; // Gán type chuẩn
@@ -41,7 +50,11 @@ export class HomeComponent implements OnInit {
     this.isCollapsed = !this.isCollapsed;
   }
 
-  constructor(private trackService: TrackService,public sb: SearchBarService,private artistService: ArtistService,private router:Router) {}
+  constructor(
+    private trackService: TrackService,
+    public sb: SearchBarService,
+    private artistService: ArtistService,
+    private router:Router) {}
 
   ngOnInit(): void {
     this.trackService.getTracks().subscribe((tracks) => {
@@ -56,27 +69,31 @@ export class HomeComponent implements OnInit {
       });
     });
   }
-  onInputFilterRes($event: string) {
-    const res = this.browserAll.filter(
-      (element) => element.title.toLowerCase() === $event.toLowerCase().trim()
-    );
-    console.log(res);
-  }
 
   onNavigation(pageName: PageType) {
-    this.currentPage = pageName;
-    if (pageName ==='search') {
-      this.sb.isSearchVisible.next(true);
-      this.sb.isPlayListVisible.next(false);
-      this.sb.isHomeVisible.next(false);
-    } else if(pageName === 'playlist') {
-      this.sb.isSearchVisible.next(false);
+    if (pageName === 'playlist') {
       this.sb.isPlayListVisible.next(true);
-    }else{
-      this.sb.isSearchVisible.next(false);
+      this.sb.isHomeVisible.next(false);
+    } else { // home
+      this.selectedPlaylistId = null;
+      this.sb.isHomeVisible.next(true);
+      this.sb.isPlayListVisible.next(false);
     }
+    this.currentPage = pageName;
     console.log('Navigate to:', pageName);
   } 
+
+  selectPlaylist(id: string) {
+    this.selectedPlaylistId = id;
+    this.currentPage = 'playlist';
+    this.sb.isSearchVisible.next(false);
+    this.sb.isPlayListVisible.next(true);
+    this.sb.isHomeVisible.next(false);
+  }
+
+  get selectedPlaylist() {
+    return this.playlists.find(p => p.id === this.selectedPlaylistId) || null;
+  }
     
   getArtistName(artistId: number): string {
     return this.artistNames[artistId] || 'Unknown';
