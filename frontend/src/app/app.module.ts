@@ -17,6 +17,7 @@ import { SongComponent } from './pages/song/song.component';
 import { ArtistCardComponent } from "./components/artist-card/artist-card.component";
 import { HttpClientModule } from '@angular/common/http'; 
 import { MusicPlayerComponent } from './components/music-player/music-player.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { MusicPlayerComponent } from './components/music-player/music-player.com
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    
+    MatDialogModule,
     
 ],
   providers: [],
