@@ -4,8 +4,10 @@ import { SearchBarService } from '../../services/searchbar.service';
 import { Artist, ArtistService } from '../../services/artists.service';
 import { Router } from '@angular/router';
 import { MusicPlayerComponent } from '../../components/music-player/music-player.component';
+import { AuthService } from '../../services/auth.service';
 
-
+import { LoginDialogComponent } from '../../components/login-dialog/login-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 type PageType = 'home' | 'playlist' | 'library';
 
 @Component({
@@ -25,6 +27,13 @@ export class HomeComponent implements OnInit {
   selectedPlaylistId: string | null = null;
 
   createAndSelectNewPlaylist() {
+    console.log("Logged in?", this.authService.isLoggedIn());
+
+  if (!this.authService.isLoggedIn()) {
+    //this.dialog.open(LoginDialogComponent);
+    alert("You must log in first!");
+    return;
+  }
     const newPlaylist = {
       id: Date.now().toString(), // tạo ID ngẫu nhiên đơn giản
       name: `Playlist ${this.playlists.length + 1}`,
@@ -54,7 +63,10 @@ export class HomeComponent implements OnInit {
     private trackService: TrackService,
     public sb: SearchBarService,
     private artistService: ArtistService,
-    private router:Router) {}
+    private router:Router,
+    private authService: AuthService,
+    private dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.trackService.getTracks().subscribe((tracks) => {
