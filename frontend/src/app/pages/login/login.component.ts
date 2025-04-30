@@ -31,11 +31,24 @@ export class LoginComponent implements OnInit {
   
       this.authService.login(username, password).subscribe({
         next: (data) => {
+          console.log(data);
           this.authService.saveToken(data.access); // Lưu token vào localStorage hoặc state
+<<<<<<< HEAD
           localStorage.setItem('username', username);
 
+=======
+          this.authService.saveRole(data.role_id);
+        
+          if(this.authService.isAdmin()){
+            console.log('admin');
+            this.router.navigate(['/admin'])
+          } else{
+            this.router.navigate(['/']);
+            console.log('user');
+          }
+>>>>>>> 60c3fb7e1059458bb0b1301420284785b2b581df
           alert('Login Successful');
-          this.router.navigate(['/']); // Chuyển hướng người dùng sau khi đăng nhập thành công
+          // Chuyển hướng người dùng sau khi đăng nhập thành công
         },
         error: (err) => {
           console.error('Login failed:', err); // In lỗi ra console để dễ dàng gỡ lỗi

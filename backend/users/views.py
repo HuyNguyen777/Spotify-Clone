@@ -74,6 +74,7 @@ def login_view(request):
             return Response({
                 'access': access_token,
                 'refresh': refresh_token,
+                'role_id': user.role.role_id
             })
         else:
             return Response({'error': 'Invalid credentials'}, status=400)
