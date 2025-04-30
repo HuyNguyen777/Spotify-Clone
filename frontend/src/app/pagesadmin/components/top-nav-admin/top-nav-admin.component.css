@@ -1,0 +1,35 @@
+.admin__top-nav{
+    display: flex;
+    flex-direction: row;
+    background-color: #0087ff;
+    height: 60px;
+    border-radius: 10px;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.search_playlist{
+    width: 350px;
+    height: 30px;
+    border: none;
+    border-radius: 20px;
+    height: 40px;
+    padding: 14px;
+    font-size: 14px;
+}
+
+.admin__top-nav_auth_logout{
+    display: flex;
+    border-radius: 20px;
+    background-color: black;
+    font-weight: bold;
+    color: white;
+    height: 40px;
+    width: 100px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}

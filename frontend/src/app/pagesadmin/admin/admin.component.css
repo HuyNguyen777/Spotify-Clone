@@ -1,0 +1,99 @@
+  .home-container{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .body {
+    display: flex;
+    flex: 1;
+    overflow: hidden; /* để không bị tràn */
+  }
+
+  .sider-bar-right{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+  
+  .sider-bar-admin{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background-color: rgb(204, 198, 198);
+  }
+
+  .sider-bar-container{
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .sider-bar-name{
+    margin-top: 20px;
+    font-size: 20px;
+  }
+
+  .sider-bar-system{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .system-bar-user{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    margin: 10px;
+  }
+
+  .system-bar-user-group{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    margin: 10px;
+  }
+
+  .system-bar-mic{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    margin: 10px;
+  }
+
+  .system-bar-category{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    margin: 10px;
+  }
+
+  .system-bar-albums{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    margin: 10px;
+  }
+
+  .system-bar-musics{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    margin: 10px;
+  }
+
+  .spotify__admin-container_playlist-container{
+    background-color: rgb(255, 255, 255);
+  }
+
+  .admin-container{
+    background-color: rgb(233, 225, 225);
+    margin-top: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    height: calc(100vh - 60px);
+  }
+
