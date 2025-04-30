@@ -26,6 +26,19 @@ export class AuthService {
     localStorage.setItem('access_token', token);
   }
 
+  saveRole(role: number){
+    localStorage.setItem('role', role.toString());
+  }
+
+  getRoleId(): number | null{
+    const roleid = localStorage.getItem('role');
+    return roleid ? parseInt(roleid, 10) : null;
+  }
+
+  isAdmin(): boolean {
+    return this.getRoleId() === 1;
+  }
+
   getToken() {
     return localStorage.getItem('access_token');
   }
