@@ -40,3 +40,9 @@ class ArtistViewSet(viewsets.ModelViewSet):
         artist = self.get_object()
         artist.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def get_artist_name_by_id(artist_id):
+        try:
+            return Artist.objects.get(id=artist_id).name
+        except Artist.DoesNotExist:
+            return "Unknown Artist"

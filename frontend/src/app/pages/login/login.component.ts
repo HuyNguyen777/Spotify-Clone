@@ -32,6 +32,8 @@ export class LoginComponent implements OnInit {
       this.authService.login(username, password).subscribe({
         next: (data) => {
           this.authService.saveToken(data.access); // Lưu token vào localStorage hoặc state
+          localStorage.setItem('username', username);
+
           alert('Login Successful');
           this.router.navigate(['/']); // Chuyển hướng người dùng sau khi đăng nhập thành công
         },

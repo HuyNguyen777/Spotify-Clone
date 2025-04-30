@@ -22,7 +22,9 @@ export class TopNavComponent implements OnInit {
   onNavigateToLogin() {
     this.router.navigate(['/', 'login']);
   }
-
+  onNavigateToChat() {
+    this.router.navigate(['/', 'search']);
+  }
   OnNavigateToSignUp(){
     this.router.navigate(['/', 'signup']);
   }

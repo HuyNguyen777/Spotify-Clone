@@ -8,6 +8,8 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { PlaylistComponent } from './pages/playlist/playlist.component';
 import { AdminComponent } from './pagesadmin/admin/admin/admin.component';
 import { adminGuard } from './guards/admin.guard';
+import { ChatComponent } from './pages/chat/chat.component';
+import { SearchUsersComponent } from './pages/search-users/search-users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent},
   { path: 'playlist', component: PlaylistComponent},
   { path: 'register', component: SignupComponent },
+  { path: 'chat/:receiver', component: ChatComponent },
+  { path: 'search', component: SearchUsersComponent },
 
 ];
 

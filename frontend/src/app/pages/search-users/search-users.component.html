@@ -1,0 +1,20 @@
+<!-- search-users.component.html -->
+<div class="search-container">
+    <input type="text"
+           [(ngModel)]="searchQuery"
+           (keyup.enter)="onSearch()"
+           placeholder="Search users..." />
+  
+    <ul *ngIf="users.length > 0">
+      <li *ngFor="let u of users"
+          (click)="goChat(u.user_name)"
+          class="user-item">
+        {{ u.user_name }}
+      </li>
+    </ul>
+  
+    <div *ngIf="searchQuery && users.length === 0">
+      No users found.
+    </div>
+  </div>
+  

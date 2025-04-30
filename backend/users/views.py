@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from users.models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import User as CustomUser
@@ -8,7 +8,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from users.serializers import UserSerializer  # bạn phải có UserSerializer
 
 @csrf_exempt
 def register(request):
@@ -77,3 +79,18 @@ def login_view(request):
             return Response({'error': 'Invalid credentials'}, status=400)
     else:
         return Response({'error': 'Invalid credentials'}, status=400)
+
+@api_view(['GET'])
+def search_users(request):
+    query = request.GET.get('q', '').strip()
+    results = []
+
+    if query:
+        qs = User.objects.filter(user_name__icontains=query)
+        # Nếu có user đã login, loại bỏ họ ra khỏi kết quả
+        if hasattr(request, 'user') and request.user.is_authenticated:
+            qs = qs.exclude(user_id=request.user.user_id)
+        # Trả về user_id và user_name
+        results = [{'user_id': u.user_id, 'user_name': u.user_name} for u in qs]
+
+    return Response(results)

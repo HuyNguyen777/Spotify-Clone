@@ -25,12 +25,14 @@ SECRET_KEY = 'django-insecure-&v+5et1&&&w*&ke80v(-$@q!3tkjoa5_v&mpu%37nx8jwc7lb0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'channels',
     # Các app của bạn
     'tracks',       
     'albums',      
@@ -48,6 +51,8 @@ INSTALLED_APPS = [
     'playlistdetail',
     'playlist_oder',
     'role',
+    'chat',
+    'chat_message',
 
     
     'corsheaders',  # Nếu bạn đang sử dụng CORS
@@ -86,6 +91,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+ASGI_APPLICATION = 'backend.asgi.application'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -101,11 +108,18 @@ DATABASES = {
     }
 }
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',]
+    ,
 }
+
+
 
 
 
@@ -128,6 +142,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 SIMPLE_JWT = {
     'USER_ID_FIELD': 'user_id',  # Chỉ định trường 'user_id' là khóa chính thay cho 'id'
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
 
@@ -156,3 +171,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CORS_ALLOW_HEADERS = [
+    'authorization',
+    'content-type',
+    # nếu cần các header khác
+]
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}

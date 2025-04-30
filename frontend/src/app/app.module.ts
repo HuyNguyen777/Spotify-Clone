@@ -18,6 +18,9 @@ import { ArtistCardComponent } from "./components/artist-card/artist-card.compon
 import { HttpClientModule } from '@angular/common/http'; 
 import { MusicPlayerComponent } from './components/music-player/music-player.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { ChatComponent } from './pages/chat/chat.component';
+import { SearchUsersComponent } from './pages/search-users/search-users.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     SongComponent,
     ArtistCardComponent,
     MusicPlayerComponent,
+    LoginDialogComponent,
+    ChatComponent,
+    SearchUsersComponent
   ],
   imports: [
     
@@ -43,6 +49,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule,
     HttpClientModule,
     MatDialogModule,
+    
     
 ],
   providers: [],
