@@ -12,7 +12,7 @@ import { adminGuard } from './guards/admin.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'admin', component: AdminComponent, canActivate: [adminGuard]},
+  { path: 'admin', component: AdminComponent },
   { path: 'login', component: LoginComponent },
   //{ path: 'song/:song_id', component: SongComponent },
   { path: 'signup', component: SignupComponent},

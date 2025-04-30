@@ -116,5 +116,6 @@
   .spotify__home-container_side-bar-item > a:hover {
     cursor: pointer;
     color: lightgrey;
+    width: 100%;
   }
   
