@@ -32,9 +32,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         else:
             message_text = data['message_text']
             sender_id = data['sender_id']
-            chat_id = int(self.chat_id)  # ép về int nếu cần cho API
-
-            api_url = f'http://localhost:8000/api/chat/{chat_id}/messages/'
+            chat_id = data['chat_id']
+            chat_id = self.chat_id
+            api_url = f'http://localhost:8000/api/chats/{chat_id}/messages/'
             headers = {'Content-Type': 'application/json'}
             payload = {
                 'message_text': message_text,

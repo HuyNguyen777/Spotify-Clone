@@ -8,6 +8,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.login_view, name='login'),
     path('search/', search_users, name='search-users'),
+    path('get-user_id/', views.GetUsernameByTokenView.as_view(), name='get-username-by-token'),
 
 
 ]

@@ -7,7 +7,7 @@
   
     <ul *ngIf="users.length > 0">
       <li *ngFor="let u of users"
-          (click)="goChat(u.user_name)"
+          (click)="goChat(u.user_id)"
           class="user-item">
         {{ u.user_name }}
       </li>

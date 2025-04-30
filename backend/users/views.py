@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from users.serializers import UserSerializer  # bạn phải có UserSerializer
+from rest_framework.views import APIView
 
 @csrf_exempt
 def register(request):
@@ -95,3 +96,15 @@ def search_users(request):
         results = [{'user_id': u.user_id, 'user_name': u.user_name} for u in qs]
 
     return Response(results)
+
+class GetUsernameByTokenView(APIView):
+    def get(self, request):
+        token = request.query_params.get('access_token')
+        if not token:
+            return Response({'error': 'Access token is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            user = User.objects.get(accesstoken=token)
+            return Response({'user_id': user.user_id}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
