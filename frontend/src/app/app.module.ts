@@ -18,6 +18,9 @@ import { ArtistCardComponent } from "./components/artist-card/artist-card.compon
 import { HttpClientModule } from '@angular/common/http'; 
 import { MusicPlayerComponent } from './components/music-player/music-player.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { ChatComponent } from './pages/chat/chat.component';
+import { SearchUsersComponent } from './pages/search-users/search-users.component';
 import { AdminComponent } from './pagesadmin/admin/admin.component';
 import { TopNavAdminComponent } from './pagesadmin/components/top-nav-admin/top-nav-admin.component';
 
@@ -38,6 +41,9 @@ import { TopNavAdminComponent } from './pagesadmin/components/top-nav-admin/top-
     MusicPlayerComponent,
     AdminComponent,
     TopNavAdminComponent,
+    LoginDialogComponent,
+    ChatComponent,
+    SearchUsersComponent
   ],
   imports: [
     
@@ -47,6 +53,7 @@ import { TopNavAdminComponent } from './pagesadmin/components/top-nav-admin/top-
     ReactiveFormsModule,
     HttpClientModule,
     MatDialogModule,
+    
     
 ],
   providers: [],
