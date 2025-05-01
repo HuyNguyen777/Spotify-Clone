@@ -1,78 +1,98 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { WebSocketSubject } from 'rxjs/webSocket';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { combineLatest, Observable, Subject } from 'rxjs';
+
+export interface Message {
+  id: number;
+  sender_id: number;
+  chat_id: number;
+  message_text: string;
+  created_at: string;
+  date: string;
+  time: string;
+  isRead: boolean;
+}
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
   private socket!: WebSocket;
-  private messageCallback: ((msg: any) => void) | null = null;
-  constructor(private http : HttpClient){}
-  connect(receiver: number) {
-    this.socket = new WebSocket(`ws://localhost:8000/ws/chat/${receiver}/`);
-  
+  private messages$ = new Subject<Message>();
+  private deleteResponses$ = new Subject<boolean>();
+
+  constructor(private http: HttpClient) {}
+
+  connect(chatId: number): void {
+    this.socket = new WebSocket(`ws://localhost:8000/ws/chat/${chatId}/`);
+
+    this.socket.onopen = () => {
+      // WebSocket kết nối thành công
+      console.log('WebSocket connected successfully');
+      alert('WebSocket connected successfully'); // Hiển thị thông báo thành công
+    };
+
     this.socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      if (this.messageCallback) this.messageCallback(data);
+      if (data.message_type === 'create_chat_response') {
+        this.messages$.next(data as Message);
+      } else if (data.message_type === 'delete_chat_response') {
+        this.deleteResponses$.next(data.success);
+      }
     };
-  
-    this.socket.onopen = () => {
-      console.log('WebSocket connection opened');
-    };
-  
+
     this.socket.onerror = (error) => {
-      console.error('WebSocket error: ', error);
+      // Lỗi khi kết nối WebSocket
+      console.error('WebSocket error:', error);
+      alert('WebSocket connection failed'); // Hiển thị thông báo lỗi kết nối
     };
-  
+
     this.socket.onclose = () => {
-      console.log('WebSocket connection closed');
+      // WebSocket đóng kết nối
+      console.log('WebSocket closed');
+      alert('WebSocket connection closed'); // Hiển thị thông báo khi kết nối bị đóng
     };
   }
-  
+
+
+  disconnect(): void {
+    if (this.socket) {
+      this.socket.close();
+    }
+  }
 
   // chat.service.ts
-onMessage(callback: (msg: any) => void): void {
-  this.socket.onmessage = (event: MessageEvent) => {
-    const data = JSON.parse(event.data);
-    if (data.message_type === 'create_chat_response') {
-      const msg = {
-        message: data.message_text,
-        sender: data.sender_id,
-        time: data.time,
-        date: data.date,
-        is_read: data.is_read,
-        chat_id: data.chat_id,
-        id: data.id
-      };
-      callback(msg);
-    }
-  };
-}
-
-
-sendMessage(message: {
-  message_text: string;
-  sender_id: number;
-  chat_id: number;
-}) {
-  if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-    this.socket.send(
-      JSON.stringify({
-        command: 'send_message',
-        ...message,
-      })
-    );
-  } else {
-    console.error('WebSocket is not connected.');
-  }
-}
-
-close() {
-  this.socket?.close();
-}
-
-  getChatHistory(chatId: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8000/api/chat/${chatId}/messages/`);
+  sendMessage(chatId: number, senderId: number, text: string): void {
+    const trimmedText = text.trim();
+    if (!trimmedText) return;
+  
+    const payload = {
+      command: 'new_message',  // Phải khớp với consumers.py
+      chat_id: chatId,
+      sender_id: senderId,
+      message_text: trimmedText,
+    };
+  
+    this.socket.send(JSON.stringify(payload));
   }
   
+  
+  
+
+  deleteChat(chatId: number): void {
+    this.socket.send(JSON.stringify({
+      command: 'delete_chat',
+      chat_id: chatId
+    }));
+  }
+
+  onMessage(): Observable<Message> {
+    return this.messages$.asObservable();
+  }
+
+  onDeleteResponse(): Observable<boolean> {
+    return this.deleteResponses$.asObservable();
+  }
+
+  fetchHistory(chatId: number): Observable<Message[]> {
+    return this.http.get<Message[]>(`http://localhost:8000/api/chat/${chatId}/messages/`);
+  }
 }

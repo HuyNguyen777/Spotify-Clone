@@ -3,20 +3,17 @@ import json
 from rest_framework.response import Response
 
 from chat.models import Message
+from chat_message.models import Chat_Message
 from users.models import User
 from rest_framework.decorators import action
 
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status,viewsets
 
 from rest_framework.decorators import api_view, permission_classes
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-from rest_framework.views import APIView
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 
 class MessageViewSet(viewsets.ModelViewSet):
-    @csrf_exempt
     def create_chat(request):
         """
         Tạo chat giữa hai người dùng.
@@ -62,3 +59,78 @@ class MessageViewSet(viewsets.ModelViewSet):
         if chat:
             return Response({'exists': True, 'chat_id': chat.id})
         return Response({'exists': False})
+    def get_chat_messages(request, chat_id):
+        if request.method == 'GET':
+            try:
+                # Lấy tất cả tin nhắn từ chat theo chat_id
+                messages = Chat_Message.objects.filter(chat_id=chat_id)
+                data = [
+                    {
+                        'id': msg.id,
+                        'message_text': msg.message_text,
+                        'sender_id': msg.sender_id.user_id,
+                        'created_at': msg.create_at.isoformat(),
+                        'chat_id': msg.chat.id,
+                        'is_read': msg.isRead,
+                    }
+                    for msg in messages
+                ]
+                return JsonResponse({'messages': data}, status=200)
+            except Exception as e:
+                return JsonResponse({'error': str(e)}, status=500)
+        else:
+            return JsonResponse({'error': 'Invalid request method'}, status=400)
+    
+    def chat_messages(request, chat_id):
+        if request.method == 'GET':
+            try:
+                messages = Chat_Message.objects.filter(chat_id=chat_id)
+                data = [
+                    {
+                        'id': msg.id,
+                        'message_text': msg.message_text,
+                        'sender_id': msg.sender_id.user_id,
+                        'created_at': msg.create_at.isoformat(),
+                        'chat_id': msg.chat.id,
+                        'is_read': msg.isRead,
+                    }
+                    for msg in messages
+                ]
+                return JsonResponse({'messages': data}, status=200)
+            except Exception as e:
+                return JsonResponse({'error': str(e)}, status=500)
+
+        elif request.method == 'POST':
+            try:
+                body = json.loads(request.body)
+                message_text = body.get('message_text')
+                sender_id = body.get('sender_id')
+                chat = Message.objects.get(id=chat_id)
+                sender = User.objects.get(user_id=sender_id)
+
+                new_message = Chat_Message.objects.create(
+                    message_text=message_text,
+                    sender_id=sender,
+                    chat=chat
+                )
+
+                data = {
+                    'new_message': {
+                        'id': new_message.id,
+                        'message_text': new_message.message_text,
+                        'sender_id': new_message.sender_id.user_id,
+                        'chat_id': new_message.chat.id,
+                        'created_at': new_message.create_at.isoformat(),
+                        'isRead': new_message.isRead,
+                        'time': new_message.create_at.strftime('%H:%M'),
+                        'date': new_message.create_at.strftime('%Y-%m-%d'),
+                    }
+                }
+
+                return JsonResponse(data, status=201)
+
+            except Exception as e:
+                return JsonResponse({'error': str(e)}, status=400)
+
+        else:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)

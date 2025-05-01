@@ -1,8 +1,8 @@
-// chat.component.ts
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ChatService } from '../../services/chat.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { ChatService, Message } from '../../services/chat.service';
+import { Subscription } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-chat',
@@ -10,74 +10,67 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   styleUrls: ['./chat.component.css'],
   standalone:false,
 })
-export class ChatComponent implements OnInit {
-  token!: string;
-  receiver!: number;
-  currentUser!: number;
-  messages: any[] = [];
-  newMessage: string = '';
-
-  @ViewChild('messageContainer') messageContainer!: ElementRef;
-
-  private jwtHelper = new JwtHelperService();
+export class ChatComponent implements OnInit, OnDestroy {
+  chatId!: number;
+  userId!: number; // Có thể lấy từ auth service sau này
+  messages: Message[] = [];
+  newText = '';
+  private subs: Subscription[] = [];
+  token = localStorage.getItem('access_token')!;
 
   constructor(
+    private route: ActivatedRoute,
     private chatService: ChatService,
-    private route: ActivatedRoute
+    private http : HttpClient
   ) {}
 
-  ngOnInit() {
-    // Ensure token and receiver are properly set
-    this.token = localStorage.getItem('access_token') || '';
-    if (this.token) {
-      const decoded = this.jwtHelper.decodeToken(this.token);
-      this.currentUser = decoded['user_name'] || decoded['username'] || decoded['user_id']?.toString()!;
-    }
-  
-    this.receiver = Number(this.route.snapshot.paramMap.get('receiver'));
-  
-    if (this.token && this.receiver) {
-      // Connect to WebSocket
-      this.chatService.connect(this.receiver);
-    /*  this.chatService.getChatHistory(this.receiver).subscribe(history => {
-        this.messages = history.map(m => ({
-          message: m.message_text,
-          sender: m.sender_id,
-          time: m.time,
-          date: m.date,
-          is_read: m.is_read,
-          chat_id: m.chat_id,
-          id: m.id
-        }));
-        setTimeout(() => this.scrollToBottom(), 100);
-      });*/
-      
-      // Handle incoming messages
-      this.chatService.onMessage(msg => {
+  ngOnInit(): void {
+    this.chatId = +(this.route.snapshot.paramMap.get('chatId')??0);
+    this.chatService.connect(this.chatId);
+    this.http.get<any>(`http://localhost:8000/api/auth/get-user_id/?access_token=${this.token}`)
+    .subscribe(currentUser => {
+      this.userId = currentUser.user_id;
+    });
+    
+    this.chatService.fetchHistory(this.chatId).subscribe(
+      (response: any) => {
+        // Kiểm tra phản hồi từ API, gán tin nhắn vào biến messages
+        this.messages = response.messages; // Hoặc response nếu API trả về mảng trực tiếp
+        console.log('Messages fetched:', this.messages);
+      },
+      error => {
+        console.error('Error fetching messages:', error);
+      }
+    );
+
+    this.subs.push(
+      this.chatService.onMessage().subscribe(msg => {
         this.messages.push(msg);
-        setTimeout(() => this.scrollToBottom(), 100);
-      });
-      
-      
-    } else {
-      console.error('Invalid token or receiver');
-    }
+      })
+    );
   }
-  
 
-  sendMessage() {
-    if (this.newMessage.trim()) {
-      this.chatService.sendMessage({
-        message_text: this.newMessage,
-        sender_id: this.currentUser,
-        chat_id: this.receiver,
-      });
-      this.newMessage = '';
-    }
+  ngOnDestroy(): void {
+    this.chatService.disconnect();
+    this.subs.forEach(s => s.unsubscribe());
   }
-  
 
-  private scrollToBottom() {
-    this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+  send(): void {
+    
+    if (this.newText.trim()) {
+      this.chatService.sendMessage(this.chatId, this.userId, this.newText);
+    }
+    this.newText = '';
+  }
+
+  clearChat(): void {
+    this.chatService.deleteChat(this.chatId);
+    this.subs.push(
+      this.chatService.onDeleteResponse().subscribe(success => {
+        if (success) {
+          this.messages = [];
+        }
+      })
+    );
   }
 }
