@@ -23,6 +23,11 @@ import { ChatComponent } from './pages/chat/chat.component';
 import { SearchUsersComponent } from './pages/search-users/search-users.component';
 import { AdminComponent } from './pagesadmin/admin/admin.component';
 import { TopNavAdminComponent } from './pagesadmin/components/top-nav-admin/top-nav-admin.component';
+import { AlbumComponent } from './pagesadmin/album/album.component';
+import { ArtistComponent } from './pagesadmin/artist/artist.component';
+import { SongsListComponent } from './pagesadmin/songs-list/songs-list.component';
+import { UsersComponent } from './pagesadmin/users/users.component';
+import { UserGroupComponent } from './pagesadmin/user-group/user-group.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,11 @@ import { TopNavAdminComponent } from './pagesadmin/components/top-nav-admin/top-
     TopNavAdminComponent,
     LoginDialogComponent,
     ChatComponent,
-    SearchUsersComponent
+    SearchUsersComponent,
+    ArtistComponent,
+    SongsListComponent,
+    UsersComponent,
+    UserGroupComponent
   ],
   imports: [
     

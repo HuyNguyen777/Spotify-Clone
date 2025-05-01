@@ -1,1 +1,51 @@
-<p>artist works!</p>
+<div class="artist-container">
+    <div class="artist-header-bar">
+      <h2>Artist Management</h2>
+      <button class="create-artist-button" (click)="openModal()">+ Create Artist</button>
+    </div>
+  
+    <div class="artist-table">
+      <div class="artist-table-header">
+        <div>#</div>
+        <div>Artist ID</div>
+        <div>Image</div>
+        <div>Name</div>
+        <div>Popularity</div>
+        <div>Genre</div>
+        <div>Actions</div>
+      </div>
+  
+      <div
+      *ngFor="let artist of artistList; let i = index" class="artist-table-row">
+        <div>{{ i + 1 }}</div>
+        <div>{{ artist.id }}</div>
+        <div>
+          <img [src]="artist.thumbnail" alt="artist" class="artist-img" />
+        </div>
+        <div>{{ artist.name }}</div>
+        <div>{{ artist.popularity }}</div>
+        <div>{{ artist.genre }}</div>
+        <div>
+          <button class="edit-btn">Edit</button>
+          <button class="delete-btn">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal Form -->
+<div class="modal-overlay" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <h3>Create New Artist</h3>
+      <form (ngSubmit)="submitForm()">
+        <input type="text" placeholder="Artist Name" name="name" required />
+        <input type="text" placeholder="Genre" name="genre" required />
+        <input type="number" placeholder="Popularity" name="popularity" required />
+        <input type="file" placeholder="Image URL" name="thumbnail" required />
+        <div class="modal-buttons">
+          <button type="submit">Create</button>
+          <button type="button" class="cancel-btn" (click)="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>

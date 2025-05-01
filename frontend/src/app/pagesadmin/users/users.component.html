@@ -1,1 +1,63 @@
-<p>users works!</p>
+<div class="artist-container">
+    <div class="artist-header-bar">
+      <h2>User Management</h2>
+      <button class="create-artist-button" (click)="openCreate()">+ Create User</button>
+    </div>
+  
+    <div class="artist-table">
+      <div class="artist-table-header">
+        <div>#</div>
+        <div>User ID</div>
+        <div>Avatar</div>
+        <div>User Name</div>
+        <div>Birthday</div>
+        <div>Email</div>
+        <div>Phone</div>
+        <div>Is Active</div>
+        <div>Role</div>
+        <div>Actions</div>
+      </div>
+  
+      <div
+      *ngFor="let user of userList; let i = index" class="artist-table-row">
+        <div>{{ i + 1 }}</div>
+        <div>{{user.userid }}</div>
+        <div>
+          <img [src]="user.image_user" alt="artist" class="artist-img" />
+        </div>
+        <div>{{ user.username }}</div>
+        <div>{{ user.birthday }}</div>
+        <div>{{ user.email }}</div>
+        <div>{{ user.phone }}</div>
+        <div>{{ user.is_active }}</div>
+        <div>{{ user.role }}</div>
+        <div>
+          <button class="edit-btn">Edit</button>
+          <button class="delete-btn">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal Form -->
+<div class="modal-overlay" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <h3>Create New Track</h3>
+      <form (ngSubmit)="submitFormSong()">
+        <input type="text" placeholder="User Name" name="username" required />
+        <input type="text" placeholder="Full Name" name="fulname" required />
+        <input type="date" placeholder="Birth day" name="birthday" required />
+        <input type="email" placeholder="Email" name="email" required>
+        <input type="number" placeholder="Phone" name="phone" required>
+        <input type="number" placeholder="Artist Id" name="artistid" required>
+        <input type="file" placeholder="Image" name="img" required />
+        <input type="checkbox" placeholder="Is Active" name="iaactive" required>
+        <input type="text" placeholder="Role" name="role" required>
+        <div class="modal-buttons">
+          <button type="submit">Create</button>
+          <button type="button" class="cancel-btn" (click)="closeCreate()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+

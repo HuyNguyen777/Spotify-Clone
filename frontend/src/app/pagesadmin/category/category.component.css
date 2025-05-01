@@ -1,0 +1,71 @@
+.scrollbar-playlist {
+    max-height: 500px;
+    overflow-y: auto;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  /* Header */
+  .playlist-header-row {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #555;
+    font-weight: bold;
+    color: #aaa;
+  }
+  
+  /* Each song row */
+  .playlist-song-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+    transition: background 0.2s;
+  }
+  
+  .playlist-song-row:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Column styles */
+  .col-number, .col-title, .col-album, .col-date, .col-duration {
+    flex: 1;
+    padding: 0 10px;
+  }
+  
+  .col-number {
+    flex: 0.2;
+  }
+  
+  .col-title {
+    flex: 3;
+    display: flex;
+    align-items: center;
+  }
+  
+  .title-info {
+    margin-left: 10px;
+  }
+  
+  .song-title {
+    font-weight: bold;
+  }
+  
+  .song-artist {
+    font-size: 12px;
+    color: #bbb;
+  }
+  
+  .col-album {
+    flex: 2;
+  }
+  
+  .col-date {
+    flex: 1.5;
+  }
+  
+  .col-duration {
+    flex: 0.5;
+    text-align: right;
+  }

@@ -1,1 +1,45 @@
-<p>user-group works!</p>
+<div class="artist-container">
+    <div class="artist-header-bar">
+      <h2>Role Management</h2>
+      <button class="create-artist-button" (click)="openCreate()">+ Create Role</button>
+    </div>
+  
+    <div class="artist-table">
+      <div class="artist-table-header">
+        <div>#</div>
+        <div>Role ID</div>
+        <div>Role Name</div>
+        <div>Deception</div>
+        <div>Actions</div>
+      </div>
+  
+      <div
+      *ngFor="let role of usergroupList; let i = index" class="artist-table-row">
+        <div>{{ i + 1 }}</div>
+        <div>{{ role.role_id }}</div>
+        <div>{{ role.role_name }}</div>
+        <div>{{ role.deception }}</div>
+        <div>
+          <button class="edit-btn">Edit</button>
+          <button class="delete-btn">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal Form -->
+<div class="modal-overlay" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <h3>Create New Track</h3>
+      <form (ngSubmit)="submitFormSong()">
+        <input type="text" placeholder="Role id" name="roleid" required />
+        <input type="text" placeholder="Role Name" name="rolename" required />
+        <input type="text" placeholder="Deception" name="deception" required />
+        <div class="modal-buttons">
+          <button type="submit">Create</button>
+          <button type="button" class="cancel-btn" (click)="closeCreate()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+

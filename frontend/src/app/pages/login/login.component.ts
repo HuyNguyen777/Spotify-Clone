@@ -34,6 +34,8 @@ export class LoginComponent implements OnInit {
           console.log(data);
           this.authService.saveToken(data.access); // Lưu token vào localStorage hoặc state
 
+          localStorage.setItem('username', username);
+
           this.authService.saveRole(data.role_id);
         
           if(this.authService.isAdmin()){
