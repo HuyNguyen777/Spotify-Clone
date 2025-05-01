@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Role, RoleService } from '../../services/role.service';
 
 @Component({
   selector: 'app-user-group',
@@ -6,12 +7,10 @@ import { Component } from '@angular/core';
   templateUrl: './user-group.component.html',
   styleUrl: './user-group.component.css'
 })
-export class UserGroupComponent {
-  usergroupList = [{
-    role_id: '1',
-    role_name: 'admin',
-    deception: 'quyen admin'
-  }];
+export class UserGroupComponent implements OnInit {
+ roles : Role[] = [];
+
+ constructor(private roleService: RoleService){}
 
   isModalOpen = false;
 
@@ -38,6 +37,13 @@ export class UserGroupComponent {
       };
       this.closeCreate();
     }
+  }
+
+  ngOnInit(): void {
+      this.roleService.getRole().subscribe((data) =>{
+        console.log("list" ,data);
+        this.roles = data;
+      });
   }
   
 }

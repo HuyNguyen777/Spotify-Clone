@@ -17,7 +17,6 @@ export class AuthService {
   private baseUrl = 'http://localhost:8000/api/auth/'; // Đúng link Django
 
 
-
   login(username: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}login/`, { username, password });
   }
