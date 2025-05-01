@@ -2,6 +2,7 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 import requests
 import asyncio
+from django.views.decorators.csrf import csrf_exempt
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -31,14 +32,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.delete_message(data)
         else:
             message_text = data['message_text']
-            sender_id = data['sender_id']
-            chat_id = int(self.chat_id)  # ép về int nếu cần cho API
-
+            sender_id_id = data['sender_id']
+            chat_id = data['chat_id']
+            chat_id = self.chat_id
             api_url = f'http://localhost:8000/api/chat/{chat_id}/messages/'
             headers = {'Content-Type': 'application/json'}
             payload = {
                 'message_text': message_text,
-                'sender_id': sender_id,
+                'sender_id': sender_id_id,
                 'chat_id':chat_id,
             }
             response = await asyncio.to_thread(requests.post, api_url, json=payload, headers=headers)
@@ -51,10 +52,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 {
                     'type': 'chat_message', 
                     'message_text': m['message_text'],
-                    'sender_id': m['sender_id'],
+                    'sender_id_id': m['sender_id'],
                     'chat_id':m['chat_id'],
                     'created_at':m['created_at'],
-                    'is_read':m['is_read'],
+                    'isRead':m['isRead'],
                     'id':m['id'],
                     'time':m['time'],
                     'date':m['date']
@@ -71,14 +72,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     print("Thông tin lỗi từ server:", response_data)
                 except ValueError:
                     print("Phản hồi không phải là JSON.")
-        
+    
     async def chat_message(self, event):
         await self.send(text_data=json.dumps({
             'message_type': 'create_chat_response',
             'message_text': event['message_text'],
-            'sender_id': event['sender_id'],
+            'sender_id_id': event['sender_id_id'],
             'chat_id':event['chat_id'],
-            'is_read':event['is_read'],
+            'isRead':event['isRead'],
             'created_at':event['created_at'],
             'id':event['id'],
             'time':event['time'],

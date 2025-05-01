@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent},
   { path: 'playlist', component: PlaylistComponent},
   { path: 'register', component: SignupComponent },
-  { path: 'chat/:receiver', component: ChatComponent },
+  { path: 'chat/:chatId', component: ChatComponent },
   { path: 'search', component: SearchUsersComponent },
 
 ];

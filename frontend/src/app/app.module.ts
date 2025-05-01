@@ -15,7 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowseCardComponent } from './components/browse-card/browse-card.component';
 import { SongComponent } from './pages/song/song.component';
 import { ArtistCardComponent } from "./components/artist-card/artist-card.component";
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'; 
 import { MusicPlayerComponent } from './components/music-player/music-player.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
@@ -53,7 +53,10 @@ import { TopNavAdminComponent } from './pagesadmin/components/top-nav-admin/top-
     ReactiveFormsModule,
     HttpClientModule,
     MatDialogModule,
-    
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN',
+      headerName: 'X-XSRF-TOKEN',
+    }),
     
 ],
   providers: [],

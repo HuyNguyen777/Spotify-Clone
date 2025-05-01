@@ -38,7 +38,7 @@ export class SearchUsersComponent {
       this.http.get<any>(`http://localhost:8000/api/auth/get-user_id/?access_token=${this.token}`)
         .subscribe(currentUser => {
           const currentUserId = currentUser.user_id;
-    
+         alert(currentUserId);
           // B1: Kiểm tra chat đã tồn tại chưa
           this.http.get<any>('http://localhost:8000/api/chat/check/', {
             params: {
