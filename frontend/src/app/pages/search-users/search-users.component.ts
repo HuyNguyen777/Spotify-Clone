@@ -14,7 +14,7 @@ export class SearchUsersComponent {
   searchQuery: string = '';
   users: any[] = [];
   token = localStorage.getItem('access_token')!;
-
+  currentuser!: number;
   constructor(private http: HttpClient, private router: Router) {}
 
   onSearch() {
@@ -23,13 +23,24 @@ export class SearchUsersComponent {
       this.users = [];
       return;
     }
-    this.http
-      .get<{ user_id: number; user_name: string }[]>(`http://localhost:8000/api/auth/search/?q=${q}`)
-      .subscribe({
-        next: data => this.users = data,
-        error: () => this.users = []
+  
+    // Lấy user_id của người dùng hiện tại
+    this.http.get<any>(`http://localhost:8000/api/auth/get-user_id/?access_token=${this.token}`)
+      .subscribe(currentUser => {
+        this.currentuser = currentUser.user_id;
+  
+        // Sau khi nhận được currentuser, thực hiện tìm kiếm
+        this.http
+          .get<{ user_id: number; user_name: string }[]>(
+            `http://localhost:8000/api/auth/search/?q=${q}&exclude=${this.currentuser}`
+          )
+          .subscribe({
+            next: data => this.users = data,
+            error: () => this.users = []
+          });
       });
   }
+  
   /*goChat(username: string) {
     // điều hướng đến /chat/:receiver
     this.router.navigate(['/chat', username]);
@@ -38,7 +49,6 @@ export class SearchUsersComponent {
       this.http.get<any>(`http://localhost:8000/api/auth/get-user_id/?access_token=${this.token}`)
         .subscribe(currentUser => {
           const currentUserId = currentUser.user_id;
-         alert(currentUserId);
           // B1: Kiểm tra chat đã tồn tại chưa
           this.http.get<any>('http://localhost:8000/api/chat/check/', {
             params: {

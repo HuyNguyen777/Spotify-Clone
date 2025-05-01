@@ -85,17 +85,20 @@ def login_view(request):
 @api_view(['GET'])
 def search_users(request):
     query = request.GET.get('q', '').strip()
+    exclude = request.GET.get('exclude')  # Lấy giá trị 'exclude' từ query params
     results = []
 
     if query:
         qs = User.objects.filter(user_name__icontains=query)
-        # Nếu có user đã login, loại bỏ họ ra khỏi kết quả
-        if hasattr(request, 'user') and request.user.is_authenticated:
-            qs = qs.exclude(user_id=request.user.user_id)
+        # Kiểm tra nếu exclude được truyền và hợp lệ
+        if exclude:
+            qs = qs.exclude(user_id=exclude)  # Loại bỏ user có user_id trùng với 'exclude'
+        
         # Trả về user_id và user_name
         results = [{'user_id': u.user_id, 'user_name': u.user_name} for u in qs]
 
     return Response(results)
+
 
 class GetUsernameByTokenView(APIView):
     def get(self, request):
