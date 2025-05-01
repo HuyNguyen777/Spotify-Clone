@@ -1,0 +1,60 @@
+<div class="artist-container">
+    <div class="artist-header-bar">
+      <h2>Track Management</h2>
+      <button class="create-artist-button" (click)="openCreate()">+ Create Track</button>
+    </div>
+  
+    <div class="artist-table">
+      <div class="artist-table-header">
+        <div>#</div>
+        <div>Track ID</div>
+        <div>Image</div>
+        <div>Title</div>
+        <div>Price</div>
+        <div>Release Date</div>
+        <div>Name Mp3</div>
+        <div>Album Id</div>
+        <div>Artist Id</div>
+        <div>Actions</div>
+      </div>
+  
+      <div
+      *ngFor="let track of songsList; let i = index" class="artist-table-row">
+        <div>{{ i + 1 }}</div>
+        <div>{{ track.trackid }}</div>
+        <div>
+          <img [src]="track.image" alt="artist" class="artist-img" />
+        </div>
+        <div>{{ track.title }}</div>
+        <div>{{ track.price }}</div>
+        <div>{{ track.ReleaseDate }}</div>
+        <div>{{ track.NameMp3 }}</div>
+        <div>{{ track.Albumid }}</div>
+        <div>{{ track.ArtistId }}</div>
+        <div>
+          <button class="edit-btn">Edit</button>
+          <button class="delete-btn">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal Form -->
+<div class="modal-overlay" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <h3>Create New Track</h3>
+      <form (ngSubmit)="submitFormSong()">
+        <input type="text" placeholder="Title" name="title" required />
+        <input type="number" placeholder="Price" name="price" required />
+        <input type="date" placeholder="Release Date" name="releaseday" required />
+        <input type="text" placeholder="Name Mp3" name="namemp3" required>
+        <input type="number" placeholder="Album Id" name="albumid" required>
+        <input type="number" placeholder="Artist Id" name="artistid" required>
+        <input type="file" placeholder="Image" name="img" required />
+        <div class="modal-buttons">
+          <button type="submit">Create</button>
+          <button type="button" class="cancel-btn" (click)="closeCreate()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>

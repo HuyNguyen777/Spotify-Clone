@@ -1,1 +1,38 @@
-<p>category works!</p>
+<div class="album-container">
+    <div class="album-container-album-header">
+        <div class="album-header">
+         
+        </div>
+      
+        <div class="album-actions">
+          
+        </div>
+  
+  
+        <div class="scrollbar-playlist">
+          <!-- Header Row -->
+          <div class="playlist-header-row">
+            <div class="col-number">#</div>
+            <div class="col-title">Title</div>
+            <div class="col-album">Album</div>
+            <div class="col-date">Date Added</div>
+            <div class="col-duration"><img src="settings.png" alt="" width="12px" height="12px"></div>
+          </div>
+  
+          <!-- Song List -->
+          <div *ngFor="let song of songsInPlaylist; let i = index" class="playlist-song-row">
+            <div class="col-number">{{ i + 1 }}</div>
+            <div class="col-title">
+              <img [src]="song.thumbnail" alt="thumbnail" width="40px" height="40px" />
+              <div class="title-info">
+                <div class="song-title">{{ song.title }}</div>
+                <div class="song-artist">{{ song.artist }}</div>
+              </div>
+            </div>
+            <div class="col-album">{{ song.album }}</div>
+            <div class="col-date">{{ song.dateAdded }}</div>
+            <div class="col-duration">{{ song.duration }}</div>
+          </div>
+        </div>
+      </div>
+    </div>

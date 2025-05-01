@@ -25,19 +25,19 @@
                 </div>
                 <div class="sider-bar-name">ALBUM</div>
                 <div class="sider-bar-container">
-                    <div class="system-bar-mic">
+                    <div class="system-bar-mic" [routerLink]="['/admin/artist']">
                         <span class="material-icons">mic</span>
                         <span>Nghệ sĩ</span>
                     </div>
-                    <div class="system-bar-category">
+                    <div class="system-bar-category" [routerLink]="['/admin/category']">
                         <span class="material-icons">category</span>
                         <span>Thể loại</span>
                     </div>
-                    <div class="system-bar-albums">
+                    <div class="system-bar-albums" [routerLink]="['/admin/album']">
                         <span class="material-icons">album</span>
                         <span>Albums</span>
                     </div>
-                    <div class="system-bar-musics">
+                    <div class="system-bar-musics" [routerLink]="['/admin/song']">
                         <span class="material-icons">music_note</span>
                         <span>Bài hát</span>
                     </div>
@@ -52,7 +52,7 @@
             </div>
           
             <div class="admin-container" >
-                
+                <router-outlet></router-outlet>
             </div>
       
     </div>

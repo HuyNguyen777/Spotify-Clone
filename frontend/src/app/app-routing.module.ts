@@ -14,6 +14,10 @@ import { UsersComponent } from './pagesadmin/users/users.component';
 import { UserGroupComponent } from './pagesadmin/user-group/user-group.component';
 import { ArtistCardComponent } from './components/artist-card/artist-card.component';
 import { ArtistComponent } from './pagesadmin/artist/artist.component';
+import { CategoryComponent } from './pagesadmin/category/category.component';
+import { MusicPlayerComponent } from './components/music-player/music-player.component';
+import { AlbumComponent } from './pagesadmin/album/album.component';
+import { SongsListComponent } from './pagesadmin/songs-list/songs-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -22,7 +26,10 @@ const routes: Routes = [
     children:[
       { path: 'users', component: UsersComponent },
       { path: 'user-group', component: UserGroupComponent },
-      { path: 'artist', component: ArtistComponent}
+      { path: 'artist', component: ArtistComponent},
+      { path: 'category', component: CategoryComponent },
+      { path: 'album', component: AlbumComponent },
+      { path: 'song', component: SongsListComponent }
     ] },
   { path: 'login', component: LoginComponent },
   //{ path: 'song/:song_id', component: SongComponent },
