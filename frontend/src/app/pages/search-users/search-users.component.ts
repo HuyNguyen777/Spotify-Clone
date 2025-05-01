@@ -2,8 +2,8 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { timestamp } from 'rxjs';
-
+import { ChatComponent } from '../chat/chat.component';
+import { ChatService } from '../../services/chat.service';
 @Component({
   selector: 'app-search-users',
   templateUrl: './search-users.component.html',
@@ -15,8 +15,14 @@ export class SearchUsersComponent {
   users: any[] = [];
   token = localStorage.getItem('access_token')!;
   currentuser!: number;
-  constructor(private http: HttpClient, private router: Router) {}
+  chattedUsers: { user_id: number; user_name: string }[] = [];
+  chats: any[] = [];
 
+  constructor(private http: HttpClient, private router: Router,private chatService: ChatService) {}
+  ngOnInit(): void {
+    
+    this.getUserChats();
+  }
   onSearch() {
     const q = this.searchQuery.trim();
     if (!q) {
@@ -57,7 +63,6 @@ export class SearchUsersComponent {
             }
           }).subscribe(checkRes => {
             if (checkRes.exists) {
-              // đã có đoạn chat → điều hướng
               this.router.navigate(['/chat', checkRes.chat_id]);
            
             } else {
@@ -73,5 +78,19 @@ export class SearchUsersComponent {
           });
         });
     }
+    getUserChats() {
+      this.http.get<any>('http://localhost:8000/api/chat/get-user-chats/', {
+        params: { user: 7 }
+      }).subscribe({
+        next: data => {
+          this.chats = data;
+          console.log('Fetched chats:', this.chats);  // <-- Đây mới là lúc dữ liệu đã được gán
+        },
+        error: err => console.error('Error fetching chats:', err)
+      });
+    
+      // console.log(this.chats);  <-- Chỗ này dữ liệu chưa về, nên sẽ là rỗng
+    }
+    
     
 }

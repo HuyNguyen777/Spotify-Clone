@@ -12,7 +12,13 @@ export interface Message {
   time: string;
   isRead: boolean;
 }
-
+export interface Chat {
+  id: number;
+  user1_id: number;
+  user2_id: number;
+  timestamp: string;
+  
+}
 @Injectable({ providedIn: 'root' })
 export class ChatService {
   private socket!: WebSocket;
@@ -91,5 +97,10 @@ export class ChatService {
 
   fetchHistory(chatId: number): Observable<Message[]> {
     return this.http.get<Message[]>(`http://localhost:8000/api/chat/${chatId}/messages/`);
+  }
+  private apiUrl = 'http://localhost:8000/api/chat/get-user-chats/';
+
+  getUserChats(currentUserID: number): Observable<any> {
+    return this.http.get<Chat>(`${this.apiUrl}${currentUserID}/`);
   }
 }

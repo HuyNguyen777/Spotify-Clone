@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 import json
 from rest_framework.response import Response
+from django.db.models import Q
 
 from chat.models import Message
 from chat_message.models import Chat_Message
@@ -134,3 +135,37 @@ class MessageViewSet(viewsets.ModelViewSet):
 
         else:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
+        
+    @api_view(['GET'])
+    def get_user_chats(request):
+        user_id_str = request.GET.get('user')
+        if not user_id_str:
+            return Response({'error': 'User ID is required'}, status=400)
+
+        try:
+            user_id = int(user_id_str)
+            user = User.objects.get(user_id=user_id)
+        except (ValueError, User.DoesNotExist):
+            return Response({'error': 'Invalid User ID'}, status=400)
+
+        # Lấy các Message mà user tham gia
+        chats = Message.objects.filter(
+            Q(user1_id=user) | Q(user2_id=user)
+        ).order_by('-timestamp')
+
+        data = []
+        for chat in chats:
+            # Nếu user là user1 thì partner là user2, ngược lại partner là user1
+            if chat.user1_id_id == user_id:
+                partner = chat.user2_id
+            else:
+                partner = chat.user1_id
+
+            data.append({
+                'chat_id': chat.id,
+                'with_user_id': partner.user_id,
+                'with_user_name': partner.user_name,
+                'last_message_time': chat.timestamp.isoformat(),
+            })
+
+        return Response(data, status=200)
