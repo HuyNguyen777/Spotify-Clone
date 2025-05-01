@@ -19,18 +19,18 @@
       </div>
   
       <div
-      *ngFor="let track of songsList; let i = index" class="artist-table-row">
+      *ngFor="let track of song; let i = index" class="artist-table-row">
         <div>{{ i + 1 }}</div>
-        <div>{{ track.trackid }}</div>
+        <div>{{ track.track_id }}</div>
         <div>
-          <img [src]="track.image" alt="artist" class="artist-img" />
+          <img [src]="track.image_url" alt="artist" class="artist-img" />
         </div>
         <div>{{ track.title }}</div>
         <div>{{ track.price }}</div>
-        <div>{{ track.ReleaseDate }}</div>
-        <div>{{ track.NameMp3 }}</div>
-        <div>{{ track.Albumid }}</div>
-        <div>{{ track.ArtistId }}</div>
+        <div>{{ track.release_date }}</div>
+        <div>{{ track.namemp3 }}</div>
+        <div>{{ track.album }}</div>
+        <div>{{ getArtistName(track.artist) }}</div>
         <div>
           <button class="edit-btn">Edit</button>
           <button class="delete-btn">Delete</button>

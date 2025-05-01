@@ -27,7 +27,6 @@ export class ChatService {
     this.socket.onopen = () => {
       // WebSocket kết nối thành công
       console.log('WebSocket connected successfully');
-      alert('WebSocket connected successfully'); // Hiển thị thông báo thành công
     };
 
     this.socket.onmessage = (event) => {
@@ -42,13 +41,11 @@ export class ChatService {
     this.socket.onerror = (error) => {
       // Lỗi khi kết nối WebSocket
       console.error('WebSocket error:', error);
-      alert('WebSocket connection failed'); // Hiển thị thông báo lỗi kết nối
     };
 
     this.socket.onclose = () => {
       // WebSocket đóng kết nối
       console.log('WebSocket closed');
-      alert('WebSocket connection closed'); // Hiển thị thông báo khi kết nối bị đóng
     };
   }
 
