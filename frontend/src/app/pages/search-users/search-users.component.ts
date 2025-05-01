@@ -2,6 +2,7 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { timestamp } from 'rxjs';
 
 @Component({
   selector: 'app-search-users',
@@ -29,8 +30,38 @@ export class SearchUsersComponent {
         error: () => this.users = []
       });
   }
-  goChat(username: string) {
+  /*goChat(username: string) {
     // điều hướng đến /chat/:receiver
     this.router.navigate(['/chat', username]);
-  }
+  }*/
+    goChat(userid: number) {
+      this.http.get<any>(`http://localhost:8000/api/auth/get-user_id/?access_token=${this.token}`)
+        .subscribe(currentUser => {
+          const currentUserId = currentUser.user_id;
+    
+          // B1: Kiểm tra chat đã tồn tại chưa
+          this.http.get<any>('http://localhost:8000/api/chat/check/', {
+            params: {
+              user1_id: currentUserId,
+              user2_id: userid
+            }
+          }).subscribe(checkRes => {
+            if (checkRes.exists) {
+              // đã có đoạn chat → điều hướng
+              this.router.navigate(['/chat', checkRes.chat_id]);
+           
+            } else {
+              // chưa có → gọi API tạo chat mà không cần token
+              this.http.post<any>('http://localhost:8000/api/chat/create_chat/', {
+                user1_id: currentUserId,
+                user2_id: userid,
+              }).subscribe(createRes => {
+                this.router.navigate(['/chat', createRes.id]);  // điều hướng đến đoạn chat mới
+              });
+            }
+            
+          });
+        });
+    }
+    
 }

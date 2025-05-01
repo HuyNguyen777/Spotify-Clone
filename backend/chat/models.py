@@ -10,4 +10,4 @@ class Message(models.Model):
         db_table = 'Chat' 
 
     def __str__(self):
-        return f'{self.user1_id.username} to {self.user2_id.username}'
+        return f'{self.user1_id.user_id} to {self.user2_id.user_id}'

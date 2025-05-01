@@ -12,8 +12,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class ChatComponent implements OnInit {
   token!: string;
-  receiver!: string;
-  currentUser!: string;
+  receiver!: number;
+  currentUser!: number;
   messages: any[] = [];
   newMessage: string = '';
 
@@ -34,17 +34,31 @@ export class ChatComponent implements OnInit {
       this.currentUser = decoded['user_name'] || decoded['username'] || decoded['user_id']?.toString()!;
     }
   
-    this.receiver = this.route.snapshot.paramMap.get('receiver')!;
+    this.receiver = Number(this.route.snapshot.paramMap.get('receiver'));
   
     if (this.token && this.receiver) {
       // Connect to WebSocket
-      this.chatService.connect( this.receiver);
-  
+      this.chatService.connect(this.receiver);
+    /*  this.chatService.getChatHistory(this.receiver).subscribe(history => {
+        this.messages = history.map(m => ({
+          message: m.message_text,
+          sender: m.sender_id,
+          time: m.time,
+          date: m.date,
+          is_read: m.is_read,
+          chat_id: m.chat_id,
+          id: m.id
+        }));
+        setTimeout(() => this.scrollToBottom(), 100);
+      });*/
+      
       // Handle incoming messages
       this.chatService.onMessage(msg => {
         this.messages.push(msg);
         setTimeout(() => this.scrollToBottom(), 100);
       });
+      
+      
     } else {
       console.error('Invalid token or receiver');
     }
@@ -52,12 +66,16 @@ export class ChatComponent implements OnInit {
   
 
   sendMessage() {
-    if (!this.newMessage.trim()) return;
-    this.chatService.sendMessage(this.newMessage, this.receiver);
-    this.messages.push({ message: this.newMessage, sender: this.currentUser });
-    this.newMessage = '';
-    setTimeout(() => this.scrollToBottom(), 100);
+    if (this.newMessage.trim()) {
+      this.chatService.sendMessage({
+        message_text: this.newMessage,
+        sender_id: this.currentUser,
+        chat_id: this.receiver,
+      });
+      this.newMessage = '';
+    }
   }
+  
 
   private scrollToBottom() {
     this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
