@@ -79,18 +79,26 @@ export class SearchUsersComponent {
         });
     }
     getUserChats() {
-      this.http.get<any>('http://localhost:8000/api/chat/get-user-chats/', {
-        params: { user: 7 }
-      }).subscribe({
-        next: data => {
-          this.chats = data;
-          console.log('Fetched chats:', this.chats);  // <-- Đây mới là lúc dữ liệu đã được gán
-        },
-        error: err => console.error('Error fetching chats:', err)
-      });
+      this.http.get<any>(`http://localhost:8000/api/auth/get-user_id/?access_token=${this.token}`)
+        .subscribe({
+          next: currentUser => {
+            const currentid = currentUser.user_id;
     
-      // console.log(this.chats);  <-- Chỗ này dữ liệu chưa về, nên sẽ là rỗng
+            this.http.get<any>('http://localhost:8000/api/chat/get-user-chats/', {
+              params: { user: currentid }
+            }).subscribe({
+              next: data => {
+                this.chats = data;
+                console.log('Fetched chats:', this.chats);
+              },
+              error: err => console.error('Error fetching chats:', err)
+            });
+    
+          },
+          error: err => console.error('Error getting user id:', err)
+        });
     }
+    
     
     
 }

@@ -5,9 +5,8 @@ import { Artist, ArtistService } from '../../services/artists.service';
 import { Router } from '@angular/router';
 import { MusicPlayerComponent } from '../../components/music-player/music-player.component';
 import { AuthService } from '../../services/auth.service';
-
-import { LoginDialogComponent } from '../../components/login-dialog/login-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { Playlist, PlaylistService } from '../../services/playlist.service';
+import { HttpClient } from '@angular/common/http';
 type PageType = 'home' | 'playlist' | 'library';
 
 @Component({
@@ -24,7 +23,10 @@ export class HomeComponent implements OnInit {
     songs: any[]
   }[] = [];
 
-  selectedPlaylistId: string | null = null;
+  selectedPlaylistId: number | null = null;
+  playlist: Playlist[] = [];
+  token = localStorage.getItem('access_token')!;
+
 
   createAndSelectNewPlaylist() {
     console.log("Logged in?", this.authService.isLoggedIn());
@@ -40,8 +42,8 @@ export class HomeComponent implements OnInit {
       songs: []
     };
     
-    this.playlists.push(newPlaylist);           // Thêm vào danh sách sidebar
-    this.selectedPlaylistId = newPlaylist.id;        // Chọn playlist vừa tạo
+    //this.playlist.push();           // Thêm vào danh sách sidebar
+    //this.selectedPlaylistId = newPlaylist.id;        // Chọn playlist vừa tạo
     this.currentPage = 'playlist';   
     this.sb.isHomeVisible.next(false);           // Đổi trang hiển thị
     this.sb.setPlayListVisible.next(true);           // Hiển thị vùng playlist nếu bạn dùng service
@@ -65,7 +67,8 @@ export class HomeComponent implements OnInit {
     private artistService: ArtistService,
     private router:Router,
     private authService: AuthService,
-    private dialog: MatDialog,
+    private playlistService: PlaylistService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -80,6 +83,7 @@ export class HomeComponent implements OnInit {
         }
       });
     });
+    this.getUserPlaylist();
   }
 
   onNavigation(pageName: PageType) {
@@ -95,7 +99,7 @@ export class HomeComponent implements OnInit {
     console.log('Navigate to:', pageName);
   } 
 
-  selectPlaylist(id: string) {
+  selectPlaylist(id: number) {
     this.selectedPlaylistId = id;
     this.currentPage = 'playlist';
     this.sb.isSearchVisible.next(false);
@@ -104,7 +108,7 @@ export class HomeComponent implements OnInit {
   }
 
   get selectedPlaylist() {
-    return this.playlists.find(p => p.id === this.selectedPlaylistId) || null;
+    return this.playlist.find(p => p.playlist_id === this.selectedPlaylistId) || null;
   }
     
   getArtistName(artistId: number): string {
@@ -115,5 +119,34 @@ export class HomeComponent implements OnInit {
   onClickSong(clickedSong: Track, allSongs: Track[]) {
     this.musicPlayer.setQueueAndPlay(allSongs, clickedSong);
   }
+
+  getUserPlaylist() {
+    this.http.get<any>(`http://localhost:8000/api/auth/get-user_id/?access_token=${this.token}`)
+      .subscribe({
+        next: currentUser => {
+          const currentid = currentUser.user_id;
+  
+          this.http.get<any>('http://localhost:8000/api/playlists/getPLbyUser/', {
+            params: { user_id: currentid }
+          }).subscribe({
+            next: data => {
+              // Kiểm tra nếu data là một đối tượng, chuyển nó thành mảng
+              if (Array.isArray(data)) {
+                this.playlist = data;  // Nếu đã là mảng, sử dụng trực tiếp
+              } else {
+                // Nếu không phải mảng, tạo mảng với đối tượng đó
+                this.playlist = [data];
+              }
+              console.log('Playlist:', this.playlist);
+            },
+            error: err => console.error('Error fetching playlist:', err)
+          });
+  
+        },
+        error: err => console.error('Error getting user id:', err)
+      });
+  }
+  
+  
 
 }
