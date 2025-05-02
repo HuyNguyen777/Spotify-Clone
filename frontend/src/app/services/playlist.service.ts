@@ -6,8 +6,8 @@ export interface Playlist {
     playlist_id: number;
     name: string;
     ispublic: boolean;
-    releasedate: Date;
-    user_id: number;
+    releasedate: string;
+    user: number;
 }
 @Injectable({
     providedIn: 'root'

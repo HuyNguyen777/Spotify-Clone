@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from rest_framework.decorators import action
 
 # tracks/views.py
 from rest_framework import viewsets, status
@@ -35,4 +36,30 @@ class PlayListDetailViewSet(viewsets.ModelViewSet):
         playlistdetail = self.get_object()
         playlistdetail.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+    @action(detail=False, methods=['get'], url_path='by-playlist')
+    def get_by_playlist(self, request):
+        playlist_id_str = request.query_params.get('playlist_id')
+        if not playlist_id_str:
+            return Response({'error': 'Playlist ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            playlist_id = int(playlist_id_str)
+        except ValueError:
+            return Response({'error': 'Invalid Playlist ID'}, status=status.HTTP_400_BAD_REQUEST)
+
+        playlist_details = PlaylistDetail.objects.filter(playlist_id=playlist_id)
+
+        if not playlist_details:
+            return Response({'message': 'No tracks found for this playlist'}, status=status.HTTP_200_OK)
+
+        # Dữ liệu trả về
+        data = []
+        for playlist_detail in playlist_details:
+            data.append({
+                'track_id': playlist_detail.track.track_id,
+                'track_title': playlist_detail.track.title,
+                'releasedate': playlist_detail.track.release_date.isoformat(),
+                'album_name': playlist_detail.track.album.title,
+            })
+
+        return Response(data, status=status.HTTP_200_OK)

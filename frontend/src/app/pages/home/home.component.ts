@@ -7,6 +7,7 @@ import { MusicPlayerComponent } from '../../components/music-player/music-player
 import { AuthService } from '../../services/auth.service';
 import { Playlist, PlaylistService } from '../../services/playlist.service';
 import { HttpClient } from '@angular/common/http';
+import { catchError, map, Observable, throwError } from 'rxjs';
 type PageType = 'home' | 'playlist' | 'library';
 
 @Component({
@@ -147,6 +148,46 @@ export class HomeComponent implements OnInit {
       });
   }
   
+  getUserId(): Observable<number> {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      return throwError(() => new Error('Access token is missing'));
+    }
   
+    return this.http.get<any>(`http://localhost:8000/api/auth/get-user_id/?access_token=${token}`)
+      .pipe(
+        map(res => res.user_id),
+        catchError(err => {
+          console.error('Error fetching user_id:', err);
+          return throwError(() => new Error('Failed to get user_id'));
+        })
+      );
+  }
+  createNewPlaylist() {
+    this.getUserId().subscribe({
+      next: userId => {
+        const newPlaylist = {
+          playlist_id: 0,
+          name: `Playlist ${this.playlist.length + 1}`,
+          user: userId,
+          ispublic: false,
+          releasedate: new Date().toISOString().split('T')[0]
+
+        };
+  
+        this.http.post('http://localhost:8000/api/playlists/', newPlaylist)
+          .subscribe({
+            next: res => {
+              console.log('Playlist created:', res);
+              this.playlist.push(newPlaylist);
+            },
+            error: err => console.error('Error creating playlist:', err)
+          });
+      },
+      error: err => console.error('Error getting user ID:', err)
+    });
+  }
+  
+    
 
 }

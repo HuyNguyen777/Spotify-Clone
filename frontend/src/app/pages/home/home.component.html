@@ -15,7 +15,7 @@
       
         <div class="spotify__home-container_side-bar-item" (click)="createAndSelectNewPlaylist()">
           <i class="fas fa-plus-square"></i>
-          <span *ngIf="!isCollapsed">Create Playlist</span>
+          <span *ngIf="!isCollapsed" (click)="createNewPlaylist()">Create Playlist</span>
         </div>
 
         <div *ngFor="let pl of playlist" class="spotify__home-container_side-bar-item" (click)="selectPlaylist(pl.playlist_id)">
