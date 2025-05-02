@@ -60,6 +60,9 @@ class PlayListDetailViewSet(viewsets.ModelViewSet):
                 'track_title': playlist_detail.track.title,
                 'releasedate': playlist_detail.track.release_date.isoformat(),
                 'album_name': playlist_detail.track.album.title,
+                'artist_name': playlist_detail.track.artist.name,
+                'track_img': playlist_detail.track.image_url,
+                'track_namemp3': playlist_detail.track.namemp3
             })
 
         return Response(data, status=status.HTTP_200_OK)

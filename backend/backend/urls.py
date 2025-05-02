@@ -14,6 +14,7 @@ urlpatterns = [
     path('api/auth/', include('users.urls')),
     path('api/chat/', include('chat.urls')),
     path('api/', include('playlists.urls')),
+    path('api/', include('playlistdetail.urls')),
 
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
