@@ -52,7 +52,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 {
                     'type': 'chat_message', 
                     'message_text': m['message_text'],
-                    'sender_id_id': m['sender_id'],
+                    'sender_id': m['sender_id'],
                     'chat_id':m['chat_id'],
                     'created_at':m['created_at'],
                     'isRead':m['isRead'],
@@ -77,7 +77,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'message_type': 'create_chat_response',
             'message_text': event['message_text'],
-            'sender_id_id': event['sender_id_id'],
+            'sender_id': event['sender_id'],
             'chat_id':event['chat_id'],
             'isRead':event['isRead'],
             'created_at':event['created_at'],

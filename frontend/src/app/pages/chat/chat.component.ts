@@ -25,30 +25,33 @@ export class ChatComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.chatId = +(this.route.snapshot.paramMap.get('chatId')??0);
+    this.chatId = +(this.route.snapshot.paramMap.get('chatId') ?? 0);
     this.chatService.connect(this.chatId);
-    this.http.get<any>(`http://localhost:8000/api/auth/get-user_id/?access_token=${this.token}`)
-    .subscribe(currentUser => {
-      this.userId = currentUser.user_id;
-    });
     
-    this.chatService.fetchHistory(this.chatId).subscribe(
-      (response: any) => {
-        // Kiểm tra phản hồi từ API, gán tin nhắn vào biến messages
-        this.messages = response.messages; // Hoặc response nếu API trả về mảng trực tiếp
-        console.log('Messages fetched:', this.messages);
-      },
-      error => {
-        console.error('Error fetching messages:', error);
-      }
-    );
-
-    this.subs.push(
-      this.chatService.onMessage().subscribe(msg => {
-        this.messages.push(msg);
-      })
-    );
+    // Bắt đầu từ đây: chỉ khi có userId mới xử lý tiếp
+    this.http.get<any>(`http://localhost:8000/api/auth/get-user_id/?access_token=${this.token}`)
+      .subscribe(currentUser => {
+        this.userId = currentUser.user_id;
+        
+        // Lúc này mới fetch lịch sử chat
+        this.chatService.fetchHistory(this.chatId).subscribe(
+          (response: any) => {
+            this.messages = response.messages;
+          },
+          error => console.error('Error fetching messages:', error)
+        );
+  
+        // Lúc này mới lắng nghe tin nhắn WebSocket
+        this.subs.push(
+          this.chatService.onMessage().subscribe(msg => {
+            console.log('Received WS message:', msg);
+            console.log('Current userId:', this.userId);
+            this.messages.push(msg);
+          })
+        );
+      });
   }
+  
 
   ngOnDestroy(): void {
     this.chatService.disconnect();

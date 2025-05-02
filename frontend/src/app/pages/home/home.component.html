@@ -18,9 +18,9 @@
           <span *ngIf="!isCollapsed">Create Playlist</span>
         </div>
 
-        <div *ngFor="let playlist of playlists" class="spotify__home-container_side-bar-item" (click)="selectPlaylist(playlist.id)">
+        <div *ngFor="let pl of playlist" class="spotify__home-container_side-bar-item" (click)="selectPlaylist(pl.playlist_id)">
           <i class="fas fa-music"></i>
-          <span *ngIf="!isCollapsed">{{ playlist.name }}</span>
+          <span *ngIf="!isCollapsed">{{ pl.name }}</span>
         </div>
 
       </div>
@@ -76,8 +76,7 @@
                 <app-playlist 
                     *ngIf="selectedPlaylist"
                     [playlistName]="selectedPlaylist.name"
-                    [playlistId]="selectedPlaylist.id"
-                    [songInPlayList]="selectedPlaylist.songs"
+                    
                 ></app-playlist>
             </div>
           </div> 

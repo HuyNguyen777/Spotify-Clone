@@ -7,7 +7,7 @@
   </div>
 
   <div class="chat-input">
-    <input type="text" [(ngModel)]="newText" placeholder="Aa" />
-    <button (click)="send()">📨</button>
+    <input type="text" [(ngModel)]="newText" (keydown.enter)="send()" placeholder="Aa" />
+    <button (click)="send()" >📨</button>
   </div>
 </div>
