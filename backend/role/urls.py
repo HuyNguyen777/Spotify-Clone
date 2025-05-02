@@ -1,6 +1,8 @@
 from django.urls import path
-from .views import RoleListView
+from .views import RoleListCreateView
+from .views import RoleDetailView
 
 urlpatterns = [
-    path('roles/',RoleListView.as_view()  ,name='role-list'),
+    path('roles/',RoleListCreateView.as_view()  ,name='role-list-create'),
+    path('roles/<int:pk>/', RoleDetailView.as_view(), name='role-detail'),
 ]
