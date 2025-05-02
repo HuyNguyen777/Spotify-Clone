@@ -51,7 +51,6 @@ def register(request):
 
 
 
-
 @api_view(['POST'])
 def login_view(request):
     username = request.data.get('username')

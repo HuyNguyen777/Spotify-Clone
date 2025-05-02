@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Role, RoleService } from '../../services/role.service';
 
+export interface NewRole {
+  role_name: string;
+  deception: string;
+}
+
 @Component({
   selector: 'app-user-group',
   standalone: false,
@@ -9,6 +14,8 @@ import { Role, RoleService } from '../../services/role.service';
 })
 export class UserGroupComponent implements OnInit {
  roles : Role[] = [];
+ isEditMode = false;
+ editRoleId: number | null = null;
 
  constructor(private roleService: RoleService){}
 
@@ -22,27 +29,72 @@ export class UserGroupComponent implements OnInit {
     this.isModalOpen = false;
   }
 
-  newRole = {
-    roleid: '',
-    roleName: '',
-    deception: ''
+  editRole(role: Role) {
+    this.isEditMode = true;
+    this.isModalOpen = true;
+    this.editRoleId = role.role_id;
+    this.newRole = {
+      role_name: role.role_name,
+      deception: role.deception
+    };
   }
 
-  submitFormSong(){
-    if (this.newRole.roleid && this.newRole.deception) {
-      this.newRole= { 
-        roleid: '',
-        roleName: '',
-        deception: ''
-      };
-      this.closeCreate();
+  newRole: NewRole = {
+    role_name: '',
+    deception: ''
+  };
+
+  submitFormRole(){
+    if(this.isEditMode && this.editRoleId !== null){
+      this.roleService.updateRole(this.editRoleId, this.newRole).subscribe({
+        next: () => {
+          this.fetchRole();
+          this.closeCreate();
+        }
+      })
+    } else{
+      this.roleService.createRole(this.newRole).subscribe({
+        next: () =>{
+          this.closeCreate();
+          this.fetchRole();
+        },
+        error: (err) => {
+          console.log('loi', err);
+        }
+       });
     }
   }
 
-  ngOnInit(): void {
-      this.roleService.getRole().subscribe((data) =>{
-        console.log("list" ,data);
+  deleteRole(id: number) {
+    if (confirm("Bạn có chắc muốn xoá không?")) {
+      this.roleService.deleteRole(id).subscribe({
+        next: () => this.fetchRole(),
+        error: (err) => console.error("Xoá thất bại", err)
+      });
+    }
+  }
+
+  //load lai ds
+  fetchRole(){
+    this.roleService.getRole().subscribe({
+      next: (data) => {
         this.roles = data;
+      },
+      error: (err) =>{
+        console.log('Loi load danh sach', err);
+      }
+    });
+  }
+
+  ngOnInit(): void {
+      this.roleService.getRole().subscribe(
+        { next:(data) =>{
+          console.log("list" ,data);
+          this.roles = data;
+        },
+        error: (err) =>{
+          console.error('Loi ', err);
+        }
       });
   }
   
