@@ -13,7 +13,7 @@ export interface Track {
   release_date: string;
   namemp3: string;
   artist: number;
-  album: Album;
+  album: number;
 }
 
 @Injectable({

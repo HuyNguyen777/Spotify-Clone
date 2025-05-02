@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from .models import Track
 from .serializers import TrackSerializer
 from artists.models import Artist  # Import mô hình Artist
+from albums.models import Album
 
 class TrackViewSet(viewsets.ModelViewSet):
     queryset = Track.objects.all()
@@ -52,3 +53,10 @@ class TrackViewSet(viewsets.ModelViewSet):
             return JsonResponse({'artist_id': artist_id, 'name': artist.name})
         except Artist.DoesNotExist:
             return JsonResponse({'error': 'Artist not found'}, status=404)
+        
+    def get_album_name(request, album_id):
+        try:
+            album = Album.objects.get(pk=album_id)
+            return JsonResponse({'album_id': album_id, 'title': album.title})
+        except Album.DoesNotExist:
+            return JsonResponse({'error': 'Album not found'}, status=404)

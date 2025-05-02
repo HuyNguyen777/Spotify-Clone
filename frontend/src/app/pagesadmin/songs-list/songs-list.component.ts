@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Track, TrackService } from '../../services/tracks.service';
 import { ArtistService } from '../../services/artists.service';
 import { map, Observable } from 'rxjs';
+import { AlbumService } from '../../services/albums.service';
 @Component({
   selector: 'app-songs-list',
   standalone: false,
@@ -25,10 +26,11 @@ export class SongsListComponent {
   isModalOpen = false;
 
 
-  constructor(private trackService: TrackService, private artistService: ArtistService) {}
+  constructor(private trackService: TrackService, private artistService: ArtistService, private albumService: AlbumService) {}
 
   public song: Track[] = [];
   artistNames: { [key: number]: string } = {};
+  albumNames: { [key: number]: string } = {};
   ngOnInit(): void {
     this.trackService.getTracks().subscribe(data => {
       this.song = data;
@@ -45,10 +47,24 @@ export class SongsListComponent {
         }
       });
     });
+    this.trackService.getTracks().subscribe((tracks) => {
+      this.song = tracks;
+      tracks.forEach((track) => {
+        if(track.album && !this.albumNames[track.album]) {
+          this.albumService.getAlbumName(track.album).subscribe((res) => {
+            this.albumNames[track.album] = res.name;
+          })
+        }
+      })
+    })
+
   }
 
   getArtistName(artistId: number): string {
     return this.artistNames[artistId] || "undefined";
+  }
+  getAlbumName(albumId: number): string{
+    return this.albumNames[albumId] || "undefined";
   }
   openCreate(){
     this.isModalOpen = true;
