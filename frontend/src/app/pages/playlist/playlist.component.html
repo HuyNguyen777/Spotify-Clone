@@ -34,18 +34,18 @@
         </div>
 
         <!-- Song List -->
-        <div *ngFor="let song of songsInPlaylist; let i = index" class="playlist-song-row">
+        <div *ngFor="let song of tracks; let i = index" class="playlist-song-row" (click)="onClickSong(song,tracks)" >
           <div class="col-number">{{ i + 1 }}</div>
-          <div class="col-title">
-            <img [src]="song.thumbnail" alt="thumbnail" width="40px" height="40px" />
+          <div class="col-title" >
+            <img [src]="song.image_url" alt="thumbnail" width="40px" height="40px" />
             <div class="title-info">
               <div class="song-title">{{ song.title }}</div>
-              <div class="song-artist">{{ song.artist }}</div>
+              <div class="song-artist">{{ song.artist}}</div>
             </div>
           </div>
           <div class="col-album">{{ song.album }}</div>
-          <div class="col-date">{{ song.dateAdded }}</div>
-          <div class="col-duration">{{ song.duration }}</div>
+          <div class="col-date">{{ song.release_date }}</div>
+          <div class="col-duration">{{ 9 }}</div>
         </div>
       </div>
     </div>
@@ -74,5 +74,6 @@
       </div>
     </div>
     -->
+    
 </div>
   

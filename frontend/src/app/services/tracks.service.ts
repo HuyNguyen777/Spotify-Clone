@@ -8,7 +8,7 @@ export interface Track {
   track_id: number;
   title: string;
   is_copyright: boolean;
-  price: string;
+  price: number;
   image_url: string;
   release_date: string;
   namemp3: string;

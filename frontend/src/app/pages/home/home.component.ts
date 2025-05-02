@@ -37,17 +37,8 @@ export class HomeComponent implements OnInit {
     alert("You must log in first!");
     return;
   }
-    const newPlaylist = {
-      id: Date.now().toString(), // tạo ID ngẫu nhiên đơn giản
-      name: `Playlist ${this.playlists.length + 1}`,
-      songs: []
-    };
-    
-    //this.playlist.push();           // Thêm vào danh sách sidebar
-    //this.selectedPlaylistId = newPlaylist.id;        // Chọn playlist vừa tạo
-    this.currentPage = 'playlist';   
-    this.sb.isHomeVisible.next(false);           // Đổi trang hiển thị
-    this.sb.setPlayListVisible.next(true);           // Hiển thị vùng playlist nếu bạn dùng service
+    this.createNewPlaylist();
+  
   }
 
   public songCards: Track[] = [];  // Định nghĩa songCards là Track[]
