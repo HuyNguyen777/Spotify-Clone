@@ -18,8 +18,8 @@ export class SongsListComponent {
       price: '23',
       ReleaseDate: '12/12/2025',
       NameMp3: 'chungtakhongthuocvenhau.mp3',
-      Albumid: '1',
-      ArtistId: '1'
+      Albumid: '',
+      ArtistId: ''
     }
   ];
 
@@ -52,7 +52,8 @@ export class SongsListComponent {
       tracks.forEach((track) => {
         if(track.album && !this.albumNames[track.album]) {
           this.albumService.getAlbumName(track.album).subscribe((res) => {
-            this.albumNames[track.album] = res.name;
+            this.albumNames[track.album] = res.title;
+            console.log()
           })
         }
       })
