@@ -24,6 +24,8 @@ export class TrackService {
     throw new Error('Method not implemented.');
   }
   private apiUrl = 'http://localhost:8000/api/tracks/';
+  private baseUrl = 'http://localhost:8000/api/';
+
 
   constructor(private http: HttpClient) {}
 
@@ -40,10 +42,19 @@ export class TrackService {
       track_id: trackId
     });
   }
-  
-
-
-  createTracks(formData: FormData): Observable<any> {
-    return this.http.post(this.apiUrl, formData);
+  createTrack(formData: FormData) {
+    return this.http.post(`${this.baseUrl}tracks/`, formData);
   }
+
+ // Nếu chưa có model, có thể để any[]
+getArtists(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}artists/`);
+}
+
+getAlbums(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}albums/`);
+}
+
+
+  
 }

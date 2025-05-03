@@ -16,7 +16,7 @@ export interface Album {
 })
 export class AlbumService {
 
-  private apiUrl = 'http://localhost:8000/api/album/';
+  private apiUrl = 'http://localhost:8000/api/albums/';
 
   constructor(private http: HttpClient) {}
 

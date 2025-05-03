@@ -41,30 +41,58 @@
 
 <!-- Modal Form -->
 <div class="modal-overlay" *ngIf="isModalOpen">
-    <div class="modal-content">
-      <h3>Create New Track</h3>
-      <form (ngSubmit)="submitFormSong()">
-        <input type="text"  [(ngModel)]="newTrack.title" placeholder="Title" name="title" required />
-        <input type="number" [(ngModel)]="newTrack.price" placeholder="Price" name="price" required />
-        <input type="date" placeholder="Release Date" [(ngModel)]="newTrack.ReleaseDate" name="releaseday" required />
-       
-         <!-- Select Album -->
-        <select name="albumid" [(ngModel)]="newTrack.Albumid" required>
-          <option *ngFor="let a of album" [value]="a.album_id">{{ a.title }}</option>
-        </select>
+  <div class="modal-content">
+    <h3>Create New Track</h3>
+    <form (ngSubmit)="createTrack()" enctype="multipart/form-data">
+      <!-- Title -->
+      <input
+        type="text"
+        [(ngModel)]="newTrack.title"
+        placeholder="Title"
+        name="title"
+        required
+      />
 
-        <!-- Select Artist -->
-        <select name="artistid" [(ngModel)]="newTrack.ArtistId" required>
-          <option *ngFor="let ar of artist" [value]="ar.artist_id">{{ ar.name }}</option>
-        </select>
+      <!-- Price -->
+      <input
+        type="number"
+        [(ngModel)]="newTrack.price"
+        placeholder="Price"
+        name="price"
+        required
+      />
 
+      <!-- Release Date -->
+      <input
+        type="date"
+        placeholder="Release Date"
+        [(ngModel)]="newTrack.ReleaseDate"
+        name="releaseday"
+        required
+      />
 
-        <input type="file" accept=".mp3" (change)="onMp3Selected($event)" placeholder="Name Mp3" name="namemp3" required>
-        <input type="file" accept="image/*" (change)="onImageSelected($event)" placeholder="Image" name="img" required />
-        <div class="modal-buttons">
-          <button type="submit">Create</button>
-          <button type="button" class="cancel-btn" (click)="closeCreate()">Cancel</button>
-        </div>
-      </form>
-    </div>
+      <!-- Select Album -->
+      <select name="albumid" [(ngModel)]="newTrack.Albumid" required>
+        <option value="" disabled selected>Select Album</option>
+        <option *ngFor="let album of albums" [value]="album.album_id">{{ album.title }}</option>
+      </select>
+
+      <!-- Select Artist -->
+      <select name="artistid" [(ngModel)]="newTrack.ArtistId" required>
+        <option value="" disabled selected>Select Artist</option>
+        <option *ngFor="let artist of artists" [value]="artist.artist_id">{{ artist.name }}</option>
+      </select>
+
+      <!-- Upload MP3 File -->
+      <input type="file" accept=".mp3" (change)="onMp3FileChange($event)" required />
+      <input type="file" accept="image/*" (change)="onImageFileChange($event)" required />
+      
+
+      <!-- Buttons -->
+      <div class="modal-buttons">
+        <button type="submit">Create</button>
+        <button type="button" class="cancel-btn" (click)="closeCreate()">Cancel</button>
+      </div>
+    </form>
   </div>
+</div>
