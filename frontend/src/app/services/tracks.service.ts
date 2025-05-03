@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Artist } from './artists.service';
-import {Album} from './albums.service';
+import { Album } from './albums.service';
 export interface Track {
   track_id: number;
   title: string;
@@ -31,4 +31,8 @@ export class TrackService {
     return this.http.get<Track[]>(this.apiUrl);
   }
 
+
+  createTracks(formData: FormData): Observable<any> {
+    return this.http.post(this.apiUrl, formData);
+  }
 }

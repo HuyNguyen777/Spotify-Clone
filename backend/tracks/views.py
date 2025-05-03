@@ -30,6 +30,7 @@ class TrackViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.errors)  # Debug lỗi rõ hơn
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # Cập nhật thông tin bài hát

@@ -44,13 +44,23 @@
     <div class="modal-content">
       <h3>Create New Track</h3>
       <form (ngSubmit)="submitFormSong()">
-        <input type="text" placeholder="Title" name="title" required />
-        <input type="number" placeholder="Price" name="price" required />
-        <input type="date" placeholder="Release Date" name="releaseday" required />
-        <input type="text" placeholder="Name Mp3" name="namemp3" required>
-        <input type="number" placeholder="Album Id" name="albumid" required>
-        <input type="number" placeholder="Artist Id" name="artistid" required>
-        <input type="file" placeholder="Image" name="img" required />
+        <input type="text"  [(ngModel)]="newTrack.title" placeholder="Title" name="title" required />
+        <input type="number" [(ngModel)]="newTrack.price" placeholder="Price" name="price" required />
+        <input type="date" placeholder="Release Date" [(ngModel)]="newTrack.ReleaseDate" name="releaseday" required />
+       
+         <!-- Select Album -->
+        <select name="albumid" [(ngModel)]="newTrack.Albumid" required>
+          <option *ngFor="let a of album" [value]="a.album_id">{{ a.title }}</option>
+        </select>
+
+        <!-- Select Artist -->
+        <select name="artistid" [(ngModel)]="newTrack.ArtistId" required>
+          <option *ngFor="let ar of artist" [value]="ar.artist_id">{{ ar.name }}</option>
+        </select>
+
+
+        <input type="file" accept=".mp3" (change)="onMp3Selected($event)" placeholder="Name Mp3" name="namemp3" required>
+        <input type="file" accept="image/*" (change)="onImageSelected($event)" placeholder="Image" name="img" required />
         <div class="modal-buttons">
           <button type="submit">Create</button>
           <button type="button" class="cancel-btn" (click)="closeCreate()">Cancel</button>
