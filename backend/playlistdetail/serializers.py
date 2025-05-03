@@ -12,4 +12,14 @@ class PlaylistDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PlaylistDetail
-        fields = ['id', 'playlist', 'track', 'track_title', 'releasedate', 'album_name']
+        fields = [
+            'id',
+            'playlist',
+            'track',
+            'track_title',
+            'artist_name',
+            'album_name',
+            'releasedate',
+            'track_img',
+            'track_namemp3'
+        ]

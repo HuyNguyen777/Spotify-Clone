@@ -20,8 +20,31 @@
 
       <div class="playlist-search">
         <p>Let's find something for your playlist</p>
-        <input type="text" placeholder="Search for songs or episodes" />
+        <input
+          type="text"
+          placeholder="Search for songs or episodes"
+          [(ngModel)]="searchText"
+          (input)="onSearchChange()"
+      />
       </div>
+      <!-- Kết quả tìm kiếm -->
+      <div class="search-results" *ngIf="searchText && filteredTracks.length > 0">
+        <!-- Header Row -->
+        
+        <!-- Result Rows -->
+        <div class="search-result-item" *ngFor="let result of filteredTracks">
+          <div class="col-img">
+            <img [src]="result.image_url" width="30" height="30" />
+          </div>
+          <div class="col-title">{{ result.title }}</div>
+          <div class="col-artist">{{ getArtistName(result.artist) }}</div>
+          <div class="col-action">
+            <button class="add-button" (click)="addTrack(result.track_id)">Add</button>
+          </div>
+        </div>
+      </div>
+      
+      
 
       <div class="scrollbar-playlist">
         <!-- Header Row -->

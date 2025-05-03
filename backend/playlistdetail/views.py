@@ -66,3 +66,23 @@ class PlayListDetailViewSet(viewsets.ModelViewSet):
             })
 
         return Response(data, status=status.HTTP_200_OK)
+    @action(detail=False, methods=['post'], url_path='add-track')
+    def add_track(self, request):
+        playlist_id = request.data.get('playlist_id')
+        track_id = request.data.get('track_id')
+        if not playlist_id or not track_id:
+            return Response({'error': 'playlist_id and track_id are required'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            playlist_id = int(playlist_id)
+            track_id = int(track_id)
+        except ValueError:
+            return Response({'error': 'Invalid IDs provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Check for existing entry
+        if PlaylistDetail.objects.filter(playlist_id=playlist_id, track_id=track_id).exists():
+            return Response({'message': 'Track already in playlist'}, status=status.HTTP_200_OK)
+
+        # Create new detail
+        detail = PlaylistDetail.objects.create(playlist_id=playlist_id, track_id=track_id)
+        serializer = self.get_serializer(detail)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
