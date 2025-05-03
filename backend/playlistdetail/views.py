@@ -56,6 +56,7 @@ class PlayListDetailViewSet(viewsets.ModelViewSet):
         data = []
         for playlist_detail in playlist_details:
             data.append({
+                'id': playlist_detail.id,
                 'track_id': playlist_detail.track.track_id,
                 'track_title': playlist_detail.track.title,
                 'releasedate': playlist_detail.track.release_date.isoformat(),

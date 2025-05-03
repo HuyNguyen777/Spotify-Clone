@@ -38,6 +38,8 @@ const routes: Routes = [
   { path: 'register', component: SignupComponent },
   { path: 'chat/:chatId', component: ChatComponent },
   { path: 'search', component: SearchUsersComponent },
+  { path: 'home/playlist/:id', component: PlaylistComponent },
+
 
 ];
 
