@@ -13,7 +13,7 @@ export class PlaylistComponent {
   @Input() playlistName: string = 'My Playlist';
   @Input() playlistId: number = 1;
   @Input() songInPlayList: any[] = [];
-  Song: any[] = [];  // ✅ Mảng để lưu danh sách bài hát
+  Song: any[] = [];  // Mảng để lưu danh sách bài hát
 
   tracks: Track[] = []
   constructor(private http: HttpClient){}
