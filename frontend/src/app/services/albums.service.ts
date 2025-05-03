@@ -20,7 +20,7 @@ export class AlbumService {
 
   constructor(private http: HttpClient) {}
 
-  getAlbumName(id: number): Observable<{ name: string }> {
-    return this.http.get<{ name: string }>(`${this.apiUrl}${id}/`);
+  getAlbumName(id: number): Observable<{ title: string }> {
+    return this.http.get<{ title: string }>(`${this.apiUrl}${id}/`);
   }
 }
