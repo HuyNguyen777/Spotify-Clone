@@ -11,23 +11,23 @@
         <div>Image</div>
         <div>Name</div>
         <div>Popularity</div>
-        <div>Genre</div>
+        <div>Gener</div>
         <div>Actions</div>
       </div>
   
       <div
-      *ngFor="let artist of artistList; let i = index" class="artist-table-row">
+      *ngFor="let ar of artist; let i = index" class="artist-table-row">
         <div>{{ i + 1 }}</div>
-        <div>{{ artist.id }}</div>
+        <div>{{ ar.artist_id}}</div>
         <div>
-          <img [src]="artist.thumbnail" alt="artist" class="artist-img" />
+          <img [src]="ar.artist_img" alt="artist" class="artist-img" />
         </div>
-        <div>{{ artist.name }}</div>
-        <div>{{ artist.popularity }}</div>
-        <div>{{ artist.genre }}</div>
+        <div>{{ ar.name }}</div>
+        <div>{{ ar.popularity_score }}</div>
+        <div>{{ ar.gener }}</div>
         <div>
-          <button class="edit-btn">Edit</button>
-          <button class="delete-btn">Delete</button>
+          <button class="edit-btn" (click)="editArtist(ar)">Edit</button>
+          <button class="delete-btn" (click)="deleteArtist(ar.artist_id)">Delete</button>
         </div>
       </div>
     </div>
@@ -36,14 +36,18 @@
 <!-- Modal Form -->
 <div class="modal-overlay" *ngIf="isModalOpen">
     <div class="modal-content">
-      <h3>Create New Artist</h3>
-      <form (ngSubmit)="submitForm()">
-        <input type="text" placeholder="Artist Name" name="name" required />
-        <input type="text" placeholder="Genre" name="genre" required />
-        <input type="number" placeholder="Popularity" name="popularity" required />
-        <input type="file" placeholder="Image URL" name="thumbnail" required />
+      <h3>{{ isEditMode ? 'Edit Artist' : 'Create Artist'}}</h3>
+      <form (ngSubmit)="submitForm()" #roleFrom="ngForm">
+        <input type="text" [(ngModel)]="newArtist.name" placeholder="Artist Name" name="name" required />
+        <input type="text" [(ngModel)]="newArtist.gener" placeholder="Genre" name="genre" required />
+        <input type="number" [(ngModel)]="newArtist.popularity_score" placeholder="Popularity" name="popularity" required />
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" placeholder="Image URL" name="thumbnail" required />
+        
+        <div *ngIf="isEditMode && newArtist.artist_img">
+          <img [src]="newArtist.artist_img" alt="current image" class="current-img" width="80px" height="80px" />
+        </div>
         <div class="modal-buttons">
-          <button type="submit">Create</button>
+          <button type="submit" [disabled]="roleFrom.invalid">{{ isEditMode ? 'Update' : 'Create' }}</button>
           <button type="button" class="cancel-btn" (click)="closeModal()">Cancel</button>
         </div>
       </form>

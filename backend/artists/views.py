@@ -3,6 +3,8 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import Artist
 from .serializers import ArtistSerializer
+import os
+from django.conf import settings
 
 class ArtistViewSet(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
@@ -24,6 +26,7 @@ class ArtistViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.errors) 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # Cập nhật thông tin nghệ sĩ
@@ -46,3 +49,4 @@ class ArtistViewSet(viewsets.ModelViewSet):
             return Artist.objects.get(id=artist_id).name
         except Artist.DoesNotExist:
             return "Unknown Artist"
+        
