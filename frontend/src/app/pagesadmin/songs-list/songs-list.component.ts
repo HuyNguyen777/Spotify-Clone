@@ -25,35 +25,28 @@ export class SongsListComponent {
   artistNames: { [key: number]: string } = {};
   albumNames: { [key: number]: string } = {};
   ngOnInit(): void {
-    this.trackService.getTracks().subscribe(data => {
-      this.song = data;
-      
-    });
     this.trackService.getTracks().subscribe((tracks) => {
       this.song = tracks;
-      // Lấy tên nghệ sĩ tương ứng
+  
       tracks.forEach((track) => {
         if (track.artist && !this.artistNames[track.artist]) {
           this.artistService.getArtistName(track.artist).subscribe((res) => {
             this.artistNames[track.artist] = res.name;
           });
         }
-      });
-    });
-    this.trackService.getTracks().subscribe((tracks) => {
-      this.song = tracks;
-      tracks.forEach((track) => {
-        if(track.album && !this.albumNames[track.album]) {
+  
+        if (track.album && !this.albumNames[track.album]) {
           this.albumService.getAlbumName(track.album).subscribe((res) => {
             this.albumNames[track.album] = res.title;
-            console.log()
-          })
+          });
         }
-      })
-    })
+      });
+    });
+  
     this.loadAlbums();
     this.loadArtists();
   }
+  
 
   getArtistName(artistId: number): string {
     return this.artistNames[artistId] || "undefined";

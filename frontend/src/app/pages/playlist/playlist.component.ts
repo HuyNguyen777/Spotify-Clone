@@ -6,6 +6,7 @@ import { MusicPlayerService } from '../../services/music-player.service';
 import { ArtistService } from '../../services/artists.service';
 import { map, Observable } from 'rxjs';
 import { PlaylistService } from '../../services/playlist.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-playlist',
@@ -20,9 +21,10 @@ export class PlaylistComponent {
   Song: any[] = [];  // ✅ Mảng để lưu danh sách bài hát
   filteredTracks: Track[] = [];
   searchText: string = '';
+  username = localStorage.getItem('username')!;
 
   tracks: Track[] = []
-  constructor(private http: HttpClient,private musicPlayerService: MusicPlayerService, private trackService: TrackService,private artistService: ArtistService, private playlistDetailService: PlaylistService){}
+  constructor(private http: HttpClient,private musicPlayerService: MusicPlayerService, private trackService: TrackService,private artistService: ArtistService, private playlistDetailService: PlaylistService,private router: Router){}
   
   artistNames: { [key: number]: string } = {};
 
@@ -45,7 +47,6 @@ export class PlaylistComponent {
       });
      
   }
-  @ViewChild(MusicPlayerComponent) musicPlayer!: MusicPlayerComponent;
 
   onClickSong(clickedSong: Track, allSongs: Track[]) {
     this.musicPlayerService.setQueueAndPlay(allSongs, clickedSong);
@@ -62,7 +63,7 @@ export class PlaylistComponent {
         } else {
           this.Song = [data];
         }
-  
+        console.log(this.Song)
         // 🔁 Sau khi this.Song đã có dữ liệu, convert thành Track[]
         this.tracks = this.Song.map(s => {
           const track: Track = {
@@ -131,5 +132,62 @@ export class PlaylistComponent {
     });
   }
   
+  deleteTrack(detailId: number) {
+    if (confirm('Are you sure you want to remove this track from playlist?')) {
+      this.playlistDetailService.deleteTrackFromPlaylist(detailId).subscribe({
+        next: () => {
+          console.log('Track deleted');
+          this.getUserPlaylist(); // Cập nhật lại danh sách
+        },
+        error: err => console.error('Delete error', err)
+      });
+    }
+  }
   
+  isEditingTitle = false;
+
+  startEditingTitle() {
+    this.isEditingTitle = true;
+  }
+  
+  savePlaylistName() {
+    this.isEditingTitle = false;
+  
+    // Gọi API cập nhật tên playlist nếu cần
+    this.http.patch(`http://localhost:8000/api/playlists/${this.playlistId}/`, {
+      name: this.playlistName
+    }).subscribe({
+      next: () => console.log('Tên playlist đã được cập nhật'),
+      error: (err) => console.error('Lỗi khi cập nhật tên playlist', err)
+    });
+  }
+  isPublic: boolean = true; // Giả sử mặc định là public
+
+togglePrivacy() {
+  this.isPublic = !this.isPublic;
+
+  // Gọi API để cập nhật trạng thái public/private
+  this.http.patch(`http://localhost:8000/api/playlists/${this.playlistId}/`, {
+    is_public: this.isPublic
+  }).subscribe({
+    next: () => console.log('Cập nhật quyền truy cập playlist thành công'),
+    error: err => console.error('Lỗi khi cập nhật quyền truy cập', err)
+  });
+}
+deletePlaylist() {
+  if (confirm('Are you sure you want to delete this playlist?')) {
+    this.http.delete(`http://localhost:8000/api/playlists/${this.playlistId}/`)
+      .subscribe({
+        next: () => {
+          alert('Playlist deleted successfully');
+          // Redirect hoặc cập nhật giao diện
+        },
+        error: err => {
+          console.error('Error deleting playlist:', err);
+          alert('Failed to delete playlist');
+        }
+      });
+  }
+}
+
 }

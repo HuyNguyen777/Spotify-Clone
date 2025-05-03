@@ -3,46 +3,46 @@
       <div class="playlist-header">
         <div class="playlist-icon">🎵</div>
         <div class="playlist-info">
-          <p class="playlist-type">Public Playlist</p>
-          <h1 class="playlist-title">{{ playlistName }}</h1>
-          <p class="playlist-id">{{ playlistId }}</p>
-        </div>
+          <p class="playlist-type">
+            <span [ngClass]="{ 'public': isPublic, 'private': !isPublic }">
+              {{ isPublic ? 'Public Playlist' : 'Private Playlist' }}
+            </span>
+            <button (click)="togglePrivacy()" class="toggle-btn">
+              {{ isPublic ? 'Make Private' : 'Make Public' }}
+            </button>
+          </p>
+                    <h1 class="playlist-title" *ngIf="!isEditingTitle" (click)="startEditingTitle()">
+            {{ playlistName }}
+          </h1>
+          
+          <!-- Form sửa tên -->
+          <input
+            *ngIf="isEditingTitle"
+            type="text"
+            [(ngModel)]="playlistName"
+            (blur)="savePlaylistName()"
+            (keydown.enter)="savePlaylistName()"
+            class="playlist-title-input"
+          />
+                    <p class="playlist-id" *ngIf="tracks.length > 0">
+            {{ username }} • {{ tracks.length }} {{ tracks.length === 1 ? 'song' : 'songs' }}
+          </p>
+          </div>
       </div>
     
       <div class="playlist-actions">
-        <div class="Play-music"><img src="play.png" alt="" width="30px" height="30px" title="Invite collabora to "></div>
-        <div class="Invite-collabora-to-my-playlist"><img src="invite.png" alt="" width="30px" height="30px" title="Invite collabora to "></div>
-        <div class="More-Option"><img src="more.png" alt="" width="30px" height="30px" title="More Option"></div>
+        <div class="Play-music"><img src="play.png" alt="" width="30px" height="30px" title="Invite collabora to " (click)="onClickSong(tracks[0],tracks)"></div>
+        <div class="Delete-playlist">
+          <img src="delete.png" alt="Delete" width="30px" height="30px" title="Delete Playlist" (click)="deletePlaylist()">
+        </div>
         
       </div>
+      
+      
 
       <div class="bar"></div>
 
-      <div class="playlist-search">
-        <p>Let's find something for your playlist</p>
-        <input
-          type="text"
-          placeholder="Search for songs or episodes"
-          [(ngModel)]="searchText"
-          (input)="onSearchChange()"
-      />
-      </div>
-      <!-- Kết quả tìm kiếm -->
-      <div class="search-results" *ngIf="searchText && filteredTracks.length > 0">
-        <!-- Header Row -->
-        
-        <!-- Result Rows -->
-        <div class="search-result-item" *ngFor="let result of filteredTracks">
-          <div class="col-img">
-            <img [src]="result.image_url" width="30" height="30" />
-          </div>
-          <div class="col-title">{{ result.title }}</div>
-          <div class="col-artist">{{ getArtistName(result.artist) }}</div>
-          <div class="col-action">
-            <button class="add-button" (click)="addTrack(result.track_id)">Add</button>
-          </div>
-        </div>
-      </div>
+      
       
       
 
@@ -68,7 +68,36 @@
           </div>
           <div class="col-album">{{ song.album }}</div>
           <div class="col-date">{{ song.release_date }}</div>
-          <div class="col-duration">{{ 9 }}</div>
+          <div class="col-duration">
+            <button (click)="deleteTrack(Song[i].id); $event.stopPropagation()" class="btn-delete">
+              Delete
+            </button>
+                      </div>
+                  </div>
+      </div>
+    </div>
+    <div class="playlist-search">
+      <p>Let's find something for your playlist</p>
+      <input
+        type="text"
+        placeholder="Search for songs or episodes"
+        [(ngModel)]="searchText"
+        (input)="onSearchChange()"
+    />
+    </div>
+    <!-- Kết quả tìm kiếm -->
+    <div class="search-results" *ngIf="searchText && filteredTracks.length > 0">
+      <!-- Header Row -->
+      
+      <!-- Result Rows -->
+      <div class="search-result-item" *ngFor="let result of filteredTracks">
+        <div class="col-img">
+          <img [src]="result.image_url" width="30" height="30" />
+        </div>
+        <div class="col-title">{{ result.title }}</div>
+        <div class="col-artist">{{ getArtistName(result.artist) }}</div>
+        <div class="col-action">
+          <button class="add-button" (click)="addTrack(result.track_id)">Add</button>
         </div>
       </div>
     </div>

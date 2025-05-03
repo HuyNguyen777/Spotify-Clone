@@ -23,5 +23,10 @@ export class PlaylistService {
           track_id: trackId
         });
       }
+      private apiUrl = 'http://localhost:8000/api/playlistdetail'; // hoặc URL thực tế của bạn
+
+      deleteTrackFromPlaylist(playlistDetailId: number) {
+        return this.http.delete(`${this.apiUrl}/${playlistDetailId}/`);
+      }
       
 }
