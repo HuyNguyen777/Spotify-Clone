@@ -13,7 +13,6 @@ class TrackViewSet(viewsets.ModelViewSet):
     queryset = Track.objects.all()
     serializer_class = TrackSerializer
 
-    # Tìm kiếm bài hát theo tên hoặc nghệ sĩ
     def get_queryset(self):
         queryset = Track.objects.all()
         title = self.request.query_params.get('title', None)

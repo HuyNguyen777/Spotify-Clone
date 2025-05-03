@@ -30,5 +30,16 @@ export class TrackService {
   getTracks(): Observable<Track[]> {
     return this.http.get<Track[]>(this.apiUrl);
   }
+  // track.service.ts
+  getTracksByTitle(title: string): Observable<Track[]> {
+    return this.http.get<Track[]>(`${this.apiUrl}?title=${encodeURIComponent(title)}`);
+  }
+  addTrackToPlaylist(playlistId: number, trackId: number): Observable<any> {
+    return this.http.post('/api/playlistdetail/add-track/', {
+      playlist_id: playlistId,
+      track_id: trackId
+    });
+  }
+  
 
 }
