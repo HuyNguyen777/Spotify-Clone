@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Track, TrackService } from '../../services/tracks.service';
 import { Artist, ArtistService } from '../../services/artists.service';
-
+import { MusicPlayerService } from '../../services/music-player.service';
 @Component({
   selector: 'app-music-player',
   templateUrl: './music-player.component.html',
@@ -38,7 +38,7 @@ export class MusicPlayerComponent implements OnInit {
     }
     this.isPlaying = !this.isPlaying;
   }
-
+  
   onTimeUpdate() {
     const audio = this.audioPlayer.nativeElement;
     this.currentTime = audio.currentTime;
@@ -144,7 +144,7 @@ export class MusicPlayerComponent implements OnInit {
     return `linear-gradient(to right, white ${percentage}%, #555 ${percentage}%)`;
   }
 
-  constructor(private tracksService: TrackService, private artistService: ArtistService){}
+  constructor(private tracksService: TrackService, private artistService: ArtistService, private musicPlayerService: MusicPlayerService){}
 
   ngOnInit(): void {
       this.tracksService.getTracks().subscribe( data => {
@@ -154,5 +154,16 @@ export class MusicPlayerComponent implements OnInit {
       this.artistService.getArtists().subscribe( data => {
         this.currentArt = data;
       })
+      this.musicPlayerService.trackQueue$.subscribe(queue => {
+        this.currentQueue = queue;
+      });
+    
+      this.musicPlayerService.currentTrack$.subscribe(track => {
+        if (track) {
+          const index = this.currentQueue.findIndex(t => t.track_id === track.track_id);
+          this.currentQueueIndex = index !== -1 ? index : 0;
+          this.playSongFromQueue();
+        }
+      });
   }
 }
