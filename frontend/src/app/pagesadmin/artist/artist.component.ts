@@ -14,13 +14,24 @@ export class ArtistComponent implements OnInit {
   selectedFile: File | null = null;
   isEditMode = false;
   editArtistId: number | null = null;
+  selectedFileName: string = '';
 
   constructor(private artistService: ArtistService){}
   
   isModalOpen = false;
   
   openModal() {
+    this.isEditMode = false;
+    this.editArtistId = null;
     this.isModalOpen = true;
+    this.newArtist = {
+      name: '',
+      gener: '',
+      popularity_score: 0,
+      artist_img: ''
+    };
+    this.selectedFile = null;
+    this.selectedFileName = '';
   }
   
   closeModal() {
@@ -39,8 +50,9 @@ export class ArtistComponent implements OnInit {
     formData.append('name', this.newArtist.name);
     formData.append('genre', this.newArtist.gener);
     formData.append('popularity', this.newArtist.popularity_score.toString());
-    formData.append('artist_img', this.selectedFile!);
-
+    if (this.selectedFile) {
+    formData.append('artist_img', this.selectedFile);
+    }
 
     if(this.isEditMode && this.editArtistId !== null){
       this.artistService.updateArtist(this.editArtistId, formData).subscribe({
@@ -68,12 +80,17 @@ export class ArtistComponent implements OnInit {
     this.isEditMode = true;
     this.isModalOpen = true;
     this.editArtistId = artist.artist_id;
+    this.selectedFileName = this.extractFileName(artist.artist_img);
     this.newArtist = {
       name: artist.name,
       gener: artist.gener,
       popularity_score: artist.popularity_score,
       artist_img: artist.artist_img,
     };
+  }
+
+  extractFileName(url: string): string {
+    return url.split('/').pop() || '';
   }
 
   deleteArtist(artistid: number) {
@@ -90,6 +107,7 @@ export class ArtistComponent implements OnInit {
     const file = event.target.files[0];
     if (file && file.type.startsWith('image/')) {
       this.selectedFile = file;
+      this.selectedFileName = file.name;
     } else {
       console.error('Tệp không hợp lệ!');
     }
@@ -101,13 +119,22 @@ export class ArtistComponent implements OnInit {
       this.artist = res;
     });
   }
+
+  resetForm() {
+    this.newArtist = {
+      name: '',
+      gener: '',
+      popularity_score: 0,
+      artist_img: ''
+    };
+    this.selectedFile = null;
+    this.isEditMode = false;
+    this.editArtistId = null;
+  }
   
 
   ngOnInit(): void {
-      this.artistService.getArtists().subscribe(data => {
-        this.artist = data;
-        console.log(data);
-      });
+      this.loadArtists();
   }
 
 }

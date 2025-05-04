@@ -43,7 +43,9 @@
         <input type="number" [(ngModel)]="newArtist.popularity_score" placeholder="Popularity" name="popularity" required />
         <input type="file" (change)="onFileSelected($event)" accept="image/*" placeholder="Image URL" name="thumbnail" required />
         
-        <div *ngIf="isEditMode && newArtist.artist_img">
+        
+        <div *ngIf="isEditMode && newArtist.artist_img" style="display: flex; flex-direction: column;">
+          <small *ngIf="selectedFileName">Đã chọn: {{ selectedFileName }}</small>
           <img [src]="newArtist.artist_img" alt="current image" class="current-img" width="80px" height="80px" />
         </div>
         <div class="modal-buttons">

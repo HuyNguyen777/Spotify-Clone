@@ -31,7 +31,7 @@
 <div class="modal-overlay" *ngIf="isModalOpen">
     <div class="modal-content">
       <h3>{{ isEditMode ? 'Edit Role' : 'Create New Role'}}</h3>
-      <form (ngSubmit)="submitFormRole()"  #roleFrom="ngForm">
+      <form (ngSubmit)="submitFormRole()" #roleFrom="ngForm">
         <input type="text" placeholder="Role Name" name="rolename" [(ngModel)]="newRole.role_name" required />
         <input type="text" placeholder="Deception" name="deception" [(ngModel)]="newRole.deception" required />
         <div class="modal-buttons">
