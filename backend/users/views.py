@@ -110,3 +110,15 @@ class GetUsernameByTokenView(APIView):
             return Response({'user_id': user.user_id}, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+class GetUserByTokenView(APIView):
+    def get(self, request):
+        token = request.query_params.get('access_token')
+        if not token:
+            return Response({'error': 'Access token is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            user = User.objects.get(accesstoken=token)
+            serializer = UserSerializer(user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)

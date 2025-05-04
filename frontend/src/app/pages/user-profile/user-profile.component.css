@@ -1,0 +1,48 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* chiếm toàn màn hình */
+    background-color: #121212; /* tùy chỉnh theo theme */
+  }
+  
+  .user-profile {
+    background-color: #1e1e1e;
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+    width: 100%;
+  }
+  
+  .profile-info {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #444;
+  }
+  
+  .profile-details {
+    flex-grow: 1;
+  }
+  
+  .profile-details p {
+    margin: 6px 0;
+    font-size: 16px;
+  }
+  
+  .profile-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+  

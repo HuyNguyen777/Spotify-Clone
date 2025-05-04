@@ -9,6 +9,6 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('search/', search_users, name='search-users'),
     path('get-user_id/', views.GetUsernameByTokenView.as_view(), name='get-username-by-token'),
-
+    path('get-user/', views.GetUserByTokenView.as_view()),
 
 ]

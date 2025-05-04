@@ -1,23 +1,41 @@
 <header>
-    <nav class="spotify__top-nav">
-      <div class="logospotify"><img src="spotify.png" alt="" width="30px" height="30px"></div>
-      <div class="spotify__top-nav_focus_title">
-        <div class="spotify__top-nav_auth" *ngIf="isSearchFieldVisible">
-         
-            <input
-              class="search_playlist"
-              type="search"
-              placeholder="What do you want to listen to?"
-              #inputSearchRef
-              (keyup)="filterBrowsingList(inputSearchRef)"
-            />
-        </div>
+  <nav class="spotify__top-nav">
+    <div class="logospotify">
+      <img src="spotify.png" alt="Logo" width="30px" height="30px">
+    </div>
+
+    <div class="spotify__top-nav_focus_title">
+      <div class="spotify__top-nav_auth" *ngIf="isSearchFieldVisible">
+        <input
+          class="search_playlist"
+          type="search"
+          placeholder="What do you want to listen to?"
+          #inputSearchRef
+          (keyup)="filterBrowsingList(inputSearchRef)"
+        />
       </div>
-      <div class="spotify__top-nav_auth">
-        <div class="spotify__top-nav_auth_login" (click)="onNavigateToChat()">Chat</div>
+    </div>
+
+    <div class="spotify__top-nav_auth">
+      <div class="spotify__top-nav_auth_login" (click)="onNavigateToChat()">Chat</div>
+
+      <!-- Hiển thị nếu chưa đăng nhập -->
+      <ng-container *ngIf="!isLoggedIn">
         <div class="spotify__top-nav_auth_login" (click)="OnNavigateToSignUp()">Sign up</div>
         <div class="spotify__top-nav_auth_login" (click)="onNavigateToLogin()">Log in</div>
-      </div>
-    </nav>
-  </header>
-  
+      </ng-container>
+
+      <!-- Hiển thị nếu đã đăng nhập -->
+      <ng-container *ngIf="isLoggedIn">
+        <div class="user-avatar-wrapper" (click)="onViewProfile()">
+          <img [src]="user?.image_user || 'default-avatar.png'" class="user-avatar" alt="Avatar" />
+          <div class="user-menu" *ngIf="isUserMenuVisible">
+            <div (click)="onViewProfile()">Profile</div>
+            <div (click)="onEditInfo()">Edit Info</div>
+            <div (click)="onLogout()">Log out</div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </nav>
+</header>
