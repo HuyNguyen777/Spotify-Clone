@@ -83,6 +83,7 @@ export class SongsListComponent {
 
 
   createTrack() {
+    
     const formData = new FormData();
     formData.append('title', this.newTrack.title);
     formData.append('price', this.newTrack.price);
@@ -91,8 +92,10 @@ export class SongsListComponent {
     formData.append('album', this.newTrack.Albumid.toString());
     
     // Gửi tên file thay vì file thực
-    formData.append('namemp3', this.selectedMp3File, this.selectedMp3File.name); // tên file mp3
-    formData.append('image_url', this.selectedImageFile, this.selectedImageFile.name); // tên file hình ảnh
+   /* formData.append('namemp3', this.selectedMp3File, this.selectedMp3File.name); // tên file mp3
+    formData.append('image_url', this.selectedImageFile, this.selectedImageFile.name); // tên file hình ảnh*/
+    formData.append('namemp3', this.newTrack.namemp3); // tên file mp3
+    formData.append('image_url', this.newTrack.image_url); // tên file hình ảnh
     
     console.log(this.newTrack);
     this.trackService.createTrack(formData).subscribe({

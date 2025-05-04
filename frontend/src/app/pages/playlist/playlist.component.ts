@@ -119,20 +119,6 @@ export class PlaylistComponent {
       next: (response) => {
         console.log('Thêm thành công:', response);
   
-        // 👇 Tạo mới Track từ response và thêm vào danh sách hiện tại
-       /* const newTrack: Track = {
-          track_id: response.track.track_id,
-          title: response.track_title,
-          artist: response.artist_name,
-          image_url: response.track_img,
-          namemp3: response.track_namemp3,
-          price: 0,
-          is_copyright: true,
-          album: response.album_name,
-          release_date: response.releasedate
-        };
-  
-        this.tracks.push(newTrack);  // 👈 Thêm track vào danh sách hiện tại*/
         this.getUserPlaylist();
       },
       error: (error) => {

@@ -1,7 +1,7 @@
 // track.service.ts
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { Artist } from './artists.service';
 import { Album } from './albums.service';
 export interface Track {
@@ -54,7 +54,6 @@ getArtists(): Observable<any[]> {
 getAlbums(): Observable<any[]> {
   return this.http.get<any[]>(`${this.baseUrl}albums/`);
 }
-
 
   
 }
