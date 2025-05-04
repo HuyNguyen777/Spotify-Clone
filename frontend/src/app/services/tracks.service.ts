@@ -46,6 +46,14 @@ export class TrackService {
     return this.http.post(`${this.baseUrl}tracks/`, formData);
   }
 
+  updateTrack(id: number, formData: FormData) {
+    return this.http.put(`${this.apiUrl}${id}/`, formData);
+  }
+
+  deleteTrack(id: number): Observable<void>{
+    return this.http.delete<void>(`${this.apiUrl}${id}/`);
+  }
+
  // Nếu chưa có model, có thể để any[]
 getArtists(): Observable<any[]> {
   return this.http.get<any[]>(`${this.baseUrl}artists/`);
