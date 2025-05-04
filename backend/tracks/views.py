@@ -1,5 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.core.files.storage import default_storage
+from .utils import copy_mp3_to_public, copy_image_to_public
 
 # tracks/views.py
 from rest_framework import viewsets, status
@@ -25,6 +27,32 @@ class TrackViewSet(viewsets.ModelViewSet):
 
     # Tạo một bài hát mới
     def create(self, request, *args, **kwargs):
+        # Trực tiếp làm việc với request.data
+        mp3_file = request.FILES.get('mp3File')
+        image_file = request.FILES.get('imageFile')
+
+        # Chuẩn bị dữ liệu cho track
+        track_data = {
+            'title': request.data.get('title'),
+            'price': request.data.get('price'),
+            'release_date': request.data.get('release_date'),
+            'artist': request.data.get('artist'),
+            'album': request.data.get('album')
+        }
+
+        # Lưu file mp3 nếu có
+        if mp3_file:
+            mp3_path = default_storage.save('mp3/' + mp3_file.name, mp3_file)
+            track_data['namemp3'] = mp3_file.name
+            copy_mp3_to_public(mp3_file.name)
+
+        # Lưu file ảnh nếu có
+        if image_file:
+            image_path = default_storage.save('images/' + image_file.name, image_file)
+            track_data['image_url'] = image_file.name
+            copy_image_to_public(image_file.name)
+
+
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

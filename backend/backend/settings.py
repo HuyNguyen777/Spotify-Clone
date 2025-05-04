@@ -164,7 +164,11 @@ CORS_ALLOW_ALL_ORIGINS = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+import os
 
+# Đường dẫn đến thư mục public/mp3 trong frontend Angular
+ANGULAR_PUBLIC_MP3 = os.path.join(BASE_DIR, '../frontend/public/mp3/')
+ANGULAR_PUBLIC_IMAGES = os.path.join(BASE_DIR, '../frontend/public/images/')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
