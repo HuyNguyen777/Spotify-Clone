@@ -2,7 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.core.files.storage import default_storage
 from .utils import copy_mp3_to_public, copy_image_to_public
-
+from rest_framework.decorators import api_view, parser_classes
+from rest_framework.parsers import MultiPartParser, FormParser
 # tracks/views.py
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -10,6 +11,10 @@ from .models import Track
 from .serializers import TrackSerializer
 from artists.models import Artist  # Import mô hình Artist
 from albums.models import Album
+import os
+import shutil
+from django.conf import settings
+
 
 class TrackViewSet(viewsets.ModelViewSet):
     queryset = Track.objects.all()
