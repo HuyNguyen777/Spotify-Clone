@@ -7,6 +7,8 @@ import { ArtistService } from '../../services/artists.service';
 import { map, Observable } from 'rxjs';
 import { PlaylistService } from '../../services/playlist.service';
 import { Route, Router } from '@angular/router';
+import { SearchBarService } from '../../services/searchbar.service';
+type PageType = 'home' | 'playlist' | 'library';
 
 @Component({
   selector: 'app-playlist',
@@ -22,9 +24,16 @@ export class PlaylistComponent {
   filteredTracks: Track[] = [];
   searchText: string = '';
   username = localStorage.getItem('username')!;
+  currentPage: PageType = 'playlist'; // Gán type chuẩn
 
   tracks: Track[] = []
-  constructor(private http: HttpClient,private musicPlayerService: MusicPlayerService, private trackService: TrackService,private artistService: ArtistService, private playlistDetailService: PlaylistService,private router: Router){}
+  constructor(
+    private http: HttpClient,
+    private musicPlayerService: MusicPlayerService,
+     private trackService: TrackService,
+     private artistService: ArtistService, 
+     private playlistDetailService: PlaylistService,private router: Router,    public sb: SearchBarService,
+  ){}
   
   artistNames: { [key: number]: string } = {};
 
@@ -181,6 +190,7 @@ deletePlaylist() {
         next: () => {
           alert('Playlist deleted successfully');
           // Redirect hoặc cập nhật giao diện
+         
         },
         error: err => {
           console.error('Error deleting playlist:', err);

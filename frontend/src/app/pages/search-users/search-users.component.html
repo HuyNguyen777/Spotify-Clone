@@ -1,51 +1,48 @@
 <form (submit)="onSearch(); $event.preventDefault()"
-      class="max-w-md mx-auto p-4 bg-white rounded-lg shadow">
+      class="max-w-lg mx-auto mt-8 p-6 bg-white rounded-2xl shadow-lg space-y-6">
 
-  <!-- Search Section -->
-  <div class="mb-4">
+  <!-- 🔍 Search Input -->
+  <div>
+    <label class="block text-gray-700 font-semibold mb-2">Search users</label>
     <input
       type="text"
       [(ngModel)]="searchQuery"
       name="searchQuery"
-      placeholder="Search users..."
+      placeholder="Enter username..."
       (keyup.enter)="onSearch()"
-      class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm
-             focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      class="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm 
+             focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700" />
   </div>
 
-  <!-- Search Results -->
-  <div *ngIf="users.length > 0" class="mb-6">
-    <h3 class="text-lg font-semibold text-gray-700 mb-2">Search Results</h3>
-    <ul class="bg-white shadow rounded-lg divide-y divide-gray-200">
+  <!-- 🔎 Search Results -->
+  <div *ngIf="users.length > 0">
+    <h3 class="text-md font-semibold text-blue-700 mb-2">Search Results</h3>
+    <ul class="rounded-xl border border-gray-200 divide-y">
       <li
         *ngFor="let u of users"
         (click)="goChat(u.user_id)"
-        class="px-4 py-2 hover:bg-blue-50 cursor-pointer">
-        {{ u.user_name }}
+        class="px-4 py-3 hover:bg-blue-100 cursor-pointer transition">
+        <span class="text-gray-800 font-medium">{{ u.user_name }}</span>
       </li>
     </ul>
   </div>
 
-  <!-- Recently Chatted Users -->
-<div>
-  <h3 class="text-lg font-semibold text-gray-700 mb-2">Recently Chatted</h3>
-  <ul *ngIf="chats.length > 0" class="bg-white shadow rounded-lg divide-y divide-gray-200 mb-4">
-    <li *ngFor="let u of chats"
-    routerLink="/chat/{{u.chat_id}}"
-        class="px-4 py-2 hover:bg-green-50 cursor-pointer">
-      {{ u.with_user_name }}
-    </li>
-  </ul>
-  <div *ngIf="chats.length === 0" class="text-sm text-gray-500 mb-4">
-    You haven't chatted with anyone yet.
+  <!-- 🕒 Recently Chatted -->
+  <div>
+    <h3 class="text-md font-semibold text-green-700 mb-2">Recently Chatted</h3>
+    <ul *ngIf="chats.length > 0" class="rounded-xl border border-gray-200 divide-y">
+      <li
+        *ngFor="let u of chats"
+        [routerLink]="'/chat/' + u.chat_id"
+        class="px-4 py-3 hover:bg-green-100 cursor-pointer transition">
+        <span class="text-gray-800 font-medium">{{ u.with_user_name }}</span>
+      </li>
+    </ul>
+    <div *ngIf="chats.length === 0" class="text-sm text-gray-500 italic">
+      You haven't chatted with anyone yet.
+    </div>
   </div>
-</div>
 
-
-  <!-- (Optional) Button để tìm kiếm -->
-  <button type="submit"
-          class="w-full py-2 bg-blue-600 text-white rounded-lg
-                 hover:bg-blue-700 transition">
-    Search
-  </button>
+  <!-- 🔘 Submit Button -->
+  
 </form>
