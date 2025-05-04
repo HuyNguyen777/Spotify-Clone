@@ -13,10 +13,24 @@ export interface Artist {
 @Injectable({
   providedIn: 'root'
 })
+
 export class ArtistService {
   private apiUrl = 'http://localhost:8000/api/artists/';
+  private baseUrl = 'http://localhost:8000/api/';
 
   constructor(private http: HttpClient) {}
+
+  createArtist(formData: FormData){
+    return this.http.post(`${this.apiUrl}`, formData);
+  }
+
+  updateArtist(id: number, formData: FormData){
+    return this.http.put(`${this.apiUrl}${id}/`, formData);
+  }
+
+  deleteArtist(id: number): Observable<void>{
+    return this.http.delete<void>(`${this.apiUrl}${id}/`);
+  }
 
   // Lấy tất cả các nghệ sĩ
   getArtists(): Observable<Artist[]> {

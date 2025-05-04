@@ -28,11 +28,11 @@
         <div>{{ track.title }}</div>
         <div>{{ track.price }}</div>
         <div>{{ track.release_date }}</div>
-        <div>{{ track.namemp3 }}</div>
+        <div>{{ getFileName(track.namemp3) }}</div>
         <div>{{ getAlbumName(track.album) }}</div>
         <div>{{ getArtistName(track.artist) }}</div>
         <div>
-          <button class="edit-btn">Edit</button>
+          <button class="edit-btn" (click)="editTrack(track)" >Edit</button>
           <button class="delete-btn">Delete</button>
         </div>
       </div>
@@ -42,8 +42,8 @@
 <!-- Modal Form -->
 <div class="modal-overlay" *ngIf="isModalOpen">
   <div class="modal-content">
-    <h3>Create New Track</h3>
-    <form (ngSubmit)="createTrack()" enctype="multipart/form-data">
+    <h3>{{ isEditMode ? 'Edit Artist' : 'Create Artist'}}</h3>
+    <form (ngSubmit)="createTrack()" >
       <!-- Title -->
       <input
         type="text"
@@ -87,7 +87,10 @@
       <input type="file" accept=".mp3" (change)="onMp3FileChange($event)" required />
       <input type="file" accept="image/*" (change)="onImageFileChange($event)" required />
       
-
+      <div *ngIf="isEditMode && newTrack.artist_img" style="display: flex; flex-direction: column;">
+        <small *ngIf="selectedFileNameImage">Đã chọn: {{ selectedFileNameImage }}</small>
+        <img [src]="newTrack.artist_img" alt="current image" class="current-img" width="80px" height="80px" />
+      </div>
       <!-- Buttons -->
       <div class="modal-buttons">
         <button type="submit">Create</button>

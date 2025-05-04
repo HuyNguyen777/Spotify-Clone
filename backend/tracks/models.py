@@ -9,9 +9,9 @@ class Track(models.Model):
     #artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE, null=True, blank=True)
     is_Copyright = models.BooleanField(default=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    image_url = models.TextField(null=True, blank=True)
+    image_url = models.ImageField(upload_to='images/')
     release_date = models.DateField(null=True, blank=True)
-    namemp3 = models.CharField(max_length=200)
+    namemp3 = models.FileField(upload_to='mp3/')
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     class Meta:
