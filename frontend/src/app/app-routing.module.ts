@@ -18,6 +18,7 @@ import { CategoryComponent } from './pagesadmin/category/category.component';
 import { MusicPlayerComponent } from './components/music-player/music-player.component';
 import { AlbumComponent } from './pagesadmin/album/album.component';
 import { SongsListComponent } from './pagesadmin/songs-list/songs-list.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'chat/:chatId', component: ChatComponent },
   { path: 'search', component: SearchUsersComponent },
   { path: 'home/playlist/:id', component: PlaylistComponent },
+  { path: 'user-profile', component: UserProfileComponent },
 
 
 ];
