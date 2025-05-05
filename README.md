@@ -118,8 +118,6 @@ Server chạy tại: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 └── README.md
 ```
 
----
-
 ## 📦 requirements.txt
 
 ```txt
@@ -139,7 +137,48 @@ django-cors-headers
 - Bạn cần cài MySQL và Redis trước khi chạy server.
 - Đảm bảo frontend Angular chạy ở `http://localhost:4200` để tránh lỗi CORS.
 
----
+## 4.Angular
+```bash
+Kiểm tra Node:
+    node -v
+    npm -v
+```
 
+```bash
+Cài Angular CLI (nếu chưa có):
+    npm install -g @angular/cli
+```
+
+```bash
+    Mở đường dẫn Terminal tới Frontend và chạy lệnh 
+    npm install
+    Lệnh này sẽ đọc file package.json và cài toàn bộ dependencies.
+```
+
+```bash
+    Chạy project
+    ng serve
+```
+
+```bash
+    Vào địa chỉ: http://localhost:4200
+```
+## 📁 Cấu trúc thư mục chính Frontend
+```bash
+frontend
+frontend/
+└── src/
+    └── app/
+        ├── components/        # Chứa các component tái sử dụng (header, footer, button,...)
+        ├── pages/             # Chứa các trang chính (home, login, artist, chat, signup,...)
+        ├── pagesadmin/        # Các trang riêng cho admin (admin, artist, album, songs-list, ...)
+        ├── service/           # Chứa các service để gọi API hoặc xử lý logic nghiệp vụ
+        ├── app-routing.module.ts    # Định nghĩa các route chính trong ứng dụng
+        ├── app.component.ts         # Component gốc (root component) khởi đầu của Angular app
+        ├── app.component.html       # Template HTML của root component
+        ├── app.component.css        # Style cho root component
+        ├── app.component.spec.ts    # File test cho root component
+        ├── app.model.ts             # Khai báo các model (interface, class) dùng trong app
+```
 
 
