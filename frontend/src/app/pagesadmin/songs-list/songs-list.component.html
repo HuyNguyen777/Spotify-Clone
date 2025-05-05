@@ -23,7 +23,7 @@
         <div>{{ i + 1 }}</div>
         <div>{{ track.track_id }}</div>
         <div>
-          <img [src]="track.image_url" alt="artist" class="artist-img" />
+          <img [src]="'http://127.0.0.1:8000/media/images/'+track.image_url" alt="artist" class="artist-img" />
         </div>
         <div>{{ track.title }}</div>
         <div>{{ track.price }}</div>
