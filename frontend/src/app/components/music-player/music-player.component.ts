@@ -90,7 +90,7 @@ export class MusicPlayerComponent implements OnInit {
     const audio = this.audioPlayer.nativeElement;
     if (this.currentQueue.length > 0) {
       const song = this.currentQueue[this.currentQueueIndex];
-      audio.src = `http://localhost:8000/media/mp3/${song.namemp3}`;
+      audio.src = `http://127.0.0.1:8000/media/mp3/${song.namemp3}`;
       audio.load();
       audio.play();
       this.isPlaying = true;

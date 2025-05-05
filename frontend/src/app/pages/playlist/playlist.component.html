@@ -60,7 +60,7 @@
         <div *ngFor="let song of tracks; let i = index" class="playlist-song-row" (click)="onClickSong(song,tracks)" >
           <div class="col-number">{{ i + 1 }}</div>
           <div class="col-title" >
-            <img [src]="song.image_url" alt="thumbnail" width="40px" height="40px" />
+            <img [src]="'http://localhost:8000/media/images/'+song.image_url" alt="thumbnail" width="40px" height="40px" />
             <div class="title-info">
               <div class="song-title">{{ song.title }}</div>
               <div class="song-artist">{{ song.artist}}</div>

@@ -32,7 +32,7 @@
           <div class="playlist_card_collections">
             <div id="song_card_item" *ngFor="let sc of songCards">
               <app-song-card
-              [playlistThumbnail]="sc.image_url"  
+              [playlistThumbnail]="'http://127.0.0.1:8000/media/images/'+sc.image_url"  
               [title]="sc.title"
               [description]="getArtistName(sc.artist)"
               [song_id]="sc.track_id"
