@@ -52,7 +52,8 @@ import { UserGroupComponent } from './pagesadmin/user-group/user-group.component
     ArtistComponent,
     SongsListComponent,
     UsersComponent,
-    UserGroupComponent
+    UserGroupComponent,
+    AlbumComponent
   ],
   imports: [
     

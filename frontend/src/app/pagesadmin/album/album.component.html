@@ -1,1 +1,59 @@
-<p>album works!</p>
+<div class="artist-container">
+    <div class="artist-header-bar">
+      <h2>Album Management</h2>
+      <button class="create-artist-button" (click)="openCreate()">+ Create Role</button>
+    </div>
+  
+    <div class="artist-table">
+      <div class="artist-table-header">
+        <div>#</div>
+        <div>Album Id</div>
+        <div>Title</div>
+        <div>Deception</div>
+        <div>Total Tracks</div>
+        <div>Releasedate</div>
+        <div>Artist</div>
+        <div>Actions</div>
+      </div>
+  
+      <div
+      *ngFor="let al of album; let i = index" class="artist-table-row">
+        <div>{{ i + 1 }}</div>
+        <div>{{ al.album_id }}</div>
+        <div>{{ al.title }}</div> 
+        <div>{{ al.deception }}</div>
+        <div>{{ al.total_tracks}}</div>
+        <div>{{ al.releasedate}}</div>
+        <div>{{ getArtistName(al.artist) }}</div>
+        <div>
+          <button class="edit-btn" (click)="editAlbum(al)">Edit</button>
+          <button class="delete-btn" (click)="deleteAlbum(al.album_id)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal Form -->
+<div class="modal-overlay" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <h3>{{ isEditMode ? 'Edit Album' : 'Create New Album'}}</h3>
+      <form (ngSubmit)="submitFormAlbum()" #roleFrom="ngForm" >
+        <input type="text" placeholder="Title" [(ngModel)]="newAlbum.title" name="rolename"  required />
+        <input type="text" placeholder="Deception" [(ngModel)]="newAlbum.deception" name="deception" required />
+        <input type="number" placeholder="Total Tracks" [(ngModel)]="newAlbum.total_tracks" name="total_tracks"  required />
+        <input type="date" placeholder="Releasedate" [(ngModel)]="newAlbum.releasedate" name="releasedate" required />
+
+        <select name="artist" [(ngModel)]="newAlbum.artist" required="" style="margin-left: 10px;">
+          <option value="" disabled selected>Select Artist</option>
+          <option *ngFor="let art of artists" [value]="art.artist_id">{{ art.name }} </option>
+        </select>
+
+        <div class="modal-buttons">
+          <button type="submit" [disabled]="roleFrom.invalid" >{{ isEditMode ? 'Update' : 'Create' }}</button>
+          <button type="button" class="cancel-btn" (click)="closeCreate()">Cancel</button>
+        </div>
+      </form>
+    </div>
+</div>
+
+

@@ -17,7 +17,8 @@ export interface Album {
 export class AlbumService {
 
   private apiUrl = 'http://localhost:8000/api/albums/';
-
+  private baseUrl = 'http://localhost:8000/api/';
+  
   constructor(private http: HttpClient) {}
 
   getAllAlbums(): Observable<Album[]> {
@@ -27,4 +28,22 @@ export class AlbumService {
   getAlbumName(id: number): Observable<{ title: string }> {
     return this.http.get<{ title: string }>(`${this.apiUrl}${id}/`);
   }
+
+  createAlbum(formData: FormData){
+    return this.http.post(`${this.apiUrl}`, formData);
+  }
+
+  updateAlbum(id: number, formData: FormData){
+    return this.http.put(`${this.apiUrl}${id}/`, formData);
+  }
+
+  deleteAlbum(id: number): Observable<void>{
+    return this.http.delete<void>(`${this.apiUrl}${id}/`);
+  }
+  
+  getArtistName(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}artists/`);
+  }
+
+
 }
