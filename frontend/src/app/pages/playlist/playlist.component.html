@@ -60,7 +60,7 @@
         <div *ngFor="let song of tracks; let i = index" class="playlist-song-row" (click)="onClickSong(song,tracks)" >
           <div class="col-number">{{ i + 1 }}</div>
           <div class="col-title" >
-            <img [src]="'http://localhost:8000/media/images/'+song.image_url" alt="thumbnail" width="40px" height="40px" />
+            <img [src]="'http://127.0.0.1:8000/media/images/'+song.image_url" alt="thumbnail" width="40px" height="40px" />
             <div class="title-info">
               <div class="song-title">{{ song.title }}</div>
               <div class="song-artist">{{ song.artist}}</div>
@@ -101,31 +101,7 @@
         </div>
       </div>
     </div>
-    <!--
-    <div class="playlist-bottom">
-      <div class="player-bar">
-        <span class="time-start">0:02</span>
-      
-        <div class="player-controls">
-          <div class="control-button">
-            <img src="previous.png" alt="Previous" title="Previous"  width="30px" height="30px"/>
-          </div>
-          <div class="control-button play-button">
-            <img src="play-button.png" alt="Play" title="Play"  width="30px" height="30px"/>
-          </div>
-          <div class="control-button">
-            <img src="next-button.png" alt="Next" title="Next"  width="30px" height="30px"/>
-          </div>
-        </div>
-      
-        <span class="time-end">4:20</span>
-      </div>
-      Thanh progress
-      <div class="progress-container">
-        <input type="range" min="0" max="100" value="10" class="progress-bar" />
-      </div>
-    </div>
-    -->
+    
     
 </div>
   

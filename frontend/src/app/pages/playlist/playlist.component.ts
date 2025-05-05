@@ -63,7 +63,7 @@ export class PlaylistComponent {
 
 
   getUserPlaylist() {
-    this.http.get<any>('http://localhost:8000/api/playlistdetail/by-playlist/', {
+    this.http.get<any>('http://127.0.0.1:8000/api/playlistdetail/by-playlist/', {
       params: { playlist_id: this.playlistId }
     }).subscribe({
       next: data => {
@@ -149,7 +149,7 @@ export class PlaylistComponent {
     this.isEditingTitle = false;
   
     // Gọi API cập nhật tên playlist nếu cần
-    this.http.patch(`http://localhost:8000/api/playlists/${this.playlistId}/`, {
+    this.http.patch(`http://127.0.0.1:8000/api/playlists/${this.playlistId}/`, {
       name: this.playlistName
     }).subscribe({
       next: () => console.log('Tên playlist đã được cập nhật'),
@@ -162,7 +162,7 @@ togglePrivacy() {
   this.isPublic = !this.isPublic;
 
   // Gọi API để cập nhật trạng thái public/private
-  this.http.patch(`http://localhost:8000/api/playlists/${this.playlistId}/`, {
+  this.http.patch(`http://127.0.0.1:8000/api/playlists/${this.playlistId}/`, {
     is_public: this.isPublic
   }).subscribe({
     next: () => console.log('Cập nhật quyền truy cập playlist thành công'),
@@ -171,7 +171,7 @@ togglePrivacy() {
 }
 deletePlaylist() {
   if (confirm('Are you sure you want to delete this playlist?')) {
-    this.http.delete(`http://localhost:8000/api/playlists/${this.playlistId}/`)
+    this.http.delete(`http://127.0.0.1:8000/api/playlists/${this.playlistId}/`)
       .subscribe({
         next: () => {
           alert('Playlist deleted successfully');

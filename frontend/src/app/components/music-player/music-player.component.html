@@ -5,8 +5,14 @@
   <!--Name music-->
   <div class="name-muic-player">
     <div class="image-player">
-      <img [src]="currentSong?.imgUrl ? currentSong?.imgUrl : 'spotify.png'" alt="" width="50px" height="50px" border-radius="5px">
-    </div>
+      <img 
+      [src]="currentSong?.imgUrl ? 'http://127.0.0.1:8000/media/images/' + currentSong?.imgUrl : 'assets/spotify.png'" 
+      alt="" 
+      width="50px" 
+      height="50px" 
+      style="border-radius: 5px;"
+    >
+        </div>
     <div class="profile-play">
       <div class="name-music">
        {{ currentSong?.title }}

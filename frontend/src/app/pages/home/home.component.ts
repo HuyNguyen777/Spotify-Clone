@@ -86,6 +86,7 @@ export class HomeComponent implements OnInit {
       this.selectedPlaylistId = null;
       this.sb.isHomeVisible.next(true);
       this.sb.isPlayListVisible.next(false);
+      this.getUserPlaylist();
     }
     this.currentPage = pageName;
     console.log('Navigate to:', pageName);
@@ -166,7 +167,7 @@ export class HomeComponent implements OnInit {
 
         };
   
-        this.http.post('http://localhost:8000/api/playlists/', newPlaylist)
+        this.http.post('http://127.0.0.1:8000/api/playlists/', newPlaylist)
           .subscribe({
             next: res => {
               console.log('Playlist created:', res);
