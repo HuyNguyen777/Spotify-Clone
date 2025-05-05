@@ -15,8 +15,8 @@ export interface Artist {
 })
 
 export class ArtistService {
-  private apiUrl = 'http://localhost:8000/api/artists/';
-  private baseUrl = 'http://localhost:8000/api/';
+  private apiUrl = 'http://127.0.0.1:8000/api/artists/';
+  private baseUrl = 'http://127.0.0.1:8000/api/';
 
   constructor(private http: HttpClient) {}
 
@@ -35,6 +35,9 @@ export class ArtistService {
   // Lấy tất cả các nghệ sĩ
   getArtists(): Observable<Artist[]> {
     return this.http.get<Artist[]>(this.apiUrl);
+  }
+  getPopularArtist(): Observable<Artist[]> {
+    return this.http.get<Artist[]>(this.apiUrl+"/top-popular");
   }
 
   // Lấy một nghệ sĩ cụ thể theo ID

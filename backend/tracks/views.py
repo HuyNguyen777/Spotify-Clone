@@ -93,4 +93,4 @@ class TrackViewSet(viewsets.ModelViewSet):
             album = Album.objects.get(pk=album_id)
             return JsonResponse({'album_id': album_id, 'title': album.title})
         except Album.DoesNotExist:
-            return JsonResponse({'error': 'Album not found'}, status=404)
+            return JsonResponse({'error': 'Album not found'}, status=404) #ok

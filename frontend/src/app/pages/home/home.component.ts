@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   selectedPlaylistId: number | null = null;
   playlist: Playlist[] = [];
   token = localStorage.getItem('access_token')!;
+  artists: Artist[] = [];
 
 
   createAndSelectNewPlaylist() {
@@ -76,6 +77,7 @@ export class HomeComponent implements OnInit {
       });
     });
     this.getUserPlaylist();
+    this.loadArtists();
   }
 
   onNavigation(pageName: PageType) {
@@ -114,12 +116,12 @@ export class HomeComponent implements OnInit {
   }
 
   getUserPlaylist() {
-    this.http.get<any>(`http://localhost:8000/api/auth/get-user_id/?access_token=${this.token}`)
+    this.http.get<any>(`http://127.0.0.1:8000/api/auth/get-user_id/?access_token=${this.token}`)
       .subscribe({
         next: currentUser => {
           const currentid = currentUser.user_id;
   
-          this.http.get<any>('http://localhost:8000/api/playlists/getPLbyUser/', {
+          this.http.get<any>('http://127.0.0.1:8000/api/playlists/getPLbyUser/', {
             params: { user_id: currentid }
           }).subscribe({
             next: data => {
@@ -146,7 +148,7 @@ export class HomeComponent implements OnInit {
       return throwError(() => new Error('Access token is missing'));
     }
   
-    return this.http.get<any>(`http://localhost:8000/api/auth/get-user_id/?access_token=${token}`)
+    return this.http.get<any>(`http://127.0.0.1:8000/api/auth/get-user_id/?access_token=${token}`)
       .pipe(
         map(res => res.user_id),
         catchError(err => {
@@ -179,7 +181,12 @@ export class HomeComponent implements OnInit {
       error: err => console.error('Error getting user ID:', err)
     });
   }
-  
+  loadArtists(){
+    this.artistService.getArtists().subscribe((res : any) => {
+      console.log('Artist', res);
+      this.artists = res;
+    });
+  }
     
 
 }

@@ -5,6 +5,7 @@ from .models import Artist
 from .serializers import ArtistSerializer
 import os
 from django.conf import settings
+from rest_framework.decorators import action
 
 class ArtistViewSet(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
@@ -50,3 +51,8 @@ class ArtistViewSet(viewsets.ModelViewSet):
         except Artist.DoesNotExist:
             return "Unknown Artist"
         
+    @action(detail=False, methods=['get'], url_path='top-popular')
+    def top_popular_artists(self, request):
+        top_artists = Artist.objects.order_by('-popularity_score')[:7]
+        serializer = self.get_serializer(top_artists, many=True)
+        return Response(serializer.data)
