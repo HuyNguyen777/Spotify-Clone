@@ -33,8 +33,8 @@ class TrackViewSet(viewsets.ModelViewSet):
     # Tạo một bài hát mới
     def create(self, request, *args, **kwargs):
         # Trực tiếp làm việc với request.data
-        mp3_file = request.FILES.get('mp3File')
-        image_file = request.FILES.get('imageFile')
+        mp3_file = request.FILES.get('namemp3')
+        image_file = request.FILES.get('image_url')
 
         # Chuẩn bị dữ liệu cho track
         track_data = {
@@ -58,7 +58,7 @@ class TrackViewSet(viewsets.ModelViewSet):
             copy_image_to_public(image_file.name)
 
 
-        serializer = self.get_serializer(data=request.data)
+        serializer = self.get_serializer(data=track_data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

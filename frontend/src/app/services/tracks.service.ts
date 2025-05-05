@@ -23,7 +23,7 @@ export class TrackService {
   getSongCards() {
     throw new Error('Method not implemented.');
   }
-  private apiUrl = 'http://localhost:8000/api/tracks/';
+  private apiUrl = 'http://127.0.0.1:8000/api/tracks/';
   private baseUrl = 'http://localhost:8000/api/';
 
 
