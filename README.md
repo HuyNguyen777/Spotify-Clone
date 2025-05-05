@@ -22,7 +22,6 @@ Dự án backend cho ứng dụng Spotify Clone, xây dựng bằng Django 5.1.7
 - **JWT (Simple JWT)**
 - **Channels + Redis (WebSocket)**
 - **MySQL**
-- **Mutagen (metadata nhạc)**
 - **Angular (frontend)**
 
 ---
@@ -32,7 +31,7 @@ Dự án backend cho ứng dụng Spotify Clone, xây dựng bằng Django 5.1.7
 ### 1. Clone dự án
 
 ```bash
-git clone https://github.com/your-username/spotify-clone-backend.git
+git clone https://github.com/HuyNguyen777/spotify-clone-backend.git
 cd spotify-clone-backend
 ```
 
@@ -131,7 +130,6 @@ channels
 channels_redis
 mysqlclient
 django-cors-headers
-mutagen
 ```
 
 ---
