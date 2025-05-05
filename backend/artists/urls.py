@@ -8,4 +8,5 @@ router.register(r'artists', ArtistViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+
 ]
