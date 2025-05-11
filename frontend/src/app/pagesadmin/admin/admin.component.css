@@ -95,5 +95,6 @@
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     height: calc(100vh - 60px);
+    overflow-y: auto;
   }
 

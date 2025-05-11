@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './top-nav-admin.component.css'
 })
 export class TopNavAdminComponent {
-
+  
 }

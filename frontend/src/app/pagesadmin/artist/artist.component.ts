@@ -48,7 +48,7 @@ export class ArtistComponent implements OnInit {
   submitForm() {
     const formData = new FormData();
     formData.append('name', this.newArtist.name);
-    formData.append('genre', this.newArtist.gener);
+    formData.append('gener', this.newArtist.gener);
     formData.append('popularity', this.newArtist.popularity_score.toString());
     if (this.selectedFile) {
     formData.append('artist_img', this.selectedFile);

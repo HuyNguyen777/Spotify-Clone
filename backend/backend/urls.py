@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/', include('artists.urls')),
     path('api/', include('albums.urls')),
     path('api/auth/', include('users.urls')),
+    path('api/user/', include('users.urls')),
     path('api/chat/', include('chat.urls')),
     path('api/', include('playlists.urls')),
     path('api/', include('playlistdetail.urls')),

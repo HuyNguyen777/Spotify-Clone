@@ -13,6 +13,71 @@ from rest_framework.permissions import IsAuthenticated
 from users.serializers import UserSerializer  # bạn phải có UserSerializer
 from rest_framework.views import APIView
 
+
+@csrf_exempt
+def list_users(request):
+    if request.method == 'GET':
+        users = User.objects.all().values()  # bạn có thể lọc/trích fields nếu muốn
+        return JsonResponse(list(users), safe=False)
+    else:
+        return JsonResponse({'error': 'Invalid HTTP method'}, status=405)
+
+@api_view(['POST'])
+def create_user(request):
+    data = request.data
+
+    if User.objects.filter(user_name=data.get('user_name')).exists():
+        return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        user = User.objects.create(
+            user_name=data.get('user_name'),
+            passwordhash=make_password(data.get('password')),
+            fullname=data.get('fullname', ''),
+            birthday=data.get('birthday', None),
+            email=data.get('email', ''),
+            phone=data.get('phone', ''),
+            image_user=data.get('image_user', ''),
+            is_active=data.get('is_active', True),
+            role_id=data.get('role')  # phải chắc chắn role_id hợp lệ
+        )
+        return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        print("lOI", e)
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['PUT', 'PATCH'])
+def update_user(request, user_id):
+    try:
+        user = User.objects.get(user_id=user_id)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    data = request.data
+
+    user.user_name = data.get('user_name', user.user_name)
+    if data.get('password'):
+        user.passwordhash = make_password(data['password'])  # mã hóa nếu có đổi pass
+    user.fullname = data.get('fullname', user.fullname)
+    user.birthday = data.get('birthday', user.birthday)
+    user.email = data.get('email', user.email)
+    user.phone = data.get('phone', user.phone)
+    user.image_user = data.get('image_user', user.image_user)
+    user.is_active = data.get('is_active', user.is_active)
+    user.role_id = data.get('role', user.role_id)
+
+    user.save()
+    return Response({'message': 'User updated successfully'}, status=status.HTTP_200_OK)
+
+@api_view(['DELETE'])
+def delete_user(request, user_id):
+    try:
+        user = User.objects.get(user_id=user_id)
+        user.delete()
+        return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
 @csrf_exempt
 def register(request):
     if request.method == 'POST':
