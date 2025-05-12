@@ -92,7 +92,7 @@
       <!-- Result Rows -->
       <div class="search-result-item" *ngFor="let result of filteredTracks">
         <div class="col-img">
-          <img [src]="result.image_url" width="30" height="30" />
+          <img [src]="'http://127.0.0.1:8000/media/images/'+result.image_url" width="30" height="30" />
         </div>
         <div class="col-title">{{ result.title }}</div>
         <div class="col-artist">{{ getArtistName(result.artist) }}</div>
