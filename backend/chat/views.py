@@ -2,9 +2,10 @@ from django.http import JsonResponse
 import json
 from rest_framework.response import Response
 from django.db.models import Q
-
+from django.views.decorators.csrf import csrf_exempt
 from chat.models import Message
 from chat_message.models import Chat_Message
+
 from users.models import User
 from rest_framework.decorators import action
 
@@ -169,3 +170,11 @@ class MessageViewSet(viewsets.ModelViewSet):
             })
 
         return Response(data, status=200)
+    
+    @csrf_exempt
+    def list_chat(repest):
+        if repest.method == 'GET':
+            chats = Message.objects.all().values()
+            return JsonResponse(list(chats), safe=False)
+        else:
+            return JsonResponse({'error': 'Invalid HTTP method'}, status=405)
