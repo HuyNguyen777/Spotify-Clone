@@ -10,7 +10,7 @@ from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from users.serializers import UserSerializer  # bạn phải có UserSerializer
+from users.serializers import UserSerializer  
 from rest_framework.views import APIView
 
 
