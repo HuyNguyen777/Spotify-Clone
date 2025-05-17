@@ -20,7 +20,7 @@ export class PlaylistComponent {
   @Input() playlistName: string = 'My Playlist';
   @Input() playlistId: number = 1;
   @Input() songInPlayList: any[] = [];
-  Song: any[] = [];  // ✅ Mảng để lưu danh sách bài hát
+  Song: any[] = [];  
   filteredTracks: Track[] = [];
   searchText: string = '';
   username = localStorage.getItem('username')!;
@@ -73,7 +73,6 @@ export class PlaylistComponent {
           this.Song = [data];
         }
         console.log(this.Song)
-        // 🔁 Sau khi this.Song đã có dữ liệu, convert thành Track[]
         this.tracks = this.Song.map(s => {
           const track: Track = {
             track_id: s.track_id,
@@ -156,7 +155,7 @@ export class PlaylistComponent {
       error: (err) => console.error('Lỗi khi cập nhật tên playlist', err)
     });
   }
-  isPublic: boolean = true; // Giả sử mặc định là public
+  isPublic: boolean = true; 
 
 togglePrivacy() {
   this.isPublic = !this.isPublic;
