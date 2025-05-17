@@ -82,11 +82,8 @@ export class ChatService {
   
   
 
-  deleteChat(chatId: number): void {
-    this.socket.send(JSON.stringify({
-      command: 'delete_chat',
-      chat_id: chatId
-    }));
+  deleteChat(chatId: number): Observable<any> {
+     return this.http.delete(`${this.baseUrl}${chatId}/delete/`);
   }
 
   onMessage(): Observable<Message> {

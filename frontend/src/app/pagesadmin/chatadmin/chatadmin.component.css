@@ -214,3 +214,10 @@
   font-size: 12px;
   color: #666;
 }
+
+.sender-name {
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: #000;
+}

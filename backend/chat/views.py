@@ -8,6 +8,7 @@ from chat_message.models import Chat_Message
 
 from users.models import User
 from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny
 
 from rest_framework import status,viewsets
 
@@ -178,3 +179,16 @@ class MessageViewSet(viewsets.ModelViewSet):
             return JsonResponse(list(chats), safe=False)
         else:
             return JsonResponse({'error': 'Invalid HTTP method'}, status=405)
+        
+    @csrf_exempt
+    @api_view(['DELETE'])
+    @permission_classes([AllowAny])
+    def delete_chat(request, chat_id):
+        try:
+            chat = Message.objects.get(pk=chat_id)
+            chat.delete()
+            return Response({'message': 'Chat deleted successfully'}, status=200)
+        except Message.DoesNotExist:
+            return Response({'error': 'Chat not found'}, status=404)
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)

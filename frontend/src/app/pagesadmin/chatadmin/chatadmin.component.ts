@@ -24,27 +24,52 @@ export class ChatadminComponent implements OnInit {
     this.selectedChat = chat;
 
     this.chatService.fetchHistory(chat.id).subscribe((res: any) => {
-  console.log("Tin nhắn trả về từ API: ", res); 
-  console.log("chat id ", chat.id);
+    console.log("Tin nhắn trả về từ API: ", res); 
+    console.log("chat id ", chat.id);
 
-  // Nếu API trả về đúng, thì res.messages mới chứa mảng tin nhắn
-  if (res && res.messages) {
-    this.messages = res.messages;
-  } else {
-    console.error("Không tìm thấy dữ liệu tin nhắn trong response:", res);
+    // Nếu API trả về đúng, thì res.messages mới chứa mảng tin nhắn
+      if (res && res.messages) {
+        this.messages = res.messages;
+      } else {
+        console.error("Không tìm thấy dữ liệu tin nhắn trong response:", res);
+      }
+    });
+
   }
-});
 
-
+  getSenderName(senderId: number): string {
+    if (senderId === this.selectedChat?.user1_id_id) {
+      return this.userIdName1[senderId] || 'User 1';
+    }
+    if (senderId === this.selectedChat?.user2_id_id) {
+      return this.userIdName2[senderId] || 'User 2';
+    }
+    return 'Unknown';
   }
 
-  
   closePopup() {
     this.selectedChat = null;
     this.messages = [];
   }
 
-  deletechat(){}
+deletechat(chat: any) {
+  if (confirm(`Bạn có chắc muốn xoá đoạn chat giữa ${this.getNameUser1(chat.user1_id)} và ${this.getNameUser2(chat.user2_id)}?`)) {
+    this.chatService.deleteChat(chat.id).subscribe({
+      next: () => {
+        this.chatList = this.chatList.filter((c: Chat) => c.id !== chat.id);
+        if (this.selectedChat?.id === chat.id) {
+          this.closePopup();
+          this.loadChatList();
+        }
+        alert('Đã xoá đoạn chat thành công.');
+      },
+      error: (err) => {
+        console.error('Lỗi khi xoá đoạn chat:', err);
+        alert('Xoá thất bại. Vui lòng thử lại.');
+      }
+    });
+  }
+}
 
   ngOnInit(): void {
       this.loadChatList();

@@ -22,7 +22,7 @@
         <div>{{ getNameUser2(chat.user2_id_id) }} </div>
         <div>
           <button class="edit-btn" (click)="Openchat(chat)" >Detail</button>
-          <button class="delete-btn" (click)="deletechat()">Delete</button>
+          <button class="delete-btn" (click)="deletechat(chat)">Delete</button>
         </div>
       </div>
     </div>
@@ -41,6 +41,7 @@
              [ngClass]="{'user1-message': msg.sender_id === selectedChat.user1_id_id,
        'user2-message': msg.sender_id === selectedChat.user2_id_id}" 
              class="message-bubble">
+          <div class="sender-name">{{ getSenderName(msg.sender_id) }}</div>
           <div class="message-text">{{ msg.message_text }}</div>
           <div class="message-time">{{ msg.created_at | date: 'shortTime' }}</div>
         </div>
