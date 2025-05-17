@@ -28,6 +28,7 @@ import { ArtistComponent } from './pagesadmin/artist/artist.component';
 import { SongsListComponent } from './pagesadmin/songs-list/songs-list.component';
 import { UsersComponent } from './pagesadmin/users/users.component';
 import { UserGroupComponent } from './pagesadmin/user-group/user-group.component';
+import { ChatadminComponent } from './pagesadmin/chatadmin/chatadmin.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { UserGroupComponent } from './pagesadmin/user-group/user-group.component
     SongsListComponent,
     UsersComponent,
     UserGroupComponent,
-    AlbumComponent
+    AlbumComponent,
+    ChatadminComponent,
   ],
   imports: [
     

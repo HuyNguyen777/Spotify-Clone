@@ -31,7 +31,7 @@ export class UsersComponent implements OnInit {
       this.userList = res.map(user => {
         // Nếu ảnh không có http thì thêm domain backend
         if (user.image_user && !user.image_user.startsWith('http')) {
-          user.image_user = `http://localhost:8000/${user.image_user}`;
+          user.image_user = `http://127.0.0.1:8000/${user.image_user}`;
         }
         return user;
       });
