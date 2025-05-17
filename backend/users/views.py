@@ -10,14 +10,14 @@ from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from users.serializers import UserSerializer  # bạn phải có UserSerializer
+from users.serializers import UserSerializer  
 from rest_framework.views import APIView
 
 
 @csrf_exempt
 def list_users(request):
     if request.method == 'GET':
-        users = User.objects.all().values()  # bạn có thể lọc/trích fields nếu muốn
+        users = User.objects.all().values()  
         return JsonResponse(list(users), safe=False)
     else:
         return JsonResponse({'error': 'Invalid HTTP method'}, status=405)
