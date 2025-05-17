@@ -24,10 +24,17 @@ export class ChatadminComponent implements OnInit {
     this.selectedChat = chat;
 
     this.chatService.fetchHistory(chat.id).subscribe((res: any) => {
-       console.log("Tin nhắn trả về từ API: ", res); 
-       console.log("chat id ", chat.id);
-      this.messages = res.data;
-    });
+  console.log("Tin nhắn trả về từ API: ", res); 
+  console.log("chat id ", chat.id);
+
+  // Nếu API trả về đúng, thì res.messages mới chứa mảng tin nhắn
+  if (res && res.messages) {
+    this.messages = res.messages;
+  } else {
+    console.error("Không tìm thấy dữ liệu tin nhắn trong response:", res);
+  }
+});
+
 
   }
 
