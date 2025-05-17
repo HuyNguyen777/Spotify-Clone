@@ -28,6 +28,8 @@ export class LoginComponent implements OnInit {
     if (this.userForm.valid) {
       const username = this.userForm.value.username;
       const password = this.userForm.value.password;
+
+      console.log("user: ", username, "Pass: ", password);
   
       this.authService.login(username, password).subscribe({
         next: (data) => {

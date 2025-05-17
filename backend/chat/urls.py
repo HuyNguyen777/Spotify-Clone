@@ -8,4 +8,5 @@ urlpatterns = [
     path('create_chat/', views.MessageViewSet.create_chat, name='create_chat'),
     path('<int:chat_id>/messages/', views.MessageViewSet.chat_messages),
     path('get-user-chats/', views.MessageViewSet.get_user_chats, name='get_user_chats'),
+    path('', views.MessageViewSet.list_chat, name='list_chat'),
 ]

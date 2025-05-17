@@ -1,0 +1,50 @@
+<div class="artist-container">
+    <div class="artist-header-bar">
+      <h2>Chat Management</h2>
+    </div>
+  
+    <div class="artist-table">
+      <div class="artist-table-header">
+        <div>#</div>
+        <div>Chat Id</div>
+        <div>Time stamp</div>
+        <div>User Name 1</div>
+        <div>User Name 2</div>
+        <div>Actions</div>
+      </div>
+  
+      <div
+      *ngFor="let chat of chatList; let i = index" class="artist-table-row">
+        <div>{{ i + 1 }}</div>
+        <div> {{ chat.id }}</div>
+        <div>{{ timeStampSlipt(chat.timestamp) }} </div>
+        <div>{{ getNameUser1(chat.user1_id_id) }} </div>
+        <div>{{ getNameUser2(chat.user2_id_id) }} </div>
+        <div>
+          <button class="edit-btn" (click)="Openchat(chat)" >Detail</button>
+          <button class="delete-btn" (click)="deletechat()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- POPUP CHAT -->
+<div class="chat-popup-overlay" *ngIf="selectedChat">
+  <div class="chat-popup-box">
+    <div class="chat-popup-header">
+      <h3>Chat Detail</h3>
+      <button class="close-btn" (click)="closePopup()">X</button>
+    </div>
+    <div class="chat-popup-body">
+      <div class="chat-messages">
+        <div *ngFor="let msg of messages" 
+             [ngClass]="{'user1-message': msg.sender_id === selectedChat.user1_id_id,
+       'user2-message': msg.sender_id === selectedChat.user2_id_id}" 
+             class="message-bubble">
+          <div class="message-text">{{ msg.message_text }}</div>
+          <div class="message-time">{{ msg.created_at | date: 'shortTime' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

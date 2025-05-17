@@ -19,6 +19,7 @@ import { MusicPlayerComponent } from './components/music-player/music-player.com
 import { AlbumComponent } from './pagesadmin/album/album.component';
 import { SongsListComponent } from './pagesadmin/songs-list/songs-list.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { ChatadminComponent } from './pagesadmin/chatadmin/chatadmin.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -28,7 +29,7 @@ const routes: Routes = [
       { path: 'users', component: UsersComponent },
       { path: 'user-group', component: UserGroupComponent },
       { path: 'artist', component: ArtistComponent},
-      { path: 'category', component: CategoryComponent },
+      { path: 'chat', component: ChatadminComponent },
       { path: 'album', component: AlbumComponent },
       { path: 'song', component: SongsListComponent }
     ] },

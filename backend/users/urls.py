@@ -10,6 +10,7 @@ urlpatterns = [
     path('search/', search_users, name='search-users'),
     path('get-user_id/', views.GetUsernameByTokenView.as_view(), name='get-username-by-token'),
     path('get-user/', views.GetUserByTokenView.as_view()),
+    path('<int:user_id>/', views.get_user, name='get_user'),
     path('', views.list_users, name='list_users'),
     path('create-user/', views.create_user, name='create_user'),
     path('<int:user_id>/update/', views.update_user, name='update_user'),

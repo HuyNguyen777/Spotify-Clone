@@ -1,0 +1,84 @@
+import { Component, OnInit } from '@angular/core';
+import { Chat, ChatService, Message } from '../../services/chat.service';
+import { UserService } from '../../services/user.service';
+
+@Component({
+  selector: 'app-chatadmin',
+  standalone: false,
+  templateUrl: './chatadmin.component.html',
+  styleUrl: './chatadmin.component.css'
+})
+export class ChatadminComponent implements OnInit {
+  
+  chatList: any = [];
+  messages: Message[] = [];
+  nameUser?: string;
+  userIdName1: {[key: number]: string} ={};
+  userIdName2: {[key: number]: string} = {};
+  selectedChat: any = null;
+  userId: number = 0;
+  
+  constructor(public chatService: ChatService, public userService: UserService){}
+
+  Openchat(chat: any){
+    this.selectedChat = chat;
+
+    this.chatService.fetchHistory(chat.id).subscribe((res: any) => {
+       console.log("Tin nhắn trả về từ API: ", res); 
+       console.log("chat id ", chat.id);
+      this.messages = res.data;
+    });
+
+  }
+
+  
+  closePopup() {
+    this.selectedChat = null;
+    this.messages = [];
+  }
+
+  deletechat(){}
+
+  ngOnInit(): void {
+      this.loadChatList();
+  }
+
+  loadChatList(){
+    this.chatService.listChat().subscribe((chats: any[]) => {
+      console.log("Chat List: ", chats);
+      this.chatList = chats;
+
+      chats.forEach((chat) => {
+        if(chat.user1_id_id && !this.userIdName1[chat.user1_id_id]) {
+          this.userService.getUser(chat.user1_id_id).subscribe((res) =>{
+            this.userIdName1[chat.user1_id_id] = res.name;
+          } )
+        }
+      })
+
+      chats.forEach((chat) => {
+        if(chat.user2_id_id && !this.userIdName2[chat.user2_id_id]) {
+          this.userService.getUser(chat.user2_id_id).subscribe((res) => {
+            this.userIdName2[chat.user2_id_id] = res.name;
+          })
+        }
+      })
+
+    });
+
+
+  }
+
+  getNameUser1(userId: number){
+   return this.userIdName1[userId] || "undefined";
+  }
+
+  getNameUser2(userId: number){
+    return this.userIdName2[userId] || "undefined";
+  }
+
+
+  timeStampSlipt(day: string){
+    return day.slice(0, 10);
+  }
+}

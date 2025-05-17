@@ -17,7 +17,7 @@ from rest_framework.views import APIView
 @csrf_exempt
 def list_users(request):
     if request.method == 'GET':
-        users = User.objects.all().values()  # bạn có thể lọc/trích fields nếu muốn
+        users = User.objects.all().values()  
         return JsonResponse(list(users), safe=False)
     else:
         return JsonResponse({'error': 'Invalid HTTP method'}, status=405)
@@ -77,6 +77,14 @@ def delete_user(request, user_id):
         return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
     except User.DoesNotExist:
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+@api_view(['GET'])
+def get_user(request, user_id):
+    try:
+        user = User.objects.get(user_id=user_id)
+        return Response({'name': user.user_name}, status=status.HTTP_200_OK)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)  
 
 @csrf_exempt
 def register(request):

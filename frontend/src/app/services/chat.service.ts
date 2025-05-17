@@ -25,6 +25,8 @@ export class ChatService {
   private messages$ = new Subject<Message>();
   private deleteResponses$ = new Subject<boolean>();
 
+  private baseUrl = 'http://127.0.0.1:8000/api/chat/';
+
   constructor(private http: HttpClient) {}
 
   connect(chatId: number): void {
@@ -103,4 +105,9 @@ export class ChatService {
   getUserChats(currentUserID: number): Observable<any> {
     return this.http.get<Chat>(`${this.apiUrl}${currentUserID}/`);
   }
+
+  listChat(): Observable<Chat[]> {
+    return this.http.get<Chat[]>(this.baseUrl);
+  }
+
 }
